@@ -1,0 +1,219 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Definición de la tabla de usuarios
+model Usuario {
+  id               Int       @id @default(autoincrement())
+  nombre           String
+  correoElectronico String
+  contrasena       String
+  rol              Rol @default(CLIENTE)
+  rolId            Int
+  habilitado       Boolean   @default(true)
+
+  bodega Bodega[]
+  ajusteInventario AjusteInventario[]
+  salidaInventario SalidaInventario[]
+}
+
+// Definición de la tabla de roles
+enum Rol {
+  ADMINISTRADOR
+  EMPLEADO
+  CLIENTE
+}
+
+// Definición de la tabla de productos
+model Producto {
+  id               Int       @id @default(autoincrement())
+  sku              String
+  nombre           String
+  descripcion      String
+  costoUnitario    Float
+  subcategoriaId   Int  
+  subcategoria     Subcategoria @relation(fields: [subcategoriaId], references: [id])
+  // Agregar dos campos más de características del producto
+  mesesGarantia    Int?
+  estado  String?
+  cantidadStock    Int       @default(0)
+  cantidadMinima   Int
+  cantidadMaxima   Int
+
+  //FKs
+  ProductoSalidaInventario ProductoSalidaInventario[]
+  ProductoOrdenCompra ProductoOrdenCompra[]
+  ProductoTraslado ProductoTraslado[]
+  ProductoAjusteInventario ProductoAjusteInventario[]
+}
+
+// Definición de la tabla de categorías
+model Categoria {
+  id               Int       @id @default(autoincrement())
+  nombre           String
+
+  subcategorias Subcategoria[]
+}
+
+// Definición de la tabla de subcategorías
+model Subcategoria {
+  id               Int       @id @default(autoincrement())
+  nombre           String
+  categoria        Categoria @relation(fields: [categoriaId], references: [id])
+  categoriaId      Int
+
+  productos Producto[]
+}
+
+// Definición de la tabla de ubicaciones
+model Ubicacion {
+  id               Int       @id @default(autoincrement())
+  nombre           String
+  provincia        String
+  canton           String
+  distrito         String
+  direccionExacta  String
+
+  bodegas Bodega[]
+}
+
+// Definición de la tabla de bodegas
+model Bodega {
+  id               Int       @id @default(autoincrement())
+  nombre           String
+  ubicacion        Ubicacion @relation(fields: [ubicacionId], references: [id])
+  ubicacionId      Int
+  dimensiones      String
+  capacidad        Int
+
+  encargados       Usuario[]
+  ordenesCompra    OrdenCompra[]
+  ajusteInventario AjusteInventario[]
+  salidaInventario SalidaInventario[]
+
+  trasladosOrigen  Traslado[] @relation("bodegasOrigen")
+  trasladosDestino Traslado[] @relation("bodegasDestino")
+}
+
+// Definición de la tabla de proveedores
+model Proveedor {
+  id               Int       @id @default(autoincrement())
+  nombre           String
+  direccion        String
+  provincia        String
+  canton           String
+  distrito         String
+  correoElectronico String
+  numeroTelefono   String
+
+  ordenesCompra OrdenCompra[]
+}
+
+// Definición de la tabla de órdenes de compra
+model OrdenCompra {
+  id               Int       @id @default(autoincrement())
+  fechaGeneracion  DateTime
+  proveedor        Proveedor @relation(fields: [proveedorId], references: [id])
+  proveedorId      Int
+  bodega           Bodega    @relation(fields: [bodegaId], references: [id])
+  bodegaId         Int
+  fechaRecibida    DateTime?
+  productos        ProductoOrdenCompra[]
+}
+
+// Relación muchos-a-muchos entre OrdenCompra y Producto
+model ProductoOrdenCompra {
+  ordenCompraId    Int
+  ordenCompra      OrdenCompra @relation(fields: [ordenCompraId], references: [id])
+  productoId       Int
+  producto         Producto    @relation(fields: [productoId], references: [id])
+  cantidad         Int
+  updatedAt DateTime @updatedAt @default(now())
+
+  @@id([ordenCompraId, productoId])
+}
+
+// Definición de la tabla de traslados entre bodegas
+model Traslado {
+  id               Int       @id @default(autoincrement())
+  bodegaOrigenId   Int
+  bodegaOrigen     Bodega    @relation("bodegasOrigen", fields: [bodegaOrigenId], references: [id])
+  bodegaDestinoId  Int  
+  bodegaDestino    Bodega    @relation("bodegasDestino", fields: [bodegaDestinoId], references: [id])
+  fechaEnvio       DateTime
+  fechaRecibido    DateTime
+
+  productos        ProductoTraslado[]
+}
+
+// Relación muchos-a-muchos entre Traslado y Producto
+model ProductoTraslado {
+  traslado         Traslado  @relation(fields: [trasladoId], references: [id])
+  trasladoId       Int
+  producto         Producto  @relation(fields: [productoId], references: [id])
+  productoId       Int
+  cantidad         Int
+
+  @@id([trasladoId, productoId])
+}
+
+// Definición de la tabla de salidas de inventario
+model SalidaInventario {
+  id               Int       @id @default(autoincrement())
+  fecha            DateTime
+  bodega           Bodega    @relation(fields: [bodegaId], references: [id])
+  bodegaId         Int
+  usuario          Usuario   @relation(fields: [usuarioId], references: [id])
+  usuarioId        Int
+  observaciones    String
+  productos        ProductoSalidaInventario[]
+}
+
+// Relación muchos-a-muchos entre SalidaInventario y Producto
+model ProductoSalidaInventario {
+  salidaInventario SalidaInventario @relation(fields: [salidaInventarioId], references: [id])
+  salidaInventarioId Int
+  producto         Producto         @relation(fields: [productoId], references: [id])
+  productoId       Int
+  cantidad         Int
+
+  @@id([salidaInventarioId, productoId])
+}
+
+// Definición de la tabla de ajustes de inventario
+model AjusteInventario {
+  id               Int       @id @default(autoincrement())
+  fecha            DateTime
+  bodegaId         Int
+  bodega           Bodega    @relation(fields: [bodegaId], references: [id])
+  usuarioId        Int
+  usuario          Usuario   @relation(fields: [usuarioId], references: [id])
+  tipoMovimiento   TipoMovimiento
+  justificacion    String
+  productos        ProductoAjusteInventario[]
+}
+
+// Tipo de enumeración para el tipo de movimiento
+enum TipoMovimiento {
+  ENTRADA
+  SALIDA
+}
+
+// Relación muchos-a-muchos entre AjusteInventario y Producto
+model ProductoAjusteInventario {
+  ajusteInventario AjusteInventario @relation(fields: [ajusteInventarioId], references: [id])
+  ajusteInventarioId Int
+  productoId       Int
+  producto         Producto         @relation(fields: [productoId], references: [id])
+  cantidad         Int
+
+  @@id([ajusteInventarioId, productoId])
+}
