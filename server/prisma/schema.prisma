@@ -41,7 +41,7 @@ model Producto {
   costoUnitario    Float
   subcategoriaId   Int  
   subcategoria     Subcategoria @relation(fields: [subcategoriaId], references: [id])
-  // Agregar dos campos más de características del producto
+  //dos características extra
   mesesGarantia    Int?
   estado  String?
   cantidadStock    Int       @default(0)
@@ -129,7 +129,7 @@ model OrdenCompra {
   productos        ProductoOrdenCompra[]
 }
 
-// Relación muchos-a-muchos entre OrdenCompra y Producto
+// Relación muchos a muchos entre OrdenCompra y Producto
 model ProductoOrdenCompra {
   ordenCompraId    Int
   ordenCompra      OrdenCompra @relation(fields: [ordenCompraId], references: [id])
@@ -154,7 +154,7 @@ model Traslado {
   productos        ProductoTraslado[]
 }
 
-// Relación muchos-a-muchos entre Traslado y Producto
+// Relación muchos muchos entre Traslado y Producto
 model ProductoTraslado {
   traslado         Traslado  @relation(fields: [trasladoId], references: [id])
   trasladoId       Int
@@ -177,7 +177,7 @@ model SalidaInventario {
   productos        ProductoSalidaInventario[]
 }
 
-// Relación muchos-a-muchos entre SalidaInventario y Producto
+// Relación muchos a muchos entre SalidaInventario y Producto
 model ProductoSalidaInventario {
   salidaInventario SalidaInventario @relation(fields: [salidaInventarioId], references: [id])
   salidaInventarioId Int
@@ -207,7 +207,7 @@ enum TipoMovimiento {
   SALIDA
 }
 
-// Relación muchos-a-muchos entre AjusteInventario y Producto
+// Relación muchos a muchos entre AjusteInventario y Producto
 model ProductoAjusteInventario {
   ajusteInventario AjusteInventario @relation(fields: [ajusteInventarioId], references: [id])
   ajusteInventarioId Int
