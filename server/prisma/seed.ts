@@ -6,6 +6,8 @@ import { usuarios } from './seeds/usuarios';
 import { ubicaciones } from './seeds/ubicaciones';
 import { bodegas } from './seeds/bodegas';
 import { proveedores } from './seeds/proveedores';
+import { ordenesCompra } from './seeds/ordenesCompra';
+import { productoOrdenesCompra } from './seeds/productoOrdenesCompra';
 
 const prisma = new PrismaClient();
 
@@ -136,110 +138,15 @@ const main = async () => {
         },
       });
 
-    // //Ordenes
-    // await prisma.orden.create({
-    //   data: {
-    //     fechaOrden: new Date('2024-02-27'),
-    //     usuarioId: 4,
-    //     videojuegos: {
-    //       createMany: {
-    //         data: [
-    //           { cantidad: 1, videojuegoId: 1 },
-    //           { cantidad: 2, videojuegoId: 4 },
-    //         ],
-    //       },
-    //     },
-    //   },
-    // });
-    // await prisma.orden.create({
-    //   data: {
-    //     fechaOrden: new Date('2024-03-30'),
-    //     usuarioId: 3,
-    //     videojuegos: {
-    //       createMany: {
-    //         data: [{ cantidad: 1, videojuegoId: 2 }],
-    //       },
-    //     },
-    //   },
-    // });
-    // await prisma.orden.create({
-    //   data: {
-    //     fechaOrden: new Date('2024-4-20'),
-    //     usuarioId: 2,
-    //     videojuegos: {
-    //       createMany: {
-    //         data: [
-    //           { cantidad: 1, videojuegoId: 1 },
-    //           { cantidad: 1, videojuegoId: 3 },
-    //         ],
-    //       },
-    //     },
-    //   },
-    // });
-    // await prisma.orden.create({
-    //   data: {
-    //     fechaOrden: new Date('2024-3-27'),
-    //     usuarioId: 2,
-    //     videojuegos: {
-    //       createMany: {
-    //         data: [
-    //           { cantidad: 1, videojuegoId: 4 },
-    //           { cantidad: 1, videojuegoId: 3 },
-    //         ],
-    //       },
-    //     },
-    //   },
-    // });
-    // await prisma.orden.create({
-    //   data: {
-    //     fechaOrden: new Date('2024-5-02'),
-    //     usuarioId: 1,
-    //     videojuegos: {
-    //       createMany: {
-    //         data: [{ cantidad: 1, videojuegoId: 4 }],
-    //       },
-    //     },
-    //   },
-    // });
-    // await prisma.orden.create({
-    //   data: {
-    //     fechaOrden: new Date('2024-5-05'),
-    //     usuarioId: 4,
-    //     videojuegos: {
-    //       createMany: {
-    //         data: [{ cantidad: 1, videojuegoId: 3 }],
-    //       },
-    //     },
-    //   },
-    // });
-    // await prisma.orden.create({
-    //   data: {
-    //     fechaOrden: new Date('2024-4-15'),
-    //     usuarioId: 3,
-    //     videojuegos: {
-    //       createMany: {
-    //         data: [
-    //           { cantidad: 1, videojuegoId: 2 },
-    //           { cantidad: 1, videojuegoId: 1 },
-    //         ],
-    //       },
-    //     },
-    //   },
-    // });
-    // await prisma.orden.create({
-    //   data: {
-    //     fechaOrden: new Date('2024-4-02'),
-    //     usuarioId: 4,
-    //     videojuegos: {
-    //       createMany: {
-    //         data: [
-    //           { cantidad: 1, videojuegoId: 3 },
-    //           { cantidad: 1, videojuegoId: 4 },
-    //         ],
-    //       },
-    //     },
-    //   },
-    // });
+    //Ordenes de Compra 
+    await prisma.ordenCompra.createMany({
+        data: ordenesCompra,
+    });
+    //Productos ordenes de Compra 
+    await prisma.productoOrdenCompra.createMany({
+        data: productoOrdenesCompra,
+    });
+
   } catch (error) {
     throw error;
   }
