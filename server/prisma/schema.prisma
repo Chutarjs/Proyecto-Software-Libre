@@ -17,7 +17,6 @@ model Usuario {
   correoElectronico String
   contrasena       String
   rol              Rol @default(CLIENTE)
-  rolId            Int
   habilitado       Boolean   @default(true)
 
   bodega Bodega[]
@@ -53,6 +52,7 @@ model Producto {
   ProductoOrdenCompra ProductoOrdenCompra[]
   ProductoTraslado ProductoTraslado[]
   ProductoAjusteInventario ProductoAjusteInventario[]
+  InventarioProducto InventarioProducto[]
 }
 
 // Definición de la tabla de categorías
@@ -93,6 +93,7 @@ model Bodega {
   ubicacionId      Int
   dimensiones      String
   capacidad        Int
+  activa           Boolean
 
   encargados       Usuario[]
   ordenesCompra    OrdenCompra[]
@@ -101,6 +102,13 @@ model Bodega {
 
   trasladosOrigen  Traslado[] @relation("bodegasOrigen")
   trasladosDestino Traslado[] @relation("bodegasDestino")
+}
+
+model Inventario {
+  id          Int      @id @default(autoincrement())
+  nombre      String
+  descripcion String?
+  productos   InventarioProducto[]
 }
 
 // Definición de la tabla de proveedores
@@ -216,4 +224,16 @@ model ProductoAjusteInventario {
   cantidad         Int
 
   @@id([ajusteInventarioId, productoId])
+}
+
+model InventarioProducto{
+  inventario   Inventario @relation(fields: [inventarioId], references: [id])
+  inventarioId Int
+  producto     Producto  @relation(fields: [productoId], references: [id])
+  productoId   Int
+
+  cantidad     Int
+  // Otros campos relacionados con la relación entre Inventario y Producto
+
+  @@id([inventarioId, productoId])
 }
