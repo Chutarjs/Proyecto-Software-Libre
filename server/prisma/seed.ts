@@ -3,6 +3,9 @@ import { PrismaClient } from '@prisma/client';
 import { subcategorias } from './seeds/subcategorias';
 import { categorias } from './seeds/categorias';
 import { usuarios } from './seeds/usuarios';
+import { ubicaciones } from './seeds/ubicaciones';
+import { bodegas } from './seeds/bodegas';
+import { proveedores } from './seeds/proveedores';
 
 const prisma = new PrismaClient();
 
@@ -19,6 +22,18 @@ const main = async () => {
     //Usuarios - no tiene relaciones
     await prisma.usuario.createMany({
       data: usuarios,
+    });
+    //Ubicaciones - no tiene relaciones
+    await prisma.ubicacion.createMany({
+        data: ubicaciones,
+    });
+    //Bodegas 
+    await prisma.bodega.createMany({
+        data: bodegas,
+    });
+    //Proveedores 
+    await prisma.proveedor.createMany({
+        data: proveedores,
     });
 
     //Productos
