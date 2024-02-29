@@ -13,5 +13,4 @@ router.get('/:id',productoController.getById)
 
 router.put('/:id',productoController.update)
 
-
-module.exports=router
+module.exports=router 

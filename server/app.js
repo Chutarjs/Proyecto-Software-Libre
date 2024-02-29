@@ -7,6 +7,7 @@ const logger = require("morgan");
 const app = express();
 const prism = new PrismaClient();
 //---Archivos de rutas---
+const productoRouter = require("./routes/productoRoutes");
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
 // Puero que escucha por defecto 300 o definido .env
@@ -23,7 +24,8 @@ extended: true,
 })
 );
 //---- Definir rutas ----
-app.use("/producto/", productoRoutes);
+app.use("/producto/", productoRouter);
+
 // Servidor
 app.listen(port, () => { 
 console.log(`http://localhost:${port}`);

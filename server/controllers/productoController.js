@@ -16,10 +16,7 @@ module.exports.getById = async (request, response, next) => {
     //Parámetro con el id del videojuego
     let idProducto=parseInt(request.params.id)
     const producto=await prisma.producto.findUnique({
-        where: { id: idProducto },
-        include:{
-            generos:true
-        }
+        where: { id: idProducto }
     })
     response.json(producto)
 
