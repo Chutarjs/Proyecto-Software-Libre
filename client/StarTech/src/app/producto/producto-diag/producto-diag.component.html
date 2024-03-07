@@ -8,9 +8,9 @@
   <mat-dialog-content class="content">
     <p>{{ datos.descripcion }}</p>
     <p class="price">{{ datos.precioUnitario | currency : "USD" }}</p>
-    @if(datos.categorias){
+    @if(datos.subcategoria){
       <mat-chip-listbox aria-label="Categorias">
-        @for (item of datos.categorias; track item.id) {
+        @for (item of datos.subcategoria; track item.id) {
           <mat-chip-option color="accent" selected> {{item.nombre}}</mat-chip-option>
         }
         

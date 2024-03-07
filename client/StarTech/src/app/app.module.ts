@@ -9,6 +9,8 @@ import { UserModule } from './user/user.module';
 import { ProductoModule } from './producto/producto.module';
 import { HttpClientModule } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { InventarioModule } from './inventario/inventario.module';
+import { OrdenModule } from './orden/orden.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     HomeModule,
     UserModule,
     ProductoModule,
+    InventarioModule,
+    OrdenModule,
     // al final el gestor de las rutas principal
     AppRoutingModule,
   ],

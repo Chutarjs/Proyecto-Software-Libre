@@ -1,0 +1,23 @@
+mat-card {
+    max-width: 80%;
+    margin: 2em auto;
+    }
+    mat-card-header{
+    font-weight: 500;
+    margin-bottom: 0;
+    padding: 0.5em;
+    text-align: center;
+    font-size: 1.5em;
+    background-color: dodgerblue;
+    color:white;
+    }
+    mat-card-content{
+    line-height: 1.5em;
+    padding: 1.5em;
+    }
+    .price{
+    padding: 1em;
+    font-weight: 800;
+    font-size: 3em;
+    float: right;
+}
