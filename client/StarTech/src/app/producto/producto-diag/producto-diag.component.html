@@ -1,0 +1,14 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+  </button>
+  @if(datos){
+  <div> 
+    <h2 mat-dialog-title class="dialog-headline">{{ datos.nombre }}</h2>
+  
+    <mat-dialog-content class="content">
+      <p>{{ datos.descripcion }}</p>
+      <p class="price">{{ datos.costoUnitario | currency : "USD" }}</p>
+    </mat-dialog-content>
+  </div>
+  }
+  

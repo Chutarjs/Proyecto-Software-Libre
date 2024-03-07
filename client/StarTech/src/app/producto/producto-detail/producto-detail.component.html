@@ -1,14 +1,12 @@
-<mat-card >
-    <mat-card-header>
-    <mat-card-title >
-    </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-    <p class="price"> </p>
-    <p></p>
-    <mat-chip-listbox aria-label="Generos">
-    <mat-chip-option color="accent" selected> </mat-chip-option>
-    </mat-chip-listbox> 
-    </mat-card-content>
+@if(datos){
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ datos.nombre }} </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="price">{{ datos.costoUnitario | currency : "USD" }}</p>
+        <p>{{ datos.descripcion }}</p>
+      </mat-card-content>
     </mat-card>
+    }
     

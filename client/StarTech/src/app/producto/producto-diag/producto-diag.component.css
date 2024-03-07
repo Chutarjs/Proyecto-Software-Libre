@@ -1,0 +1,34 @@
+.dialog-headline{
+    font-weight: 500;
+    margin-bottom: 0;
+    padding: 0.5em;
+    text-align: center;
+    font-size: 1.5em;
+    background-color: dodgerblue;
+    color:white;
+  }
+  .close-button{
+   
+    top: 0;
+  right: -89%;
+  }
+  
+  .close-icon {
+    transition: 1s ease-in-out;
+  }
+  .content
+  {
+    padding-top: 1em;
+    text-align: left;
+    line-height: 1.5em;
+  }
+  mat-dialog-content{
+    line-height: 1.5em;
+    padding: 1.5em;
+  }
+ .price{
+    padding: 1em;
+    font-weight: 800;
+    font-size: 3em;
+    float: right;
+ }
