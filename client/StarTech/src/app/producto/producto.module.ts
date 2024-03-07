@@ -19,13 +19,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { ProductoIndexComponent } from './producto-index/producto-index.component';
 import { ProductoDetailComponent } from './producto-detail/producto-detail.component';
 import { ProductoAllComponent } from './producto-all/producto-all.component';
+import { ProductoDiagComponent } from './producto-diag/producto-diag.component';
 
 
 @NgModule({
   declarations: [
     ProductoIndexComponent,
     ProductoDetailComponent,
-    ProductoAllComponent
+    ProductoAllComponent,
+    ProductoDiagComponent
   ],
   imports: [
     CommonModule,
