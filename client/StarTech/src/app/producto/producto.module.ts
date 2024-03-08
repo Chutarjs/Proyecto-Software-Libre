@@ -22,6 +22,7 @@ import { ProductoAllComponent } from './producto-all/producto-all.component';
 import { ProductoDiagComponent } from './producto-diag/producto-diag.component';
 
 
+
 @NgModule({
   declarations: [
     ProductoIndexComponent,

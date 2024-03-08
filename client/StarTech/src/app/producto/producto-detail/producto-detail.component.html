@@ -6,6 +6,12 @@
       <mat-card-content>
         <p class="price">{{ datos.costoUnitario | currency : "USD" }}</p>
         <p>{{ datos.descripcion }}</p>
+        <p>Subcategoria: {{ datos.subcategoriaId }} </p> 
+        <p>Meses de garantia: {{ datos.mesesGarantia }} </p> 
+        <p>Estado: {{ datos.estado }} </p> 
+        <p>Cantidad en stock: {{ datos.cantidadStock }} </p> 
+        <p>Cantidad minima: {{ datos.cantidadMinima }} </p> 
+        <p>Cantidad maxima: {{ datos.cantidadMaxima }} </p> 
       </mat-card-content>
     </mat-card>
     }
