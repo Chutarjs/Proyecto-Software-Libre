@@ -19,7 +19,7 @@ model Usuario {
   rol              Rol @default(CLIENTE)
   habilitado       Boolean   @default(true)
 
-  bodega Bodega[]
+  bodega EncargadoBodega[]
   ajusteInventario AjusteInventario[]
   salidaInventario SalidaInventario[]
 }
@@ -48,11 +48,11 @@ model Producto {
   cantidadMaxima   Int
 
   //FKs
+  Bodegas ProductoBodega[]
   ProductoSalidaInventario ProductoSalidaInventario[]
   ProductoOrdenCompra ProductoOrdenCompra[]
   ProductoTraslado ProductoTraslado[]
   ProductoAjusteInventario ProductoAjusteInventario[]
-  InventarioProducto InventarioProducto[]
 }
 
 // Definición de la tabla de categorías
@@ -86,6 +86,7 @@ model Ubicacion {
 }
 
 // Definición de la tabla de bodegas
+// Definición de la tabla de bodegas
 model Bodega {
   id               Int       @id @default(autoincrement())
   nombre           String
@@ -95,7 +96,9 @@ model Bodega {
   capacidad        Int
   activa           Boolean
 
-  encargados       Usuario[]
+  // Eliminamos el campo encargados
+  encargados       EncargadoBodega[]
+  productos        ProductoBodega[]
   ordenesCompra    OrdenCompra[]
   ajusteInventario AjusteInventario[]
   salidaInventario SalidaInventario[]
@@ -104,11 +107,24 @@ model Bodega {
   trasladosDestino Traslado[] @relation("bodegasDestino")
 }
 
-model Inventario {
-  id          Int      @id @default(autoincrement())
-  nombre      String
-  descripcion String?
-  productos   InventarioProducto[]
+// Definición de la tabla de encargados de bodegas
+model EncargadoBodega {
+  usuario  Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId Int
+  bodega   Bodega   @relation(fields: [bodegaId], references: [id])
+  bodegaId Int
+
+  @@id([usuarioId, bodegaId])
+}
+
+// Definición de la tabla de productos en bodegas
+model ProductoBodega{
+  producto  Producto  @relation(fields: [productoId], references: [id])
+  productoId Int
+  bodega   Bodega   @relation(fields: [bodegaId], references: [id])
+  bodegaId Int
+
+  @@id([productoId, bodegaId])
 }
 
 // Definición de la tabla de proveedores
@@ -224,16 +240,4 @@ model ProductoAjusteInventario {
   cantidad         Int
 
   @@id([ajusteInventarioId, productoId])
-}
-
-model InventarioProducto{
-  inventario   Inventario @relation(fields: [inventarioId], references: [id])
-  inventarioId Int
-  producto     Producto  @relation(fields: [productoId], references: [id])
-  productoId   Int
-
-  cantidad     Int
-  // Otros campos relacionados con la relación entre Inventario y Producto
-
-  @@id([inventarioId, productoId])
 }

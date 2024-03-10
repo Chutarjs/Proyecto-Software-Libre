@@ -27,16 +27,28 @@ export class OrdenIndexComponent  {
   }
   //Listar todos los videojuegos llamando al API
   listaOrdenes(){
-    //localhost:3000/videojuego
-    this.gService.list('OrdenCompra/')
+    //localhost:3000/orden
+    this.gService.list('orden/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data)=>{
         console.log(data)
         this.datos=data
       })
   }
+
+// Dentro del componente.ts
+calcularTotal(productos: any[]): number {
+  let total = 0;
+  for (let producto of productos) {
+    total += producto.cantidad * producto.producto.costoUnitario;
+    console.log(total);
+  }
+  return total;
+}
+
+
   detalleOrden(id:number){
-    this.router.navigate(['/OrdenCompra',id])
+    this.router.navigate(['/orden',id])
   }
 
   ngOnDestroy(){

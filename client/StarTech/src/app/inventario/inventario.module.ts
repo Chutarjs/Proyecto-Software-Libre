@@ -48,4 +48,4 @@ import { InventarioDiagComponent } from './inventario-diag/inventario-diag.compo
     MatChipsModule,
   ]
 })
-export class InventarioModule { }
+export class InventarioModule { } 

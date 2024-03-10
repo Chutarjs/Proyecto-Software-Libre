@@ -7,7 +7,13 @@ module.exports.get = async (request, response, next) => {
             fechaGeneracion: 'asc'
         },
         include:{
-            proveedor: true
+            proveedor: true,
+            productos: {
+                select:{
+                    producto:true,
+                    cantidad:true,
+                }                
+            }
         }
     })
     response.json(ordenes)

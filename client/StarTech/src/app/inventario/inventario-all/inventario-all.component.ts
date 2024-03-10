@@ -23,7 +23,7 @@ export class InventarioAllComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['nombre', 'ubicacion','acciones'];
+  displayedColumns = ['nombre','ubicacion','acciones'];
 
   constructor(private router:Router,
     private route:ActivatedRoute,

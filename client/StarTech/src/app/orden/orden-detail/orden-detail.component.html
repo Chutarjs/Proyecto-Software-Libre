@@ -1,0 +1,20 @@
+@if(datos){
+  <p>Id de la orden: {{ datos.id }}</p>
+  <p>Fecha de Generacion: {{ datos.fechaGeneracion}}</p>
+  <p>Fecha de Recepcion: {{ datos.fechaRecibida}}</p>
+  @if(datos.proveedor) {
+      <p>Proveedor: {{ datos.proveedor.nombre }}</p>
+      <p>Correo del proveedor: {{ datos.proveedor.correoElectronico }}</p>
+  }
+  <p>Productos:</p>
+  <ul>
+      @for(item of datos.productos; track item.id) {
+          <li>
+              <ul>Nombre: {{ item.producto.nombre }}</ul>
+              <ul>Cantidad: {{ item.cantidad }}</ul>
+              <ul>Costo Unitario: {{ item.producto.costoUnitario }}</ul>
+          </li>
+      }
+  </ul>
+  <p>Total Pagado: {{calcularTotal(datos.productos)}}</p>
+}

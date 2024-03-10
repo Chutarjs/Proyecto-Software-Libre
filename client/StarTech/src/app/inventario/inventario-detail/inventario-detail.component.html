@@ -1,11 +1,20 @@
 @if(datos){
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>{{ datos.nombre }} </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p class="ubicacion">{{ datos.ubicacion.nombre }}</p>
-      </mat-card-content>
-    </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ datos.nombre }} </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="ubicacion">{{ datos.ubicacion.nombre }}</p>
+      @for (item of datos.productos; track item.id) {
+      <ul>
+        <li>SKU: {{ item.producto.sku }}</li>
+        <li>Nombre: {{ item.producto.nombre }}</li>
+        <li>Cantidad en Stock: {{ item.producto.cantidadStock }}</li>
+        <li>Cantidad Mínima: {{ item.producto.cantidadMinima }}</li>
+        <li>Cantidad Máxima: {{ item.producto.cantidadMaxima }}</li>
+        <li>Subcategoría: {{ item.producto.subcategoria.nombre }}</li>
+      </ul>
     }
-    
+    </mat-card-content>
+  </mat-card>
+}

@@ -8,6 +8,9 @@ import { bodegas } from './seeds/bodegas';
 import { proveedores } from './seeds/proveedores';
 import { ordenesCompra } from './seeds/ordenesCompra';
 import { productoOrdenesCompra } from './seeds/productoOrdenesCompra';
+import { encargadoBodega } from './seeds/encargadoBodega';
+import { productoBodega } from './seeds/productoBodega';
+
 
 const prisma = new PrismaClient();
 
@@ -33,11 +36,15 @@ const main = async () => {
     await prisma.bodega.createMany({
         data: bodegas,
     });
+
     //Proveedores 
     await prisma.proveedor.createMany({
         data: proveedores,
     });
-
+    //Encargados
+    await prisma.encargadoBodega.createMany({
+      data: encargadoBodega,
+    });
     //Productos
     await prisma.producto.create({
       //Instancia de producto 1
@@ -137,7 +144,10 @@ const main = async () => {
           cantidadMaxima: 120
         },
       });
-
+    //Productos en bodegas
+    await prisma.productoBodega.createMany({
+      data: productoBodega,
+    });
     //Ordenes de Compra 
     await prisma.ordenCompra.createMany({
         data: ordenesCompra,

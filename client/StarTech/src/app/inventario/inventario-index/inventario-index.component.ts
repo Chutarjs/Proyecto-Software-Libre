@@ -10,33 +10,37 @@ import { Router } from '@angular/router';
 })
 export class InventarioIndexComponent {
 
-  //idUsuario=2
-  datos: any //Respuesta del API
-  destroy$:Subject<boolean>=new Subject<boolean>();
+  idUsuario = '1';
+  datos: any; // Respuesta del API
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private gService: GenericService,
     private router: Router
-    )
-    {
-    this.listaInventarios()
-  }
-  //Listar todos los videojuegos llamando al API
-  listaInventarios(){
-    //localhost:3000/videojuego
-    this.gService.list('inventario/')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data)=>{
-        console.log(data)
-        this.datos=data
-      })
-  }
-  detalleInventario(id:number){
-    this.router.navigate(['/inventario',id])
+  ) {
+    this.listaInventarios();
   }
 
-  ngOnDestroy(){
-    this.destroy$.next(true)
-    this.destroy$.unsubscribe()
+  // Listar todos los inventarios llamando al API
+  listaInventarios() {
+    this.gService.list('inventario/')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        console.log(data);
+        // Filtrar la lista de inventarios para que incluya solo aquellos que tengan al usuario como encargado
+        this.datos = data.filter((inventario: any) => {
+          // Verificar si el usuario está como encargado en alguna de las bodegas del inventario
+          return inventario.encargados.some((encargado: any) => encargado.usuarioId == this.idUsuario);
+        });
+      });
+  }
+
+  detalleInventario(id: number) {
+    this.router.navigate(['/inventario', id]);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

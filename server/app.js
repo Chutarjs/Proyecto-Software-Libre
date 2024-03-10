@@ -30,6 +30,7 @@ extended: true,
 app.use("/producto/", productoRouter);
 app.use("/bodega/", inventarioRouter);
 app.use("/inventario/", inventarioRouter);
+app.use("/orden/", ordenCompraRouter);
 app.use("/ordenCompra/", ordenCompraRouter);
 
 // Servidor
