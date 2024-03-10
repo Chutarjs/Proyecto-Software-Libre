@@ -16,12 +16,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { OrdenRoutingModule } from './orden-routing.module';
 import { OrdenIndexComponent } from './orden-index/orden-index.component';
+import { OrdenDetailComponent } from './orden-detail/orden-detail.component';
 
 
 
 @NgModule({
   declarations: [
-    OrdenIndexComponent
+    OrdenIndexComponent,
+    OrdenDetailComponent
   ],
   imports: [
     CommonModule,

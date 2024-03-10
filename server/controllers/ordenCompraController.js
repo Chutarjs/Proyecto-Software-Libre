@@ -29,7 +29,7 @@ module.exports.getById = async (request, response, next) => {
                 select:{
                     producto:true,
                     cantidad:true,
-                }                
+                }
             }
         }
     })
