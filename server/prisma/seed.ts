@@ -10,6 +10,8 @@ import { ordenesCompra } from './seeds/ordenesCompra';
 import { productoOrdenesCompra } from './seeds/productoOrdenesCompra';
 import { encargadoBodega } from './seeds/encargadoBodega';
 import { productoBodega } from './seeds/productoBodega';
+import { ajusteInventario } from './seeds/ajusteInventario';
+import { productoAjusteInventario } from './seeds/productoAjusteInventario';
 
 
 const prisma = new PrismaClient();
@@ -155,6 +157,14 @@ const main = async () => {
     //Productos ordenes de Compra 
     await prisma.productoOrdenCompra.createMany({
         data: productoOrdenesCompra,
+    });
+    //ajuste inventario
+    await prisma.ajusteInventario.createMany({
+      data: ajusteInventario,
+    });
+    //producto ajuste inventario
+    await prisma.productoAjusteInventario.createMany({
+      data: productoAjusteInventario,
     });
 
   } catch (error) {

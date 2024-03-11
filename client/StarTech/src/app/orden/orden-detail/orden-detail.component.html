@@ -6,6 +6,7 @@
       <mat-card-content>
         <p>Fecha de Generacion: {{ datos.fechaGeneracion | date}}</p>
         <p>Fecha de Recepcion: {{ datos.fechaRecibida | date}}</p>
+        <p>Bodega: {{datos.bodega.nombre}}</p>
         @if(datos.proveedor) {
             <p>Proveedor: {{ datos.proveedor.nombre }}</p>
             <p>Correo del proveedor: {{ datos.proveedor.correoElectronico }}</p>

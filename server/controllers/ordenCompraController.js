@@ -7,6 +7,7 @@ module.exports.get = async (request, response, next) => {
             fechaGeneracion: 'asc'
         },
         include:{
+            bodega:true,
             proveedor: true,
             productos: {
                 select:{
@@ -24,6 +25,7 @@ module.exports.getById = async (request, response, next) => {
     const orden=await prisma.ordenCompra.findUnique({
         where: { id: idOrden },
         include:{
+            bodega:true,
             proveedor:true,
             productos: {
                 select:{

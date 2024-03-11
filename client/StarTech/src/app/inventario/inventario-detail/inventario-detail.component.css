@@ -21,3 +21,8 @@ mat-card {
     font-size: 3em;
     float: right;
 }
+.scroll-container {
+    max-height: 800px; /* Ajusta la altura máxima según tus necesidades */
+    overflow-y: auto; /* Agrega una barra de desplazamiento vertical cuando el contenido excede la altura máxima */
+  }
+  

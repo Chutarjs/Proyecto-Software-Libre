@@ -39,6 +39,7 @@ module.exports.getById = async (request, response, next) => {
                             subcategoria: true,
                             ProductoAjusteInventario:{
                                 select:{
+                                    producto:true,
                                     ajusteInventario:{
                                         select:{
                                             id:true,
