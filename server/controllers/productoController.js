@@ -3,15 +3,39 @@ const prisma = new PrismaClient();
 
 //Listar todos los productos
 module.exports.get =async (request,response, next)=>{
-    const producto= await prisma.producto.findMany({
+    const productos= await prisma.producto.findMany({
         orderBy:{
             nombre:'asc'
         } ,         
         include:{
-            subcategoria:true,
+            subcategoria: {
+                select: {
+                    id:true,
+                    nombre:true,
+                    categoria:true
+                }
+            }
         }
     })
-    response.json(producto)
+    
+    // Función para determinar el estado según la cantidad en stock
+    const determinarEstado = (cantidad, minima, maxima) => {
+        if (cantidad > maxima) {
+            return "Excede";
+        } else if (cantidad < minima) {
+            return "Falta Stock";
+        } else {
+            return "Correcto";
+        }
+    };
+
+    // Mapeo para agregar el estado a cada producto
+    const productosConEstado = productos.map(producto => ({
+        ...producto,
+        estado: determinarEstado(producto.cantidadStock, producto.cantidadMinima, producto.cantidadMaxima)
+    }));
+
+    response.json(productosConEstado);
 }
 //Obtener por Id
 //localhost:3000/producto/2
@@ -27,6 +51,7 @@ module.exports.getById = async (request, response, next) => {
     response.json(producto)
 
 }
+
 //Crear un producto
 module.exports.create = async (request, response, next) => {
 };

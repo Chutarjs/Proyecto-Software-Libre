@@ -34,3 +34,11 @@ grid-container {
     font-size: 2em;
     text-align: center;
     }
+    .report-buttons {
+        display: flex;
+      }
+      
+      .report-buttons button {
+        margin-right: 10px; /* Adjust as needed */
+      }
+      

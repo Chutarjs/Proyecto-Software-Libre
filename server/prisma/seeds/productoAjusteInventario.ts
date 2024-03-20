@@ -4,7 +4,7 @@ export const productoAjusteInventario = [
         ajusteInventarioId: 1,
         productoId: 1,
         cantidad: 10
-    },
+    }, 
     // Ajuste 2 
     {
         ajusteInventarioId: 2,

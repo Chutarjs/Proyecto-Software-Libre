@@ -1,6 +1,24 @@
 <div class="grid-container">
     <mat-card>
     <mat-card-header><h1 class="mat-h1">Productos</h1></mat-card-header>
+    <div class="report-buttons">
+      <button mat-button color="primary" (click)="reporteProductos()">
+        <mat-icon>description</mat-icon>
+        <span>Todos</span>
+      </button>
+      <button mat-button color="primary" (click)="reporteProductosExcede()">
+        <mat-icon>description</mat-icon>
+        <span>Excedidos</span>
+      </button>
+      <button mat-button color="primary" (click)="reporteProductosFalta()">
+        <mat-icon>description</mat-icon>
+        <span>Falta</span>
+      </button>
+      <button mat-button color="primary" (click)="reporteProductosCorrectos()">
+        <mat-icon>description</mat-icon>
+        <span>Correctos</span>
+      </button>
+    </div>
     <mat-card-content>
     <mat-form-field class="full-width">
     <mat-label>Nombre del producto</mat-label>
@@ -47,7 +65,6 @@
                 </mat-card>
               </mat-grid-tile>
         }
-        
       </mat-grid-list>
     </div>
     

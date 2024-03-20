@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from '../../share/generic.service';
 import { Router } from '@angular/router';
+import { ImpresiónService } from '../../shared/services/impresión.service';
 
 @Component({
   selector: 'app-inventario-index',
@@ -16,7 +17,8 @@ export class InventarioIndexComponent {
 
   constructor(
     private gService: GenericService,
-    private router: Router
+    private router: Router,
+    private srvReporte: ImpresiónService
   ) {
     this.listaInventarios();
   }
@@ -43,4 +45,20 @@ export class InventarioIndexComponent {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }
+
+  reporteMovimientosDiarios() {
+    const encabezado = ["Bodega", "Producto", "Movimiento", "Cantidad"];
+    const cuerpo = this.datos.flatMap(data =>
+      data.ajusteInventario.flatMap(inventario =>
+        inventario.productos.map(producto => [
+          inventario.bodega.nombre,
+          producto.producto.nombre,
+          inventario.justificacion,
+          producto.cantidad
+        ])
+      )
+    );
+    this.srvReporte.imprimir(encabezado, cuerpo, "Reporte de Movimientos", true);
+  }
+  
 }

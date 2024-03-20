@@ -1,6 +1,12 @@
 <div class="grid-container">
     <mat-card>
     <mat-card-header><h1 class="mat-h1">Bodegas</h1></mat-card-header>
+    <div class="report-buttons">
+      <button mat-button color="primary" (click)="reporteMovimientosDiarios()">
+        <mat-icon>description</mat-icon>
+        <span>Movimientos del día</span>
+      </button>
+    </div>
     <mat-card-content>
     <mat-form-field class="full-width">
     <mat-label>Nombre de la bodega</mat-label>

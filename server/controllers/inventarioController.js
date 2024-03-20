@@ -7,10 +7,62 @@ module.exports.get =async (request,response, next)=>{
        orderBy:{
         nombre:'asc'
        } ,
-       include: {
+       include:{
         ubicacion:true,
-        encargados:true
-       }
+        encargados:true,
+        ordenesCompra:true,
+        ajusteInventario: {
+            select: {
+                id:true,
+                fecha:true,
+                bodega:true,
+                bodegaId: true,
+                usuario: true,
+                tipoMovimiento:true,
+                justificacion:true,
+                productos:{
+                    select:{
+                        ajusteInventarioId:true,
+                        producto: true,
+                        cantidad:true
+                    }
+                }
+            }
+        },
+        salidaInventario:true,
+        productos: {
+            select: {
+                producto: {
+                    select: {
+                        sku:true,
+                        nombre:true,
+                        cantidadStock:true,
+                        cantidadMinima:true,
+                        cantidadMaxima:true,
+                        subcategoria: true,
+                        ProductoAjusteInventario:{
+                            select:{
+                                producto:true,
+                                ajusteInventario:{
+                                    select:{
+                                        id:true,
+                                        fecha:true,
+                                        bodegaId:true,
+                                        bodega:true,           
+                                        usuarioId:true,
+                                        usuario:true,
+                                        tipoMovimiento:true,
+                                        justificacion:true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
     })
     response.json(bodega)
 }
@@ -25,7 +77,24 @@ module.exports.getById = async (request, response, next) => {
             ubicacion:true,
             encargados:true,
             ordenesCompra:true,
-            ajusteInventario:true,
+            ajusteInventario: {
+                select: {
+                    id:true,
+                    fecha:true,
+                    bodega:true,
+                    bodegaId: true,
+                    usuario: true,
+                    tipoMovimiento:true,
+                    justificacion:true,
+                    productos:{
+                        select:{
+                            ajusteInventarioId:true,
+                            producto: true,
+                            cantidad:true
+                        }
+                    }
+                }
+            },
             salidaInventario:true,
             productos: {
                 select: {
@@ -62,7 +131,6 @@ module.exports.getById = async (request, response, next) => {
         }
     })
     response.json(bodega)
-
 }
 //Crear un producto
 module.exports.create = async (request, response, next) => {

@@ -220,7 +220,7 @@ model AjusteInventario {
   bodega           Bodega    @relation(fields: [bodegaId], references: [id])
   usuarioId        Int
   usuario          Usuario   @relation(fields: [usuarioId], references: [id])
-  tipoMovimiento   TipoMovimiento
+  tipoMovimiento   TipoMovimiento 
   justificacion    String
   productos        ProductoAjusteInventario[]
 }
@@ -240,4 +240,4 @@ model ProductoAjusteInventario {
   cantidad         Int
 
   @@id([ajusteInventarioId, productoId])
-}
+} 
