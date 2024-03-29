@@ -2,19 +2,18 @@
   <div class="scroll-container">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>{{ datos.nombre }}</mat-card-title>
+        <mat-card-title>{{ datos[0].bodega.nombre }}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <p class="ubicacion">{{ datos.ubicacion.nombre }}</p>
+        <p class="ubicacion">{{ datos[0].bodega.ubicacion.nombre }}</p>
         <p class="ubicacion">Productos:</p>
-        @for (item of datos.productos; track item.id) {
+        @for (item of datos; track item.productoId) {
         <ul>
           <li>SKU: {{ item.producto.sku }}</li>
           <li>Nombre: {{ item.producto.nombre }}</li>
-          <li>Cantidad en Stock: {{ item.producto.cantidadStock }}</li>
-          <li>Cantidad Mínima: {{ item.producto.cantidadMinima }}</li>
-          <li>Cantidad Máxima: {{ item.producto.cantidadMaxima }}</li>
-          <li>Subcategoría: {{ item.producto.subcategoria.nombre }}</li>
+          <li>Cantidad en Stock: {{ item.cantidadStock }}</li>
+          <li>Cantidad Mínima: {{ item.cantidadMinima }}</li>
+          <li>Cantidad Máxima: {{ item.cantidadMaxima }}</li>
           <p>Ajustes:</p>
           @for (item of item.producto.ProductoAjusteInventario; track item.id){
             <p>Ajuste: {{ item.ajusteInventario.id }}</p>

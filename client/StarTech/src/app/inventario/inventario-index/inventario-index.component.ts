@@ -11,7 +11,7 @@ import { ImpresiónService } from '../../shared/services/impresión.service';
 })
 export class InventarioIndexComponent {
 
-  idUsuario = '1';
+  idUsuario = '3';
   datos: any; // Respuesta del API
   destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -49,12 +49,12 @@ export class InventarioIndexComponent {
   reporteMovimientosDiarios() {
     const encabezado = ["Bodega", "Producto", "Movimiento", "Cantidad"];
     const cuerpo = this.datos.flatMap(data =>
-      data.ajusteInventario.flatMap(inventario =>
-        inventario.productos.map(producto => [
-          inventario.bodega.nombre,
-          producto.producto.nombre,
-          inventario.justificacion,
-          producto.cantidad
+      data.bodega.ajusteInventario.flatMap(inventario =>
+        inventario.productos.map(productos => [
+          data.bodega.nombre,
+          productos.producto.nombre,
+          inventario.tipoMovimiento,
+          productos.cantidad
         ])
       )
     );

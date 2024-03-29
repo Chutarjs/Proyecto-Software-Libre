@@ -10,7 +10,18 @@ module.exports.get =async (request,response, next)=>{
             select:{
                 capacidad:true,
                 encargados:true,
-                nombre:true
+                nombre:true,
+                ajusteInventario:{
+                    select:{
+                        tipoMovimiento:true,
+                        productos:{
+                            select:{
+                                producto:true,
+                                cantidad:true
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -25,14 +36,26 @@ module.exports.getById = async (request, response, next) => {
     const inventarioBodega=await prisma.inventario.findMany({
         where: { bodegaId: idBodega },
         include:{
+            producto:true,
             bodega:{
                 select:{
+                    ubicacion:true,
                     capacidad:true,
                     encargados:true,
-                    nombre:true
+                    nombre:true,
+                    ajusteInventario:{
+                        select:{
+                            tipoMovimiento:true,
+                            productos:{
+                                select:{
+                                    producto:true,
+                                    cantidad:true
+                                }
+                            }
+                        }
+                    }
                 }
-            },
-            producto:true
+            }
         }
     })
     response.json(inventarioBodega)
