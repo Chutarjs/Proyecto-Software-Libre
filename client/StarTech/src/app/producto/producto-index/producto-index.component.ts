@@ -23,6 +23,17 @@ export class ProductoIndexComponent {
     {
     this.listaProductos()
   }
+  actualizarProducto(id: number) {
+    // this.router.navigate(['/producto/update', id], {
+    //   relativeTo: this.route,
+    // });
+  }
+
+  crearProducto() {
+    // this.router.navigate(['/videojuego/create'], {
+    //   relativeTo: this.route,
+    // });
+  }
   //Listar todos los videojuegos llamando al API
   listaProductos(){
     //localhost:3000/videojuego

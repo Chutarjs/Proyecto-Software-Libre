@@ -1,7 +1,11 @@
 <div class="grid-container">
     <mat-card>
-    <mat-card-header><h1 class="mat-h1">Productos</h1></mat-card-header>
+    <mat-card-header>
+      <h1 class="mat-h1">Productos</h1>
+    </mat-card-header>
+    
     <div class="report-buttons">
+      
       <button mat-button color="primary" (click)="reporteProductos()">
         <mat-icon>description</mat-icon>
         <span>Todos</span>
@@ -18,6 +22,17 @@
         <mat-icon>description</mat-icon>
         <span>Correctos</span>
       </button>
+      <mat-card-subtitle>  
+        <a
+        mat-mini-fab
+          matTooltip="Crear Producto"
+          aria-label="Crear Producto"
+          color="primary"
+          (click)="crearProducto()"
+        >
+          <mat-icon>add</mat-icon>
+        </a>
+      </mat-card-subtitle>
     </div>
     <mat-card-content>
     <mat-form-field class="full-width">
