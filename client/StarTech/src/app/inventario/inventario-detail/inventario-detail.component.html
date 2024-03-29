@@ -15,7 +15,7 @@
           <li>Cantidad Mínima: {{ item.cantidadMinima }}</li>
           <li>Cantidad Máxima: {{ item.cantidadMaxima }}</li>
           <p>Ajustes:</p>
-          @for (item of item.producto.ProductoAjusteInventario; track item.id){
+          @for (item of item.producto.ProductoAjusteInventario; track item.ajusteInventarioId){
             <p>Ajuste: {{ item.ajusteInventario.id }}</p>
             <ul>
               <li>Tipo de Movimiento: {{ item.ajusteInventario.tipoMovimiento }}</li>
