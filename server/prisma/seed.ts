@@ -12,6 +12,7 @@ import { encargadoBodega } from './seeds/encargadoBodega';
 import { productoBodega } from './seeds/productoBodega';
 import { ajusteInventario } from './seeds/ajusteInventario';
 import { productoAjusteInventario } from './seeds/productoAjusteInventario';
+import { inventario } from './seeds/inventario';
 
 
 const prisma = new PrismaClient();
@@ -58,10 +59,7 @@ const main = async () => {
         costoUnitario: 500.00,
         subcategoriaId: 1,
         mesesGarantia: 3,
-        estado: 'Nueva',
-        cantidadStock: 30,
-        cantidadMinima: 5,
-        cantidadMaxima: 100
+        estado: 'Nueva'
       },
     });
 
@@ -75,10 +73,7 @@ const main = async () => {
           costoUnitario: 300.00,
           subcategoriaId: 2,
           mesesGarantia: 4,
-          estado: 'Nueva',
-          cantidadStock: 40,
-          cantidadMinima: 3,
-          cantidadMaxima: 130
+          estado: 'Nueva'
         },
       });
 
@@ -92,10 +87,7 @@ const main = async () => {
           costoUnitario: 550.00,
           subcategoriaId: 3,
           mesesGarantia: 2,
-          estado: 'Nueva',
-          cantidadStock: 10,
-          cantidadMinima: 2,
-          cantidadMaxima: 200
+          estado: 'Nueva'
         },
       });
       await prisma.producto.create({
@@ -108,10 +100,7 @@ const main = async () => {
           costoUnitario: 480.00,
           subcategoriaId: 4,
           mesesGarantia: 7,
-          estado: 'Nueva',
-          cantidadStock: 80,
-          cantidadMinima: 15,
-          cantidadMaxima: 90
+          estado: 'Nueva'
         },
       });
       await prisma.producto.create({
@@ -124,10 +113,7 @@ const main = async () => {
           costoUnitario: 700.00,
           subcategoriaId: 5,
           mesesGarantia: 12,
-          estado: 'Nueva',
-          cantidadStock: 10,
-          cantidadMinima: 5,
-          cantidadMaxima: 150
+          estado: 'Nueva'
         },
       });
       await prisma.producto.create({
@@ -140,10 +126,7 @@ const main = async () => {
           costoUnitario: 320.00,
           subcategoriaId: 6,
           mesesGarantia: 10,
-          estado: 'Nueva',
-          cantidadStock: 40,
-          cantidadMinima: 4,
-          cantidadMaxima: 120
+          estado: 'Nueva'
         },
       });
     //Productos en bodegas
@@ -165,6 +148,10 @@ const main = async () => {
     //producto ajuste inventario
     await prisma.productoAjusteInventario.createMany({
       data: productoAjusteInventario,
+    });
+    //inventario
+    await prisma.inventario.createMany({
+      data: inventario,
     });
 
   } catch (error) {

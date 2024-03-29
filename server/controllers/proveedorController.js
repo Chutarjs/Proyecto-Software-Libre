@@ -26,7 +26,6 @@ module.exports.getById = async (request, response, next) => {
         }
     })
     response.json(proveedor)
-
 }
 
 //Crear un proveedor

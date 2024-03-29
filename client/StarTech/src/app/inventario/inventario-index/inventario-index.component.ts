@@ -32,7 +32,7 @@ export class InventarioIndexComponent {
         // Filtrar la lista de inventarios para que incluya solo aquellos que tengan al usuario como encargado
         this.datos = data.filter((inventario: any) => {
           // Verificar si el usuario está como encargado en alguna de las bodegas del inventario
-          return inventario.encargados.some((encargado: any) => encargado.usuarioId == this.idUsuario);
+          return inventario.bodega.encargados.some((encargado: any) => encargado.usuarioId == this.idUsuario);
         });
       });
   }

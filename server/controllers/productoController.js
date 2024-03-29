@@ -34,9 +34,8 @@ module.exports.get =async (request,response, next)=>{
         ...producto,
         estado: determinarEstado(producto.cantidadStock, producto.cantidadMinima, producto.cantidadMaxima)
     }));
-
-    response.json(productosConEstado);
-}
+        response.json(productosConEstado);
+    }
 //Obtener por Id
 //localhost:3000/producto/2
 module.exports.getById = async (request, response, next) => {
@@ -45,7 +44,12 @@ module.exports.getById = async (request, response, next) => {
     const producto=await prisma.producto.findUnique({
         where: { id: idProducto },
         include:{
-            subcategoria:true,
+            subcategoria:{
+                select:{
+                    nombre:true,
+                    categoria:true
+                }
+            },
         }
     })
     response.json(producto)

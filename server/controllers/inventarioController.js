@@ -3,138 +3,51 @@ const prisma = new PrismaClient();
 
 //Listar todos los productos
 module.exports.get =async (request,response, next)=>{
-    const bodega= await prisma.bodega.findMany({
-       orderBy:{
-        nombre:'asc'
-       } ,
+    const inventario = await prisma.inventario.findMany({
        include:{
-        ubicacion:true,
-        encargados:true,
-        ordenesCompra:true,
-        ajusteInventario: {
-            select: {
-                id:true,
-                fecha:true,
-                bodega:true,
-                bodegaId: true,
-                usuario: true,
-                tipoMovimiento:true,
-                justificacion:true,
-                productos:{
-                    select:{
-                        ajusteInventarioId:true,
-                        producto: true,
-                        cantidad:true
-                    }
-                }
-            }
-        },
-        salidaInventario:true,
-        productos: {
-            select: {
-                producto: {
-                    select: {
-                        sku:true,
-                        nombre:true,
-                        cantidadStock:true,
-                        cantidadMinima:true,
-                        cantidadMaxima:true,
-                        subcategoria: true,
-                        ProductoAjusteInventario:{
-                            select:{
-                                producto:true,
-                                ajusteInventario:{
-                                    select:{
-                                        id:true,
-                                        fecha:true,
-                                        bodegaId:true,
-                                        bodega:true,           
-                                        usuarioId:true,
-                                        usuario:true,
-                                        tipoMovimiento:true,
-                                        justificacion:true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                
+        producto:true,
+        bodega:{
+            select:{
+                capacidad:true,
+                encargados:true,
+                nombre:true
             }
         }
     }
     })
-    response.json(bodega)
+    response.json(inventario)
 }
 //Obtener por Id
 //localhost:3000/producto/2
 module.exports.getById = async (request, response, next) => {
     //Parámetro con el id del videojuego
     let idBodega=parseInt(request.params.id)
-    const bodega=await prisma.bodega.findUnique({
-        where: { id: idBodega },
+    const inventarioBodega=await prisma.inventario.findMany({
+        where: { bodegaId: idBodega },
         include:{
-            ubicacion:true,
-            encargados:true,
-            ordenesCompra:true,
-            ajusteInventario: {
-                select: {
-                    id:true,
-                    fecha:true,
-                    bodega:true,
-                    bodegaId: true,
-                    usuario: true,
-                    tipoMovimiento:true,
-                    justificacion:true,
-                    productos:{
-                        select:{
-                            ajusteInventarioId:true,
-                            producto: true,
-                            cantidad:true
-                        }
-                    }
+            bodega:{
+                select:{
+                    capacidad:true,
+                    encargados:true,
+                    nombre:true
                 }
             },
-            salidaInventario:true,
-            productos: {
-                select: {
-                    producto: {
-                        select: {
-                            sku:true,
-                            nombre:true,
-                            cantidadStock:true,
-                            cantidadMinima:true,
-                            cantidadMaxima:true,
-                            subcategoria: true,
-                            ProductoAjusteInventario:{
-                                select:{
-                                    producto:true,
-                                    ajusteInventario:{
-                                        select:{
-                                            id:true,
-                                            fecha:true,
-                                            bodegaId:true,
-                                            bodega:true,           
-                                            usuarioId:true,
-                                            usuario:true,
-                                            tipoMovimiento:true,
-                                            justificacion:true
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                }
-            }
+            producto:true
         }
     })
-    response.json(bodega)
+    response.json(inventarioBodega)
 }
-//Crear un producto
+//Crear un inventario
 module.exports.create = async (request, response, next) => {
+    //insertar en una bodega un producto (con su cantidad), validando que el producto no supere la cantidad minima y maxima de existencias
+    
 };
 //Actualizar un producto
 module.exports.update = async (request, response, next) => {
+    //Modificar inventario: el usuario de poder actualizar el inventario seleccionado, precargado toda la información solicitada,
+    //con los valores iniciales correctos y actualizar todos los aspectos antes listados en crear, además de los siguientes aspectos:
+    //• Cantidad de producto disponible: no editable al actualizar
+    //• Usuario que realizo el registro: al actualizar no se debe realizar ningún cambio en este campo
+    //• Usuario que actualizó por última vez: asigne otro usuario por defecto, diferente al que registro
+
 };

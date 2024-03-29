@@ -43,11 +43,9 @@ model Producto {
   //dos características extra
   mesesGarantia    Int?
   estado  String?
-  cantidadStock    Int       @default(0)
-  cantidadMinima   Int
-  cantidadMaxima   Int
 
   //FKs
+  Inventario Inventario[]
   Bodegas ProductoBodega[]
   ProductoSalidaInventario ProductoSalidaInventario[]
   ProductoOrdenCompra ProductoOrdenCompra[]
@@ -96,7 +94,7 @@ model Bodega {
   capacidad        Int
   activa           Boolean
 
-  // Eliminamos el campo encargados
+  Inventario       Inventario[]
   encargados       EncargadoBodega[]
   productos        ProductoBodega[]
   ordenesCompra    OrdenCompra[]
@@ -241,3 +239,15 @@ model ProductoAjusteInventario {
 
   @@id([ajusteInventarioId, productoId])
 } 
+
+model Inventario{
+  bodega Bodega @relation(fields: [bodegaId], references: [id])
+  bodegaId Int
+  producto Producto @relation(fields: [productoId], references: [id])
+  productoId Int
+  cantidadStock    Int       @default(0)
+  cantidadMinima   Int
+  cantidadMaxima   Int
+
+  @@id([bodegaId, productoId])
+}

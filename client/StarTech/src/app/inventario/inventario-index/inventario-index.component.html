@@ -1,6 +1,6 @@
 <div class="grid-container">
     <mat-card>
-    <mat-card-header><h1 class="mat-h1">Bodegas</h1></mat-card-header>
+    <mat-card-header><h1 class="mat-h1">Inventario</h1></mat-card-header>
     <div class="report-buttons">
       <button mat-button color="primary" (click)="reporteMovimientosDiarios()">
         <mat-icon>description</mat-icon>
@@ -17,16 +17,16 @@
     </mat-form-field> 
     </mat-card-content>
     </mat-card>
-    <mat-grid-list [cols]="3" rowHeight="15em" gutterSize="10px">
-        @for(item of datos; track item.id){
+    <mat-grid-list [cols]="4" rowHeight="15em" gutterSize="10px">
+        @for(item of datos; track item.bodegaId){
             <mat-grid-tile>
                 <mat-card class="dashboard-card">
                   <mat-card-header class="dashboard-card-header">
-                    <mat-card-title>{{item.nombre}} </mat-card-title>
+                    <mat-card-title>{{item.bodega.nombre}} </mat-card-title>
                   </mat-card-header>
                   <mat-card-content class="dashboard-card-content">
-                    @if(item.ubicacion){
-                    <div class="ubicacion">{{item.ubicacion.nombre}}</div>
+                    @if(item.producto){
+                    <div class="producto">{{item.producto.nombre}}</div>
                     }
                   </mat-card-content>
                   <mat-divider inset></mat-divider>
