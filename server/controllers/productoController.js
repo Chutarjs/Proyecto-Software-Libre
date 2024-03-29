@@ -54,7 +54,59 @@ module.exports.getById = async (request, response, next) => {
 
 //Crear un producto
 module.exports.create = async (request, response, next) => {
+    let body=request.body;
+    const nuevoProducto= await prisma.producto.create({
+        data:{
+           sku: body.sku,  
+           nombre: body.nombre,
+           descripcion: body.descripcion,
+           costoUnitario: body.costoUnitario,
+           mesesGarantia: body.mesesGarantia,
+           estado: body.estado,
+           cantidadStock: body.cantidadStock,
+           cantidadMinima: body.cantidadMinima,
+           cantidadMaxima: body.cantidadMaxima,
+           subcategoria:{
+            connect: body.subcategoria
+           }
+        }
+    })
+    response.json(nuevoProducto)
 };
 //Actualizar un producto
 module.exports.update = async (request, response, next) => {
+    let producto = request.body;
+    let idProducto = parseInt(request.params.id);
+    //Obtener producto viejo
+    const productoViejo = await prisma.producto.findUnique({
+      where: { id: idProducto },
+      include: {
+        subcategoria: {
+          select:{
+            id:true
+          }
+        }
+      }
+    });
+  
+    const newProducto = await prisma.producto.update({
+      where: {
+        id: idProducto,
+      },
+      data:{
+        sku: body.sku,  
+        nombre: body.nombre,
+        descripcion: body.descripcion,
+        costoUnitario: body.costoUnitario,
+        mesesGarantia: body.mesesGarantia,
+        estado: body.estado,
+        cantidadStock: body.cantidadStock,
+        cantidadMinima: body.cantidadMinima,
+        cantidadMaxima: body.cantidadMaxima,
+        subcategoria:{
+         connect: body.subcategoria
+        }
+     }
+    });
+    response.json(newProducto);
 };
