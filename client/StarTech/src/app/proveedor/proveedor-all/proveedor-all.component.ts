@@ -5,15 +5,15 @@ import { MatSort } from '@angular/material/sort';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from '../../share/generic.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { InventarioDiagComponent } from '../inventario-diag/inventario-diag.component';
+import { ProveedorDiagComponent } from '../proveedor-diag/proveedor-diag.component';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-inventario-all',
-  templateUrl: './inventario-all.component.html',
-  styleUrl: './inventario-all.component.css'
+  selector: 'app-proveedor-all',
+  templateUrl: './proveedor-all.component.html',
+  styleUrl: './proveedor-all.component.css'
 })
-export class InventarioAllComponent implements AfterViewInit {
+export class ProveedorAllComponent implements AfterViewInit {
   datos: any
   destroy$: Subject<boolean>=new Subject<boolean>()
   
@@ -23,7 +23,7 @@ export class InventarioAllComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['bodega','producto','acciones'];
+  displayedColumns = ['nombre', 'direccion', 'contacto','acciones'];
 
   constructor(private router:Router,
     private route:ActivatedRoute,
@@ -32,12 +32,12 @@ export class InventarioAllComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.listaBodegas()
+    this.listaProveedores()
   }
   //Listar todos los videojuegos llamando al API
-  listaBodegas(){
+  listaProveedores(){
     //localhost:3000/videojuego
-    this.gService.list('inventario/')
+    this.gService.list('proveedor/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data)=>{
         console.log(data)
@@ -48,24 +48,15 @@ export class InventarioAllComponent implements AfterViewInit {
         
       })
   }
-  detalleBodega(id:number){
-    const dialogConfig=new MatDialogConfig()
-    dialogConfig.disableClose=false;
-    dialogConfig.width='50%'
-    dialogConfig.data={
-      id:id
-    }
-    this.dialog.open(InventarioDiagComponent,dialogConfig)
-    
-  }
-  actualizarInventario(id: number) {
-    this.router.navigate(['/inventario/update', id], {
+
+  actualizarProveedor(id: number) {
+    this.router.navigate(['/proveedor/update', id], {
       relativeTo: this.route,
     });
   }
 
-  crearInventario() {
-    this.router.navigate(['/inventario/create'], {
+  crearProveedor() {
+    this.router.navigate(['/proveedor/create'], {
       relativeTo: this.route,
     });
   }

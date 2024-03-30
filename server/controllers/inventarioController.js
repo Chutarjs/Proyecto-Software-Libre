@@ -10,6 +10,7 @@ module.exports.get =async (request,response, next)=>{
             select:{
                 capacidad:true,
                 encargados:true,
+                ubicacion:true,
                 nombre:true,
                 ajusteInventario:{
                     select:{

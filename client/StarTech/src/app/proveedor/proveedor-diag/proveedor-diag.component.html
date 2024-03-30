@@ -1,0 +1,21 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+@if(datos){
+<div> 
+  <h2 mat-dialog-title class="dialog-headline">{{ datos.nombre }}</h2>
+
+  <mat-dialog-content class="content">
+    <p>{{ datos.descripcion }}</p>
+    <p class="price">{{ datos.precioUnitario | currency : "USD" }}</p>
+    @if(datos.subcategoria){
+      <mat-chip-listbox aria-label="Categorias">
+        @for (item of datos.subcategoria; track item.id) {
+          <mat-chip-option color="accent" selected> {{item.nombre}}</mat-chip-option>
+        }
+        
+      </mat-chip-listbox>       
+    }
+  </mat-dialog-content>
+</div>
+}

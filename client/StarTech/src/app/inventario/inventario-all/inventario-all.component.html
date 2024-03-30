@@ -1,16 +1,21 @@
 <mat-card class="full-width">
   <!-- Titulo del Card -->
+  <mat-card-header>
   <mat-card-title>
   Inventario
-  <a
-  mat-fab
-  matTooltip="Crear bodega"
-  aria-label="Crear bodega"
-  color="primary"
-  >
-  <mat-icon>add</mat-icon>
-  </a>
+  <mat-card-subtitle>  
+    <a
+    mat-mini-fab
+    matTooltip="Crear Inventario"
+    aria-label="Crear Inventario"
+      color="primary"
+      (click)="crearInventario()"
+    >
+      <mat-icon>add</mat-icon>
+    </a>
+  </mat-card-subtitle>
   </mat-card-title>
+</mat-card-header>
   <mat-card-content>
 <!-- Table -->
 <div class="mat-elevation-z8">
@@ -18,15 +23,15 @@
   [dataSource]="dataSource"
   matSort aria-label="Elements">
     <!-- Nombre Column -->
-    <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
-      <td mat-cell *matCellDef="let row">{{ row.nombre }}</td>
+    <ng-container matColumnDef="bodega">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Bodega</th>
+      <td mat-cell *matCellDef="let row">{{ row.bodega.nombre }}</td>
     </ng-container>
 
     <!-- Precio Column -->
-    <ng-container matColumnDef="ubicacion">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ubicacion</th>
-      <td mat-cell *matCellDef="let row">{{ row.ubicacion.nombre }}</td>
+    <ng-container matColumnDef="producto">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Producto</th>
+      <td mat-cell *matCellDef="let row">{{ row.producto.nombre }}</td>
     </ng-container>
 
      <!-- Acciones Column -->
@@ -36,22 +41,12 @@
         <button
         mat-mini-fab
         color="accent"
-        matTooltip="Actualizar bodega"
-        aria-label="Actualizar bodega"
+        matTooltip="Actualizar inventario"
+        aria-label="Actualizar inventario"
         color="primary"
         >
           <mat-icon class="mat-18">edit</mat-icon>
         </button>
-        <button 
-        mat-mini-fab
-        color="accent"
-        matTooltip="Detalle bodega"
-        aria-label="Detalle bodega"
-        color="primary"
-        
-      >
-      <mat-icon class="mat-18">info</mat-icon>
-    </button>
       </td>
     </ng-container>
 
