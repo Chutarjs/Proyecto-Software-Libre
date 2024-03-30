@@ -11,6 +11,8 @@ const productoRouter = require("./routes/productoRoutes");
 const inventarioRouter = require("./routes/inventarioRoutes");
 const ordenCompraRouter = require("./routes/ordenCompraRoutes");
 const proveedorRouter = require("./routes/proveedorRoutes");
+const categoriaRoutes = require("./routes/categoriaRoutes");
+const subcategoriaRoutes = require("./routes/subcategoriaRoutes");
 
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
@@ -34,6 +36,8 @@ app.use("/inventario/", inventarioRouter);
 app.use("/orden/", ordenCompraRouter);
 app.use("/ordenCompra/", ordenCompraRouter);
 app.use("/proveedor/", proveedorRouter);
+app.use("/categoria/", categoriaRoutes);
+app.use("/subcategoria/", subcategoriaRoutes);
 
 // Servidor
 app.listen(port, () => { 

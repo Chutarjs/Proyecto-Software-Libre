@@ -21,6 +21,7 @@ import { ProductoDetailComponent } from './producto-detail/producto-detail.compo
 import { ProductoAllComponent } from './producto-all/producto-all.component';
 import { ProductoDiagComponent } from './producto-diag/producto-diag.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProductoFormComponent } from './producto-form/producto-form.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ProductoIndexComponent,
     ProductoDetailComponent,
     ProductoAllComponent,
-    ProductoDiagComponent
+    ProductoDiagComponent,
+    ProductoFormComponent
   ],
   imports: [
     CommonModule,

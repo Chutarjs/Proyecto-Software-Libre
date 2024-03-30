@@ -1,0 +1,110 @@
+<form [formGroup]="productoForm" (ngSubmit)="submitProducto()"  novalidate >
+  <input type="hidden" formControlName="id" />
+  <mat-card class="shipping-card"> 
+    <mat-card-header>
+      <mat-card-title>{{titleForm}} Producto</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="nombre" maxlength="20" placeholder="Nombre" >
+            <mat-hint align="end"> / 20</mat-hint>
+            @if (errorHandling('nombre')) {
+              <mat-error>
+                {{errorHandling('nombre')}}
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="descripcion" placeholder="Descripción" >
+            @if (errorHandling('descripcion')) {
+              <mat-error>
+                {{errorHandling('descripcion')}}
+              </mat-error>
+            }
+            
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="precio" placeholder="Precio" >
+            @if (errorHandling('precio')) {
+              <mat-error>
+                {{errorHandling('precio')}}
+              </mat-error>
+            }
+            
+          </mat-form-field>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col" *ngIf="categoriasList">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="categorias" formControlName="categorias" multiple>
+              @for (item of categoriasList; track item.id) {
+                <mat-option [value]="item.id">
+                  {{item.nombre}}
+              </mat-option>
+            }
+              
+            </mat-select>
+            @if (errorHandling('categorias')) {
+              <mat-error>
+                {{errorHandling('categorias')}}
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col" *ngIf="subcategoriasList">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Subcategorias" formControlName="subcategorias" multiple>
+              @for (item of subcategoriasList; track item.id) {
+                <mat-option [value]="item.id">
+                  {{item.nombre}}
+              </mat-option>
+            }
+              
+            </mat-select>
+            @if (errorHandling('subcategorias')) {
+              <mat-error>
+                {{errorHandling('subcategorias')}}
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-label>Publicar</mat-label>
+          <mat-radio-group formControlName="publicar">
+            <mat-radio-button [value]="true">Sí</mat-radio-button>
+            <mat-radio-button [value]="false">No</mat-radio-button>
+          </mat-radio-group>
+          @if (errorHandling('publicar')) {
+            <mat-error>
+              {{errorHandling('publicar')}}
+            </mat-error>
+          }
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="example-button-row">
+      <button mat-raised-button color="warn" (click)="onReset()">Reset</button>
+      <button mat-raised-button color="primary" (click)="onBack()">Regresar</button>
+      <button mat-raised-button color="accent" type="submit">Guardar</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>
