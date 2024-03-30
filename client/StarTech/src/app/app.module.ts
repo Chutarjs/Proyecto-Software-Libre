@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { ShareModule } from './share/share.module';
+import { ToastrModule } from 'ngx-toastr';
 import { HomeModule } from './home/home.module';
 import { UserModule } from './user/user.module';
 import { ProductoModule } from './producto/producto.module';
@@ -29,6 +30,9 @@ import { ProveedorModule } from './proveedor/proveedor.module';
     InventarioModule,
     OrdenModule,
     ProveedorModule,
+    ToastrModule.forRoot({
+      positionClass :'toast-bottom-right'
+    }),
     // al final el gestor de las rutas principal
     AppRoutingModule,
   ],

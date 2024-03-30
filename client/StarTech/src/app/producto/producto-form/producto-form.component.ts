@@ -61,9 +61,7 @@ export class ProductoFormComponent implements OnInit {
             this.productoForm.setValue({
               id: this.productoInfo.id,
               nombre: this.productoInfo.nombre,
-              descripcion: this.productoInfo.descripcion,
-              precio: this.productoInfo.precio,
-              publicar: this.productoInfo.publicar,
+              precio: this.productoInfo.costoUnitario,
               categorias: this.productoInfo.categorias.map(({id})=>id),
               subcategorias: this.productoInfo.subcategorias.map(({id})=>id)
             })
@@ -119,9 +117,10 @@ export class ProductoFormComponent implements OnInit {
   public errorHandling = (controlName: string) => {
     let messageError=''
     const control = this.productoForm.get(controlName);
+    console.log(control.errors)
     if(control.errors){
       for (const message of FormErrorMessage) {
-      
+        console.log(message)
         if (control &&
             control.errors[message.forValidator] &&
             message.forControl==controlName) {
