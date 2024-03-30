@@ -164,8 +164,8 @@ export class ProductoFormComponent implements OnInit {
           this.noti.mensajeRedirect('Crear Videojuego', 
           `Videojuego creado: ${data.nombre}`,
           TipoMessage.success,
-          'videojuego-table')
-           this.router.navigate(['/videojuego-table']); 
+          'producto-table')
+           this.router.navigate(['/producto-table']); 
         }); 
     } else {
       //Accion API actualizar enviando toda la informacion del formulario

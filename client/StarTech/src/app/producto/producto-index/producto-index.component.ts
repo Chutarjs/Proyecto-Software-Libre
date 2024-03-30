@@ -30,7 +30,7 @@ export class ProductoIndexComponent {
   }
 
   crearProducto() {
-    // this.router.navigate(['/videojuego/create'], {
+    // this.router.navigate(['/producto/create'], {
     //   relativeTo: this.route,
     // });
   }
@@ -61,7 +61,7 @@ export class ProductoIndexComponent {
     this.srvReporte.imprimirTabla(encabezado, cuerpo, "Reporte de Productos Correctos de Stock", true);
   }
   
-  reporteProductosFalta(){
+  reporteProductosFalta(){ 
     const encabezado = ["ID", "SKU", "Nombre", "Cantidad en Stock", "Estado"];
     const cuerpo = this.datos
     .filter(producto => producto.estado == 'Falta Stock')
