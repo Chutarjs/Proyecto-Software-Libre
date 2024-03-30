@@ -13,6 +13,14 @@
       <button mat-menu-item [routerLink]="['/producto']" routerLinkActive="link-active" >Producto</button>
       <button mat-menu-item [routerLink]="['/inventario']" routerLinkActive="link-active" >Inventario</button>
       <button mat-menu-item [routerLink]="['/orden']" routerLinkActive="link-active" >Ordenes</button>
+      <button mat-menu-item  [matMenuTriggerFor]="menu2"
+      routerLinkActive="link-active">
+      Mantenimientos
+    </button>
+    <mat-menu #menu2="matMenu">
+      <button mat-menu-item  [routerLink]="'/producto-table'" [routerLinkActive]="'link-active'">Productos</button>
+      <button mat-menu-item [routerLink]="'/orden'" [routerLinkActive]="'link-active'">Proveedor</button>
+    </mat-menu>
     </mat-menu>
     <!--enlaces de la app-->
     <!-- https://fonts.google.com/icons -->

@@ -2,7 +2,9 @@
   width: 100%;
   }
   .header-row {
-  background-color: #7cb342
+  background-color: #7cb342;
+  font-size: 1em;
+  font-weight: 600;
   }
   mat-card-title{
     font-size: 1.5em;

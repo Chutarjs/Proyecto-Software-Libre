@@ -20,7 +20,7 @@ import { ProductoIndexComponent } from './producto-index/producto-index.componen
 import { ProductoDetailComponent } from './producto-detail/producto-detail.component';
 import { ProductoAllComponent } from './producto-all/producto-all.component';
 import { ProductoDiagComponent } from './producto-diag/producto-diag.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -47,6 +47,7 @@ import { ProductoDiagComponent } from './producto-diag/producto-diag.component';
     MatSelectModule,
     MatRadioModule,
     MatChipsModule,
+    ReactiveFormsModule, //Gestionar Formularios
   ]
 })
 export class ProductoModule { }
