@@ -67,9 +67,6 @@ module.exports.create = async (request, response, next) => {
            costoUnitario: body.costoUnitario,
            mesesGarantia: body.mesesGarantia,
            estado: body.estado,
-           cantidadStock: body.cantidadStock,
-           cantidadMinima: body.cantidadMinima,
-           cantidadMaxima: body.cantidadMaxima,
            subcategoria:{
             connect: body.subcategoria
            }
@@ -104,9 +101,6 @@ module.exports.update = async (request, response, next) => {
         costoUnitario: body.costoUnitario,
         mesesGarantia: body.mesesGarantia,
         estado: body.estado,
-        cantidadStock: body.cantidadStock,
-        cantidadMinima: body.cantidadMinima,
-        cantidadMaxima: body.cantidadMaxima,
         subcategoria:{
          connect: body.subcategoria
         }

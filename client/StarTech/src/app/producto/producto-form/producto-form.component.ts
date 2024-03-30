@@ -77,20 +77,22 @@ export class ProductoFormComponent implements OnInit {
     this.productoForm=this.fb.group({
       //identificador
       id:[null,null],
+      sku:[null, Validators.compose([
+        Validators.required
+      ])],
       nombre:[null,Validators.compose([
         Validators.required,
         Validators.minLength(2) 
-      ])        
-      ],
+      ])],
       descripcion:[null,Validators.required],
-      precio: [null,
+      costoUnitario: [null,
         Validators.compose([
           Validators.required,
           Validators.pattern('^[0-9]+[.,]{1,1}\[0-9]{2,2}$')
-      ]) 
-      ],
-      publicar: [true,Validators.required],
-      generos: [null,Validators.required]      
+      ])],
+      mesesGarantia:[null, Validators.required],
+      estado:[null, Validators.required],
+      subcategoria: [null,Validators.required]      
     })
   }
   listaCategorias() {
@@ -99,7 +101,7 @@ export class ProductoFormComponent implements OnInit {
       .list('categoria')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        // console.log(data);
+        console.log(data);
         this.categoriasList = data;
       }); 
   }  
@@ -117,7 +119,6 @@ export class ProductoFormComponent implements OnInit {
   public errorHandling = (controlName: string) => {
     let messageError=''
     const control = this.productoForm.get(controlName);
-    console.log(control.errors)
     if(control.errors){
       for (const message of FormErrorMessage) {
         console.log(message)
@@ -160,10 +161,10 @@ export class ProductoFormComponent implements OnInit {
         .subscribe((data: any) => {
           //Obtener respuesta
           this.respProducto = data;
-          this.noti.mensajeRedirect('Crear Videojuego', 
-          `Videojuego creado: ${data.nombre}`,
+          this.noti.mensajeRedirect('Crear Producto', 
+          `Producto creado: ${data.nombre}`,
           TipoMessage.success,
-          'producto-table')
+          '-table')
            this.router.navigate(['/producto-table']); 
         }); 
     } else {
