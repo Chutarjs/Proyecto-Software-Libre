@@ -1,0 +1,56 @@
+<form [formGroup]="inventarioForm" (ngSubmit)="submitInventario()"  novalidate >
+  <input type="hidden" />
+  <mat-card class="shipping-card"> 
+    <mat-card-header>
+      <mat-card-title>{{titleForm}} Producto</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col" *ngIf="bodegasList">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Bodegas" formControlName="bodegas" single>
+              @for (item of bodegasList; track item.id) {
+                <mat-option [value]="item.id">
+                  {{item.nombre}}
+              </mat-option>
+            }
+              
+            </mat-select>
+            @if (errorHandling('bodegas')) {
+              <mat-error>
+                {{errorHandling('bodegas')}}
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col" *ngIf="productosList">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Productos" formControlName="productos" single>
+              @for (item of productosList; track item.id) {
+                <mat-option [value]="item.id">
+                  {{item.nombre}}
+              </mat-option>
+            }
+              
+            </mat-select>
+            @if (errorHandling('productos')) {
+              <mat-error>
+                {{errorHandling('productos')}}
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="example-button-row">
+      <button mat-raised-button color="warn" (click)="onReset()">Reset</button>
+      <button mat-raised-button color="primary" (click)="onBack()">Regresar</button>
+      <button mat-raised-button color="accent" type="submit">Guardar</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>

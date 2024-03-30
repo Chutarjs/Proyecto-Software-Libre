@@ -20,6 +20,8 @@ import { InventarioIndexComponent } from './inventario-index/inventario-index.co
 import { InventarioDetailComponent } from './inventario-detail/inventario-detail.component';
 import { InventarioAllComponent } from './inventario-all/inventario-all.component';
 import { InventarioDiagComponent } from './inventario-diag/inventario-diag.component';
+import { InventarioFormComponent } from './inventario-form/inventario-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { InventarioDiagComponent } from './inventario-diag/inventario-diag.compo
     InventarioIndexComponent,
     InventarioDetailComponent,
     InventarioAllComponent,
-    InventarioDiagComponent
+    InventarioDiagComponent,
+    InventarioFormComponent
   ],
   imports: [
     CommonModule,
@@ -46,6 +49,7 @@ import { InventarioDiagComponent } from './inventario-diag/inventario-diag.compo
     MatSelectModule,
     MatRadioModule,
     MatChipsModule,
+    ReactiveFormsModule, //Gestionar Formularios
   ]
 })
 export class InventarioModule { } 

@@ -76,7 +76,21 @@ module.exports.getById = async (request, response, next) => {
 //Crear un inventario
 module.exports.create = async (request, response, next) => {
     //insertar en una bodega un producto (con su cantidad), validando que el producto no supere la cantidad minima y maxima de existencias
-    
+    let body=request.body;
+    const nuevoInventario= await prisma.inventario.create({
+        data:{
+           cantidadStock: body.cantidadStock,
+           cantidadMaxima: body.cantidadMaxima,
+           cantidadMinima: body.cantidadMinima,
+           bodega:{
+            connect: body.bodega
+           },
+           producto:{
+            connect: body.producto
+           }
+        }
+    })
+    response.json(nuevoInventario)
 };
 //Actualizar un producto
 module.exports.update = async (request, response, next) => {
@@ -85,5 +99,30 @@ module.exports.update = async (request, response, next) => {
     //• Cantidad de producto disponible: no editable al actualizar
     //• Usuario que realizo el registro: al actualizar no se debe realizar ningún cambio en este campo
     //• Usuario que actualizó por última vez: asigne otro usuario por defecto, diferente al que registro
-
+    let inventario = request.body;
+    let idBodega = parseInt(request.params.idBodega);
+    let idProducto = parseIntr(request.params.idProducto);
+    //Obtener inventario viejo
+    const inventarioViejo = await prisma.inventario.findUnique({
+      where: { idBodega: idBodega, idProducto: idProducto }
+    });
+  
+    const newInventario = await prisma.inventario.update({
+      where: {
+        idProducto: idProducto,
+        idBodega: idBodega
+      },
+      data:{
+        cantidadStock: body.cantidadStock,
+        cantidadMaxima: body.cantidadMaxima,
+        cantidadMinima: body.cantidadMinima,
+        bodega:{
+         connect: body.bodega
+        },
+        producto:{
+         connect: body.producto
+        }
+     }
+    });
+    response.json(newInventario);
 };

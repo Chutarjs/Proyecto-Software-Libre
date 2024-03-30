@@ -9,6 +9,7 @@ const prism = new PrismaClient();
 //---Archivos de rutas---
 const productoRouter = require("./routes/productoRoutes");
 const inventarioRouter = require("./routes/inventarioRoutes");
+const bodegaRouter = require("./routes/bodegaRoutes");
 const ordenCompraRouter = require("./routes/ordenCompraRoutes");
 const proveedorRouter = require("./routes/proveedorRoutes");
 const categoriaRoutes = require("./routes/categoriaRoutes");
@@ -31,7 +32,7 @@ extended: true,
 );
 //---- Definir rutas ----
 app.use("/producto/", productoRouter);
-app.use("/bodega/", inventarioRouter);
+app.use("/bodega/", bodegaRouter);
 app.use("/inventario/", inventarioRouter);
 app.use("/orden/", ordenCompraRouter);
 app.use("/ordenCompra/", ordenCompraRouter);

@@ -43,6 +43,7 @@ import { ProveedorRoutingModule } from './proveedor-routing.module';
     MatSelectModule,
     MatRadioModule,
     MatChipsModule,
+    ReactiveFormsModule
   ]
 })
 export class ProveedorModule { }
