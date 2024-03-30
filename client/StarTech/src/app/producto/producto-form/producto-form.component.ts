@@ -75,8 +75,6 @@ export class ProductoFormComponent implements OnInit {
   formularioReactive() {
     //[null, Validators.required]
     this.productoForm=this.fb.group({
-      //identificador
-      id:[null,null],
       sku:[null, Validators.compose([
         Validators.required
       ])],
@@ -92,6 +90,7 @@ export class ProductoFormComponent implements OnInit {
       ])],
       mesesGarantia:[null, Validators.required],
       estado:[null, Validators.required],
+      categoria:[null,Validators.required],
       subcategoria: [null,Validators.required]      
     })
   }
@@ -164,7 +163,7 @@ export class ProductoFormComponent implements OnInit {
           this.noti.mensajeRedirect('Crear Producto', 
           `Producto creado: ${data.nombre}`,
           TipoMessage.success,
-          '-table')
+          'producto-table')
            this.router.navigate(['/producto-table']); 
         }); 
     } else {
