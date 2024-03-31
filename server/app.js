@@ -14,6 +14,9 @@ const ordenCompraRouter = require("./routes/ordenCompraRoutes");
 const proveedorRouter = require("./routes/proveedorRoutes");
 const categoriaRoutes = require("./routes/categoriaRoutes");
 const subcategoriaRoutes = require("./routes/subcategoriaRoutes");
+const provinciaRoutes = require("./routes/provinciaRoutes");
+const cantonRoutes = require("./routes/cantonRoutes");
+const distritoRoutes = require("./routes/distritoRoutes");
 
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
@@ -39,6 +42,10 @@ app.use("/ordenCompra/", ordenCompraRouter);
 app.use("/proveedor/", proveedorRouter);
 app.use("/categoria/", categoriaRoutes);
 app.use("/subcategoria/", subcategoriaRoutes);
+app.use("/provincia/", provinciaRoutes);
+app.use("/canton/", cantonRoutes);
+app.use("/distrito/", distritoRoutes);
+
 
 // Servidor
 app.listen(port, () => { 
