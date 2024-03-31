@@ -13,6 +13,9 @@ import { productoBodega } from './seeds/productoBodega';
 import { ajusteInventario } from './seeds/ajusteInventario';
 import { productoAjusteInventario } from './seeds/productoAjusteInventario';
 import { inventario } from './seeds/inventario';
+import { provincias } from './seeds/provincia';
+import { cantones } from './seeds/canton';
+import { distritos } from './seeds/distrito';
 
 
 const prisma = new PrismaClient();
@@ -39,7 +42,17 @@ const main = async () => {
     await prisma.bodega.createMany({
         data: bodegas,
     });
-
+    //provincias
+    await prisma.provincia.createMany({
+      data: provincias 
+    })
+    await prisma.canton.createMany({
+      data: cantones
+    })
+    await prisma.distrito.createMany({
+      data: distritos
+    })
+    
     //Proveedores 
     await prisma.proveedor.createMany({
         data: proveedores,
