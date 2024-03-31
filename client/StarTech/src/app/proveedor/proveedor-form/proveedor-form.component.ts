@@ -15,9 +15,9 @@ import { FormErrorMessage } from '../../form-error-message';
 export class ProveedorFormComponent implements OnInit {
   destroy$: Subject<boolean> = new Subject<boolean>();
   titleForm: string = 'Crear';
-  provinciasList: string[] = [];
-  cantonesList: string[] = [];
-  distritosList: string[] = [];
+  provincias: string;
+  cantones: string;
+  distritos: string;
   proveedorInfo: any;
   respProveedor: any;
   submitted = false;
@@ -35,7 +35,6 @@ export class ProveedorFormComponent implements OnInit {
     private noti: NotificacionService
   ) {
     this.formularioReactive();
-    this.listaProvincias();
 
   }
   ngOnInit(): void {
@@ -67,6 +66,9 @@ export class ProveedorFormComponent implements OnInit {
           //[5,4]
       }
     })
+    this.http.get<string>('https://ubicaciones.paginasweb.cr/provincias.json').subscribe(data => {
+      this.provincias = data;
+    });
   }
   //Crear Formulario
   formularioReactive() {
@@ -81,36 +83,42 @@ export class ProveedorFormComponent implements OnInit {
       numeroTelefono: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{8}$')])]
     })
   }
-  listaProvincias() {
-    this.http.get<any>('https://ubicaciones.paginasweb.cr/provincias.json')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        this.provinciasList = data;
-      });
+  listaProvincias(): string {
+    return this.provincias;
+  }
+  cargarCantones(provincia: string): void {
+    this.http.get<string>(`https://ubicaciones.paginasweb.cr/provincia/${provincia}/cantones.json`).subscribe(
+      data => {
+        this.cantones = data;
+      },
+      error => {
+        console.error('Error al cargar cantones:', error);
+      }
+    );
   }
 
-  cargarCantones(provincia: string) {
-    this.http.get<any>(`https://ubicaciones.paginasweb.cr/provincia/${provincia}/cantones.json`)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        this.cantonesList = data;
-      });
+  cargarDistritos(provincia: string, canton: string): void {
+    this.http.get<string>(`https://ubicaciones.paginasweb.cr/provincia/${provincia}/canton/${canton}/distritos.json`).subscribe(
+      data => {
+        this.distritos = data;
+      },
+      error => {
+        console.error('Error al cargar distritos:', error);
+      }
+    );
   }
-  cargarDistritos(canton: string) {
-    this.http.get<any>(`https://ubicaciones.paginasweb.cr/canton/${canton}/distritos.json`)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        this.distritosList = data;
-      });
+  onChangeProvincia(): void {
+    const provinciaSeleccionada = this.proveedorForm.get('provincia').value;
+    this.cargarCantones(provinciaSeleccionada);
+    this.proveedorForm.get('canton').setValue(null);
+    this.proveedorForm.get('distrito').setValue(null);
   }
-  onChangeProvincia(provincia: string) {
-    this.proveedorForm.get('canton')?.reset();
-    this.proveedorForm.get('distrito')?.reset();
-    this.cargarCantones(provincia);
-  }
-  onChangeCanton(canton: string) {
-    this.proveedorForm.get('distrito')?.reset();
-    this.cargarDistritos(canton);
+
+  onChangeCanton(): void {
+    const provinciaSeleccionada = this.proveedorForm.get('provincia').value;
+    const cantonSeleccionado = this.proveedorForm.get('canton').value;
+    this.cargarDistritos(provinciaSeleccionada, cantonSeleccionado);
+    this.proveedorForm.get('distrito').setValue(null);
   }
 
   public errorHandling = (controlName: string) => {

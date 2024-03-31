@@ -14,5 +14,15 @@ export const FormErrorMessage = [
   new ErrorMessage('costoUnitario', 'pattern', 'El precio solo acepta números con dos decimales'),
   new ErrorMessage('mesesGarantia', 'required', 'Los meses de garantia son requeridos'),
   new ErrorMessage('categoria', 'required', 'Es requerido que seleccione una categoria'),
-  new ErrorMessage('subcategoria', 'required', 'Es requerido que seleccione una subcategoria')
+  new ErrorMessage('subcategoria', 'required', 'Es requerido que seleccione una subcategoria'),
+
+
+  new ErrorMessage('bodegaId', 'required', 'La bodega es requerid1'),
+  new ErrorMessage('productoId', 'required', 'El producto es requerido'),
+  new ErrorMessage('cantidadStock', 'required', 'La cantidad en stock es requerida'),
+  new ErrorMessage('cantidadMinima', 'required', 'Es requerido que ingrese la cantidad mínima de existencias'),
+  new ErrorMessage('cantidadMinima', 'cantidadInvalida', 'La cantidad mínima debe ser menor que la máxima'),
+  new ErrorMessage('cantidadMaxima', 'required', 'Es requerido que ingrese la cantidad máxima de existencias'),
+  new ErrorMessage('cantidadMaxima', 'cantidadMaximaInvalida', 'La cantidad máxima debe ser mayor que la mínima')
+
 ];

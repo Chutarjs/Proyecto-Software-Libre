@@ -31,50 +31,44 @@
         </div>
       </div>
 
+      <!-- Dropdown de Provincias -->
       <div class="row">
         <div class="col">
-          <mat-form-field class="half-width">
-            <mat-select placeholder="Provincia" formControlName="provincia" (selectionChange)="onChangeProvincia($event.value)">
-              <mat-option *ngFor="let item of provinciasList" [value]="item">
-                {{item}}
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Provincia" formControlName="provincia" (selectionChange)="onChangeProvincia()">
+              <mat-option [value]="provincias">
+                {{ provincias }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="errorHandling('provincia')">
-              {{errorHandling('provincia')}}
-            </mat-error>
           </mat-form-field>
         </div>
       </div>
-      
+      <!-- Dropdown de Cantones -->
       <div class="row">
         <div class="col">
-          <mat-form-field class="half-width">
-            <mat-select placeholder="Cantón" formControlName="canton" (selectionChange)="onChangeCanton($event.value)">
-              <mat-option *ngFor="let item of cantonesList" [value]="item">
-                {{item}}
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Canton" formControlName="canton" (selectionChange)="onChangeCanton()">
+              <mat-option [value]="canton" *ngFor="let canton of cantones">
+                {{ canton }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="errorHandling('canton')">
-              {{errorHandling('canton')}}
-            </mat-error>
           </mat-form-field>
         </div>
       </div>
-      
+
+      <!-- Dropdown de Distritos -->
       <div class="row">
         <div class="col">
-          <mat-form-field class="half-width">
+          <mat-form-field class="full-width">
             <mat-select placeholder="Distrito" formControlName="distrito">
-              <mat-option *ngFor="let item of distritosList" [value]="item">
-                {{item}}
+              <mat-option [value]="distrito" *ngFor="let distrito of distritos">
+                {{ distrito }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="errorHandling('distrito')">
-              {{errorHandling('distrito')}}
-            </mat-error>
           </mat-form-field>
         </div>
       </div>
+
 
       <div class="row">
         <div class="col">

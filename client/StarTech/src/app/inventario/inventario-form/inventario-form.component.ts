@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from '../../share/generic.service';
 import { NotificacionService, TipoMessage } from '../../shared/services/notification.service';
 import { FormErrorMessage } from '../../form-error-message';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-inventario-form',
@@ -82,10 +83,25 @@ export class InventarioFormComponent implements OnInit {
       bodegas: [null,Validators.required],
       productos: [null, Validators.required] ,
       cantidadStock: [null, Validators.required],
-      cantidadMinima: [null, Validators.required],
-      cantidadMaxima: [null, Validators.required]     
+      cantidadMinima: [null, [Validators.required, this.cantidadValidator.bind(this)]],
+      cantidadMaxima: [null, [Validators.required, this.cantidadMaximaValidator.bind(this)]]  
     })
   }
+
+  cantidadValidator(control: FormControl): { [s: string]: boolean } {
+    if (this.inventarioForm && control.value >= this.inventarioForm.get('cantidadMaxima')?.value) {
+      return { 'cantidadInvalida': true };
+    }
+    return null;
+  }
+
+  cantidadMaximaValidator(control: FormControl): { [s: string]: boolean } {
+    if (this.inventarioForm && control.value <= this.inventarioForm.get('cantidadMinima')?.value) {
+      return { 'cantidadMaximaInvalida': true };
+    }
+    return null;
+  }
+
   listaBodegas() {
     this.bodegasList = null;
      this.gService
