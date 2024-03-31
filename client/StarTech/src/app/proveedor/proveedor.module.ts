@@ -19,12 +19,14 @@ import { ProveedorAllComponent } from './proveedor-all/proveedor-all.component';
 import { ProveedorDiagComponent } from './proveedor-diag/proveedor-diag.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProveedorRoutingModule } from './proveedor-routing.module';
+import { ProveedorFormComponent } from './proveedor-form/proveedor-form.component';
 
 
 @NgModule({
   declarations: [
     ProveedorDiagComponent,
-    ProveedorAllComponent
+    ProveedorAllComponent,
+    ProveedorFormComponent
   ],
   imports: [
     CommonModule,

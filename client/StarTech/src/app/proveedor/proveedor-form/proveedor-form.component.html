@@ -1,0 +1,113 @@
+<form [formGroup]="proveedorForm" (ngSubmit)="submitProveedor()" novalidate>
+  <input type="hidden" formControlName="id" />
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>{{titleForm}} Proveedor</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="nombre" placeholder="Nombre">
+            @if (errorHandling('nombre')) {
+            <mat-error>
+              {{errorHandling('nombre')}}
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="direccion" placeholder="Direccion">
+            @if (errorHandling('direccion')) {
+            <mat-error>
+              {{errorHandling('direccion')}}
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="half-width">
+            <mat-select placeholder="Provincia" formControlName="provincia" (selectionChange)="onChangeProvincia($event.value)">
+              <mat-option *ngFor="let item of provinciasList" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="errorHandling('provincia')">
+              {{errorHandling('provincia')}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="half-width">
+            <mat-select placeholder="Cantón" formControlName="canton" (selectionChange)="onChangeCanton($event.value)">
+              <mat-option *ngFor="let item of cantonesList" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="errorHandling('canton')">
+              {{errorHandling('canton')}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="half-width">
+            <mat-select placeholder="Distrito" formControlName="distrito">
+              <mat-option *ngFor="let item of distritosList" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="errorHandling('distrito')">
+              {{errorHandling('distrito')}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="correoElectronico" placeholder="Correo Electrónico">
+            @if (errorHandling('correoElectronico')) {
+            <mat-error>
+              {{errorHandling('correoElectronico')}}
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="numeroTelefono" placeholder="Número de Teléfono">
+            @if (errorHandling('numeroTelefono')) {
+            <mat-error>
+              {{errorHandling('numeroTelefono')}}
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="example-button-row">
+        <button mat-raised-button color="warn" (click)="onReset()">Reset</button>
+        <button mat-raised-button color="primary" (click)="onBack()">Regresar</button>
+        <button mat-raised-button color="accent" type="submit">Guardar</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>
