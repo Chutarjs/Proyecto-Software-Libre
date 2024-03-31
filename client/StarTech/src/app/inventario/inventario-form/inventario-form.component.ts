@@ -29,6 +29,8 @@ export class InventarioFormComponent implements OnInit {
   inventarioForm: FormGroup;
   //id de la bodega
   idBodega: number = 0;
+  //id del producto
+  idProducto: number = 0;
   //Sí es crear
   isCreate: boolean = true;
 
@@ -46,21 +48,26 @@ export class InventarioFormComponent implements OnInit {
   ngOnInit(): void {
     //Verificar si se envio un id por parametro para crear formulario para actualizar
     this.activeRouter.params.subscribe((params:Params)=>{
-      this.idBodega=params['bodegaId']
-      if(this.idBodega != undefined){
+      this.idBodega=params['idBodega']
+      this.idProducto=params['idProducto']
+      if(this.idBodega != undefined && this.idProducto != undefined){
         this.isCreate=false
         this.titleForm='Actualizar'
-        //Obtener videojuego a actualizar del API
+        let filtro = this.idBodega + '/' + this.idProducto
+        //Obtener inventario a actualizar del API
         this.gService
-          .get('inventario', this.idBodega)
+          .get('inventario', filtro)
           .pipe(takeUntil(this.destroy$))
           .subscribe((data)=>{
-            console.log(data)
             this.InventarioInfo=data
+            console.log(this.InventarioInfo[0])
             //Establecer valores a precargar en el formulario
             this.inventarioForm.setValue({
-              bodega: this.InventarioInfo.bodega.map(({id})=>id),
-              productos: this.InventarioInfo.producto.map(({id})=>id)
+              cantidadMinima: this.InventarioInfo[0].cantidadMinima,
+              cantidadMaxima: this.InventarioInfo[0].cantidadMaxima,
+              cantidadStock: this.InventarioInfo[0].cantidadStock,
+              bodegas: this.InventarioInfo[0].bodegaId,
+              productos: this.InventarioInfo[0].producto.id,
             })
           })
           //[{id:5, nombre: valor, ..}]
@@ -73,7 +80,10 @@ export class InventarioFormComponent implements OnInit {
     //[null, Validators.required]
     this.inventarioForm=this.fb.group({
       bodegas: [null,Validators.required],
-      productos: [null, Validators.required]      
+      productos: [null, Validators.required] ,
+      cantidadStock: [null, Validators.required],
+      cantidadMinima: [null, Validators.required],
+      cantidadMaxima: [null, Validators.required]     
     })
   }
   listaBodegas() {
@@ -82,7 +92,7 @@ export class InventarioFormComponent implements OnInit {
       .list('bodega')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        // console.log(data);
+        console.log(data);
         this.bodegasList = data;
       }); 
   }  
@@ -92,7 +102,7 @@ export class InventarioFormComponent implements OnInit {
       .list('producto')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        // console.log(data);
+        console.log(data);
         this.productosList = data;
       }); 
   }
@@ -100,10 +110,8 @@ export class InventarioFormComponent implements OnInit {
   public errorHandling = (controlName: string) => {
     let messageError=''
     const control = this.inventarioForm.get(controlName);
-    console.log(control.errors)
     if(control.errors){
       for (const message of FormErrorMessage) {
-        console.log(message)
         if (control &&
             control.errors[message.forValidator] &&
             message.forControl==controlName) {
@@ -123,16 +131,17 @@ export class InventarioFormComponent implements OnInit {
     if (this.inventarioForm.invalid) {
       return;
     }
-    //Obtener id Generos del Formulario y Crear arreglo con {id: value}
-    let categoriasForm=this.inventarioForm.get('bodegas').value
-                    .map((x:any)=>({ ['id']:x }))
-    let subcategoriasForm=this.inventarioForm.get('productos').value
-                    .map((x:any)=>({ ['id']:x }))
+    //Obtener id bodegas del Formulario y Crear arreglo con {id: value}
+    let bodegasForm=this.inventarioForm.get('bodegas').value
+    let productosForm=this.inventarioForm.get('productos').value
                     
     //Asignar valor al formulario
     //setValue
-    this.inventarioForm.patchValue({categorias:categoriasForm})
-    this.inventarioForm.patchValue({subcategorias:subcategoriasForm})
+    this.inventarioForm.patchValue({bodega:bodegasForm})
+    this.inventarioForm.patchValue({producto:productosForm})
+    this.inventarioForm.patchValue({bodegaId:bodegasForm.value})
+    this.inventarioForm.patchValue({productoId:productosForm.value})
+    
     console.log(this.inventarioForm.value);
   
     if (this.isCreate) {

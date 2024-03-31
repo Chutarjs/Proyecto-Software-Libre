@@ -3,7 +3,9 @@ const prisma = new PrismaClient();
 
 //Listar todos los productos
 module.exports.get =async (request,response, next)=>{
-    const bodegas = await prisma.bodega.findMany()
+    const bodegas = await prisma.bodega.findMany({
+
+    })
     response.json(bodegas)
 }
 //Obtener por Id

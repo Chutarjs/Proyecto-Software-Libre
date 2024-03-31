@@ -30,12 +30,13 @@ module.exports.get =async (request,response, next)=>{
     response.json(inventario)
 }
 //Obtener por Id
-//localhost:3000/producto/2
+//localhost:3000/producto/2/2
 module.exports.getById = async (request, response, next) => {
     //Parámetro con el id del videojuego
-    let idBodega=parseInt(request.params.id)
+    let idBodega=parseInt(request.params.idBodega)
+    let idProducto=parseInt(request.params.idProducto)
     const inventarioBodega=await prisma.inventario.findMany({
-        where: { bodegaId: idBodega },
+        where: { bodegaId: idBodega, productoId: idProducto },
         include:{
             producto:{
                 include:{
@@ -77,17 +78,18 @@ module.exports.getById = async (request, response, next) => {
 module.exports.create = async (request, response, next) => {
     //insertar en una bodega un producto (con su cantidad), validando que el producto no supere la cantidad minima y maxima de existencias
     let body=request.body;
+    console.log(body);
     const nuevoInventario= await prisma.inventario.create({
         data:{
            cantidadStock: body.cantidadStock,
            cantidadMaxima: body.cantidadMaxima,
            cantidadMinima: body.cantidadMinima,
-           bodega:{
-            connect: body.bodega
-           },
-           producto:{
-            connect: body.producto
-           }
+           bodega: {
+            connect: { id: body.bodegas } // Assuming you have a unique identifier for bodega, replace `body.bodegaId` with the actual unique identifier
+        },
+        producto: {
+            connect: { id: body.productos } // Assuming you have a unique identifier for producto, replace `body.productoId` with the actual unique identifier
+        }
         }
     })
     response.json(nuevoInventario)
@@ -100,28 +102,23 @@ module.exports.update = async (request, response, next) => {
     //• Usuario que realizo el registro: al actualizar no se debe realizar ningún cambio en este campo
     //• Usuario que actualizó por última vez: asigne otro usuario por defecto, diferente al que registro
     let inventario = request.body;
-    let idBodega = parseInt(request.params.idBodega);
-    let idProducto = parseIntr(request.params.idProducto);
+    console.log(inventario); 
+    let idBodega = parseInt(inventario.bodegas);
+    let idProducto = parseInt(inventario.productos);
     //Obtener inventario viejo
-    const inventarioViejo = await prisma.inventario.findUnique({
-      where: { idBodega: idBodega, idProducto: idProducto }
-    });
-  
-    const newInventario = await prisma.inventario.update({
+    const inventarioViejo = await prisma.inventario.findFirst({
+      where: { bodegaId: idBodega, productoId: idProducto}
+    }); 
+    console.log(inventarioViejo);
+    const newInventario = await prisma.inventario.updateMany({
       where: {
-        idProducto: idProducto,
-        idBodega: idBodega
+        productoId: idProducto,
+        bodegaId: idBodega
       },
       data:{
-        cantidadStock: body.cantidadStock,
-        cantidadMaxima: body.cantidadMaxima,
-        cantidadMinima: body.cantidadMinima,
-        bodega:{
-         connect: body.bodega
-        },
-        producto:{
-         connect: body.producto
-        }
+        cantidadStock: inventario.cantidadStock,
+        cantidadMaxima: inventario.cantidadMaxima,
+        cantidadMinima: inventario.cantidadMinima,
      }
     });
     response.json(newInventario);

@@ -44,6 +44,46 @@
           </mat-form-field>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput type="number" formControlName="cantidadStock" placeholder="Cantidad en Stock" >
+            @if (errorHandling('cantidadStock')) {
+              <mat-error>
+                {{errorHandling('cantidadStock')}}
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput type="number" formControlName="cantidadMinima" placeholder="Cantidad Minima" >
+            @if (errorHandling('cantidadMinima')) {
+              <mat-error>
+                {{errorHandling('cantidadMinima')}}
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput type="number" formControlName="cantidadMaxima" placeholder="Cantidad Maxima" >
+            @if (errorHandling('cantidadMaxima')) {
+              <mat-error>
+                {{errorHandling('cantidadMaxima')}}
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
     </mat-card-content>
     <mat-card-actions>
       <div class="example-button-row">

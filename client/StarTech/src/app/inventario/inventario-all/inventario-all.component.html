@@ -43,6 +43,7 @@
         color="accent"
         matTooltip="Actualizar inventario"
         aria-label="Actualizar inventario"
+        (click)="actualizarInventario(row.productoId, row.bodegaId)"
         color="primary"
         >
           <mat-icon class="mat-18">edit</mat-icon>
@@ -58,7 +59,7 @@
     #paginator
     [length]="dataSource.data.length"
     [pageIndex]="0"
-    [pageSize]="3"
+    [pageSize]="5"
     [pageSizeOptions]="[3, 5, 10]"
     aria-label="Selecccione una página"
    

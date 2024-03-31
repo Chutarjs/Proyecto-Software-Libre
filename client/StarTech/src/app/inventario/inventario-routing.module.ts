@@ -22,7 +22,7 @@ const routes: Routes = [
     path:'inventario/:id',component: InventarioDetailComponent
   },
   {
-    path: 'inventario/update/:id',
+    path: 'inventario/update/:idBodega/:idProducto',
     component: InventarioFormComponent
   },
 ];

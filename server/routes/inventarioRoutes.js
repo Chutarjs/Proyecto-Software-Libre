@@ -9,8 +9,8 @@ router.get('/',inventarioController.get)
 
 router.post('/',inventarioController.create)
 
-router.get('/:id',inventarioController.getById) 
-
 router.put('/:id',inventarioController.update)
+
+router.get('/:idBodega/:idProducto',inventarioController.getById) 
 
 module.exports=router 

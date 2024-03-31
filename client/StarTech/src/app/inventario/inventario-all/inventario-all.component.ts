@@ -58,8 +58,8 @@ export class InventarioAllComponent implements AfterViewInit {
     this.dialog.open(InventarioDiagComponent,dialogConfig)
     
   }
-  actualizarInventario(id: number) {
-    this.router.navigate(['/inventario/update', id], {
+  actualizarInventario(idProducto: number, idBodega: number) {
+    this.router.navigate(['/inventario/update', idBodega, idProducto], {
       relativeTo: this.route,
     });
   }
