@@ -52,11 +52,14 @@ export class ProveedorFormComponent implements OnInit {
               id: this.proveedorInfo.id,
               nombre: this.proveedorInfo.nombre,
               direccion: this.proveedorInfo.direccion,
-              distritoId: this.proveedorInfo.distritoId,
+              provincia: this.proveedorInfo.provincia,
+              canton: this.proveedorInfo.canton,
+              distrito: this.proveedorInfo.distrito,
               correoElectronico: this.proveedorInfo.correoElectronico,
               numeroTelefono: this.proveedorInfo.numeroTelefono
             })
           })
+          this.preconfigurarProvincia()
       }
     })
     this.cargarProvincias();  // Cambiado a cargarProvincias
@@ -67,7 +70,6 @@ export class ProveedorFormComponent implements OnInit {
       id: [null],
       nombre: [null, Validators.compose([Validators.required, Validators.minLength(2)])],
       direccion: [null, Validators.required],
-      distritoId: [null, Validators.required],
       correoElectronico: [null, Validators.compose([Validators.required, Validators.email])],
       numeroTelefono: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{8}$')])],
       provincia: [null, Validators.required],
@@ -81,6 +83,7 @@ export class ProveedorFormComponent implements OnInit {
       data => {
         this.provincias = Object.keys(data).map(key => ({ id: parseInt(key), nombre: data[key] }));
         console.log('Provincias:', this.provincias); // Verificar datos en la consola
+        this.preconfigurarProvincia();
       },
       error => {
         console.error('Error al cargar provincias:', error);
@@ -88,19 +91,48 @@ export class ProveedorFormComponent implements OnInit {
     );
   }
 
+  preconfigurarProvincia(): void {
+    if (this.proveedorInfo.provincia != null) {
+      console.log(this.provincias)
+      const provinciaEncontrada = this.provincias.find(provincia => provincia.nombre === this.proveedorInfo.provincia);
+      console.log(provinciaEncontrada)
+      if (provinciaEncontrada) {
+        this.proveedorForm.get('provincia').setValue(provinciaEncontrada.id);
+        // Ahora puedes cargar los cantones basados en la provincia seleccionada si es necesario
+        // this.cargarCantones(provinciaEncontrada.id);
+      } else {
+        console.warn('La provincia del proveedor no se encontró en la lista de provincias.');
+      }
+    }
+  }
 
   cargarCantones(provinciaId: number): void {
     this.http.get<any>(`https://ubicaciones.paginasweb.cr/provincia/${provinciaId}/cantones.json`).subscribe(
       data => {
         this.cantones = Object.keys(data).map(key => ({ id: parseInt(key), nombre: data[key] }));
         console.log('Cantones:', this.cantones); // Verificar datos en la consola
+        this.preconfigurarCantones();
       },
       error => {
         console.error('Error al cargar cantones:', error);
       }
     );
   }
-  
+  preconfigurarCantones(): void {
+    if (this.proveedorInfo.canton != null) {
+      console.log(this.cantones)
+      const cantonEncontrado = this.cantones.find(canton => canton.nombre === this.proveedorInfo.canton);
+      console.log(cantonEncontrado)
+      if (cantonEncontrado) {
+        this.proveedorForm.get('canton').setValue(cantonEncontrado.id);
+        // Ahora puedes cargar los cantones basados en la provincia seleccionada si es necesario
+        // this.cargarCantones(provinciaEncontrada.id);
+      } else {
+        console.warn('El canton del proveedor no se encontró en la lista de provincias.');
+      }
+    }
+  }
+
   cargarDistritos(provinciaId: number, cantonId: number): void {
     this.http.get<any>(`https://ubicaciones.paginasweb.cr/provincia/${provinciaId}/canton/${cantonId}/distritos.json`).subscribe(
       data => {
@@ -112,7 +144,20 @@ export class ProveedorFormComponent implements OnInit {
       }
     );
   }
-  
+  preconfigurarDistritos(): void {
+    if (this.proveedorInfo.distrito != null) {
+      console.log(this.distritos)
+      const distritoEncontrado = this.distritos.find(distrito => distrito.nombre === this.proveedorInfo.distrito);
+      console.log(distritoEncontrado)
+      if (distritoEncontrado) {
+        this.proveedorForm.get('distrito').setValue(distritoEncontrado.id);
+        // Ahora puedes cargar los cantones basados en la provincia seleccionada si es necesario
+        // this.cargarCantones(provinciaEncontrada.id);
+      } else {
+        console.warn('El distrito del proveedor no se encontró en la lista de provincias.');
+      }
+    }
+  }
 
   listaProvincias(): any[] {
     return this.provincias;
@@ -121,8 +166,6 @@ export class ProveedorFormComponent implements OnInit {
   onChangeProvincia(): void {
     const provinciaSeleccionada = this.provincias.find(p => p.id === this.proveedorForm.get('provincia').value);
     this.cargarCantones(provinciaSeleccionada.id);
-    this.proveedorForm.get('canton').setValue(null);
-    this.proveedorForm.get('distrito').setValue(null);
   }
   
   onChangeCanton(): void {
@@ -157,9 +200,15 @@ export class ProveedorFormComponent implements OnInit {
     }
   
     const proveedorData = {
-      ...this.proveedorForm.value,
-      distritoId: this.proveedorForm.get('distrito').value.id
+      nombre: this.proveedorForm.value.nombre,
+      direccion: this.proveedorForm.value.direccion,
+      provincia: this.provincias.find(p => p.id === this.proveedorForm.get('provincia').value).nombre,
+      canton: this.cantones.find(p => p.id === this.proveedorForm.get('canton').value).nombre,
+      distrito: this.distritos.find(p => p.id === this.proveedorForm.get('distrito').value).nombre,
+      correoElectronico: this.proveedorForm.value.correoElectronico,
+      numeroTelefono: this.proveedorForm.value.numeroTelefono
     };
+    console.log(proveedorData)
   
     if (this.isCreate) {
       this.gService

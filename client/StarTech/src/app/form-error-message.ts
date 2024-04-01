@@ -23,6 +23,14 @@ export const FormErrorMessage = [
   new ErrorMessage('cantidadMinima', 'required', 'Es requerido que ingrese la cantidad mínima de existencias'),
   new ErrorMessage('cantidadMinima', 'cantidadInvalida', 'La cantidad mínima debe ser menor que la máxima'),
   new ErrorMessage('cantidadMaxima', 'required', 'Es requerido que ingrese la cantidad máxima de existencias'),
-  new ErrorMessage('cantidadMaxima', 'cantidadMaximaInvalida', 'La cantidad máxima debe ser mayor que la mínima')
+  new ErrorMessage('cantidadMaxima', 'cantidadMaximaInvalida', 'La cantidad máxima debe ser mayor que la mínima'),
+
+  new ErrorMessage('direccion', 'required', 'La direccion es necesaria'),
+  new ErrorMessage('provincia', 'required', 'La provincia es requerida'),
+  new ErrorMessage('canton', 'required', 'El canton es requerido'),
+  new ErrorMessage('distrito', 'required', 'El distrito es requerido'),
+  new ErrorMessage('correoElectronico', 'required', 'El correo es requerido'),
+  new ErrorMessage('numeroTelefono', 'required', 'El telefono es requerido'),
+
 
 ];

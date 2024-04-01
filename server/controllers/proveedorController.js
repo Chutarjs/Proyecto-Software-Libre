@@ -31,6 +31,7 @@ module.exports.getById = async (request, response, next) => {
 //Crear un proveedor
 module.exports.create = async (request, response, next) => {
     let body=request.body;
+    console.log(body);
     const nuevoProveedor= await prisma.proveedor.create({
         data:{
             nombre: body.nombre,

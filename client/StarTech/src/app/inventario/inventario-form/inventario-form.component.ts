@@ -71,8 +71,6 @@ export class InventarioFormComponent implements OnInit {
               productos: this.InventarioInfo[0].producto.id,
             })
           })
-          //[{id:5, nombre: valor, ..}]
-          //[5,4]
       }
     })
   }

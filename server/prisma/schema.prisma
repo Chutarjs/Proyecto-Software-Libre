@@ -130,37 +130,13 @@ model Proveedor {
   id               Int       @id @default(autoincrement())
   nombre           String
   direccion        String
-  distrito         Distrito @relation(fields: [distritoId], references: [id]) 
-  distritoId       Int
+  provincia        String
+  canton           String
+  distrito         String
   correoElectronico String
   numeroTelefono   String
 
   ordenesCompra OrdenCompra[]
-}
-
-model Provincia {
-  id      Int @id @default(autoincrement())
-  nombre  String
-
-  Cantones Canton[]
-}
-
-model Canton {
-  id     Int @id @default(autoincrement())
-  nombre String
-  provincia Provincia @relation(fields: [idProvincia], references: [id])
-  idProvincia Int
-
-  distritos Distrito[]
-}
-
-model Distrito {
-  id     Int @id @default(autoincrement())
-  nombre String
-  canton Canton @relation(fields: [idCanton], references: [id])
-  idCanton Int
-
-  Proveedores Proveedor[]
 }
 
 // Definición de la tabla de órdenes de compra
