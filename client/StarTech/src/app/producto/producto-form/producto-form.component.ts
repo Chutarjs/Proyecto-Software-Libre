@@ -58,13 +58,16 @@ export class ProductoFormComponent implements OnInit {
             console.log(data)
             this.productoInfo=data
             //Establecer valores a precargar en el formulario
-            this.productoForm.setValue({
+            this.productoForm.patchValue({
               id: this.productoInfo.id,
               nombre: this.productoInfo.nombre,
-              precio: this.productoInfo.costoUnitario,
-              categorias: this.productoInfo.categorias.map(({id})=>id),
-              subcategorias: this.productoInfo.subcategorias.map(({id})=>id)
-            })
+              descripcion: this.productoInfo.descripcion,
+              costoUnitario: this.productoInfo.costoUnitario,
+              mesesGarantia: this.productoInfo.mesesGarantia,
+              estado: this.productoInfo.estado,
+              categoria: this.productoInfo.subcategoria.categoria.id,
+              subcategoria: this.productoInfo.subcategoria.id,
+            });
           })
           //[{id:5, nombre: valor, ..}]
           //[5,4]
@@ -140,6 +143,10 @@ export class ProductoFormComponent implements OnInit {
     if (this.productoForm.invalid) {
       return;
     }
+
+
+
+
     //Obtener id Generos del Formulario y Crear arreglo con {id: value}
     let categoriasForm=this.productoForm.get('categorias').value
                     .map((x:any)=>({ ['id']:x }))

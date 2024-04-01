@@ -9,11 +9,9 @@
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput formControlName="nombre" placeholder="Nombre">
-            @if (errorHandling('nombre')) {
-            <mat-error>
+            <mat-error *ngIf="errorHandling('nombre')">
               {{errorHandling('nombre')}}
             </mat-error>
-            }
           </mat-form-field>
         </div>
       </div>
@@ -22,63 +20,61 @@
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput formControlName="direccion" placeholder="Direccion">
-            @if (errorHandling('direccion')) {
-            <mat-error>
+            <mat-error *ngIf="errorHandling('direccion')">
               {{errorHandling('direccion')}}
             </mat-error>
-            }
           </mat-form-field>
         </div>
       </div>
 
-      <!-- Dropdown de Provincias -->
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-select placeholder="Provincia" formControlName="provincia" (selectionChange)="onChangeProvincia()">
-              <mat-option [value]="provincias">
-                {{ provincias }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-      <!-- Dropdown de Cantones -->
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-select placeholder="Canton" formControlName="canton" (selectionChange)="onChangeCanton()">
-              <mat-option [value]="canton" *ngFor="let canton of cantones">
-                {{ canton }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
+ <!-- Dropdown de Provincias -->
+<div class="row">
+  <div class="col">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Provincia" formControlName="provincia" (selectionChange)="onChangeProvincia()">
+        <mat-option *ngFor="let provincia of provincias" [value]="provincia.id">
+          {{ provincia.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
 
-      <!-- Dropdown de Distritos -->
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-select placeholder="Distrito" formControlName="distrito">
-              <mat-option [value]="distrito" *ngFor="let distrito of distritos">
-                {{ distrito }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
+<!-- Dropdown de Cantones -->
+<div class="row">
+  <div class="col">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Canton" formControlName="canton" (selectionChange)="onChangeCanton()">
+        <mat-option *ngFor="let canton of cantones" [value]="canton.id">
+          {{ canton.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+<!-- Dropdown de Distritos -->
+<div class="row">
+  <div class="col">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Distrito" formControlName="distrito">
+        <mat-option *ngFor="let distrito of distritos" [value]="distrito.id">
+          {{ distrito.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
 
 
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput formControlName="correoElectronico" placeholder="Correo Electrónico">
-            @if (errorHandling('correoElectronico')) {
-            <mat-error>
+            <mat-error *ngIf="errorHandling('correoElectronico')">
               {{errorHandling('correoElectronico')}}
             </mat-error>
-            }
           </mat-form-field>
         </div>
       </div>
@@ -87,11 +83,9 @@
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput formControlName="numeroTelefono" placeholder="Número de Teléfono">
-            @if (errorHandling('numeroTelefono')) {
-            <mat-error>
+            <mat-error *ngIf="errorHandling('numeroTelefono')">
               {{errorHandling('numeroTelefono')}}
             </mat-error>
-            }
           </mat-form-field>
         </div>
       </div>
