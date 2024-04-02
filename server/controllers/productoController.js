@@ -68,7 +68,7 @@ module.exports.create = async (request, response, next) => {
            mesesGarantia: body.mesesGarantia,
            estado: body.estado,
            subcategoria:{
-            connect: body.subcategoria
+            connect: {id: body.subcategoria}
            }
         }
     })

@@ -88,45 +88,32 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col" *ngIf="categoriasList">
-          <mat-form-field class="full-width">
-            <mat-select placeholder="categorias" formControlName="categorias" single>
-              @for (item of categoriasList; track item.id) {
-                <mat-option [value]="item.id">
-                  {{item.nombre}}
-              </mat-option>
-            }
-              
-            </mat-select>
-            @if (errorHandling('categorias')) {
-              <mat-error>
-                {{errorHandling('categorias')}}
-              </mat-error>
-            }
-          </mat-form-field>
-        </div>
-      </div>
-      
-      <div class="row">
-        <div class="col" *ngIf="subcategoriasList">
-          <mat-form-field class="full-width">
-            <mat-select placeholder="Subcategorias" formControlName="subcategorias" single>
-              @for (item of subcategoriasList; track item.id) {
-                <mat-option [value]="item.id">
-                  {{item.nombre}}
-              </mat-option>
-            }
-              
-            </mat-select>
-            @if (errorHandling('subcategorias')) {
-              <mat-error>
-                {{errorHandling('subcategorias')}}
-              </mat-error>
-            }
-          </mat-form-field>
-        </div>
-      </div>
+ <!-- Dropdown de Categorias -->
+ <div class="row">
+  <div class="col">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Categoria" formControlName="categoria" (selectionChange)="onChangeCategoria()">
+        <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
+          {{ categoria.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+<!-- Dropdown de Subcategorias -->
+<div class="row">
+  <div class="col">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Subcategoria" formControlName="subcategoria">
+        <mat-option *ngFor="let subcategoria of subcategorias" [value]="subcategoria.id">
+          {{ subcategoria.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
     </mat-card-content>
     <mat-card-actions>
       <div class="example-button-row">

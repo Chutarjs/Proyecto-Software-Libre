@@ -32,5 +32,8 @@ export const FormErrorMessage = [
   new ErrorMessage('correoElectronico', 'required', 'El correo es requerido'),
   new ErrorMessage('numeroTelefono', 'required', 'El telefono es requerido'),
 
+  new ErrorMessage('sku', 'required', 'El sku es necesario'),
+  new ErrorMessage('estado', 'required', 'El estado es requerido'),
+  new ErrorMessage('distrito', 'required', 'El distrito es requerido'),
 
 ];

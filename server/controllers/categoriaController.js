@@ -6,6 +6,9 @@ module.exports.get =async (request,response, next)=>{
     const categorias= await prisma.categoria.findMany({
         orderBy:{
             nombre:'asc'
+        },
+        include:{
+            subcategorias:true
         }
     })
     response.json(categorias);
@@ -17,6 +20,9 @@ module.exports.getById = async (request, response, next) => {
     let idCategoria=parseInt(request.params.id)
     const categoria=await prisma.categoria.findUnique({
         where: { id: idCategoria },
+        include:{
+            subcategorias:true
+        }
     })
     response.json(categoria)
 }

@@ -16,9 +16,9 @@ export class ProductoFormComponent implements OnInit {
   //Titulo
   titleForm: string = 'Crear';
   //Lista de categorias
-  categoriasList: any;
+  categorias: any;
   //Lista de subcategorias
-  subcategoriasList: any;
+  subcategorias: any;
   //Producto a actualizar
   productoInfo: any;
   //Respuesta del API crear/modificar
@@ -40,8 +40,6 @@ export class ProductoFormComponent implements OnInit {
    private noti:NotificacionService
   ) {
     this.formularioReactive()
-    this.listaCategorias()
-    this.listaSubcategorias()
   }
   ngOnInit(): void {
     //Verificar si se envio un id por parametro para crear formulario para actualizar
@@ -73,6 +71,7 @@ export class ProductoFormComponent implements OnInit {
           //[5,4]
       }
     })
+    this.cargarCategorias();
   }
   //Crear Formulario
   formularioReactive() {
@@ -97,27 +96,24 @@ export class ProductoFormComponent implements OnInit {
       subcategoria: [null,Validators.required]      
     })
   }
-  listaCategorias() {
-    this.categoriasList = null;
+    cargarCategorias() {
+    this.categorias = null;
      this.gService
       .list('categoria')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         console.log(data);
-        this.categoriasList = data;
+        this.categorias = data;
       }); 
   }  
-  listaSubcategorias() {
-    this.subcategoriasList = null;
-     this.gService
-      .list('subcategoria')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        // console.log(data);
-        this.subcategoriasList = data;
-      }); 
+  cargarSubcategorias(categoriaSeleccionada: any) {
+    console.log(categoriaSeleccionada)
+    this.subcategorias = categoriaSeleccionada.subcategorias; 
   }
-
+  onChangeCategoria(): void {
+    const categoriaSeleccionada = this.categorias.find(p => p.id === this.productoForm.get('categoria').value);
+    this.cargarSubcategorias(categoriaSeleccionada);
+  }
   public errorHandling = (controlName: string) => {
     let messageError=''
     const control = this.productoForm.get(controlName);
@@ -144,20 +140,19 @@ export class ProductoFormComponent implements OnInit {
       return;
     }
 
-
-
-
     //Obtener id Generos del Formulario y Crear arreglo con {id: value}
-    let categoriasForm=this.productoForm.get('categorias').value
-                    .map((x:any)=>({ ['id']:x }))
-    let subcategoriasForm=this.productoForm.get('subcategorias').value
-                    .map((x:any)=>({ ['id']:x }))
+    console.log(this.productoForm)
+    let categoriasForm=this.productoForm.get('categoria').value
+    let subcategoriasForm=this.productoForm.get('subcategoria').value
                     
     //Asignar valor al formulario
     //setValue
     this.productoForm.patchValue({categorias:categoriasForm})
     this.productoForm.patchValue({subcategorias:subcategoriasForm})
     console.log(this.productoForm.value);
+
+    this.productoForm.get('costoUnitario').setValue(parseFloat(this.productoForm.get('costoUnitario').value))
+    this.productoForm.get('mesesGarantia').setValue(parseInt(this.productoForm.get('mesesGarantia').value))
   
     if (this.isCreate) {
       //Accion API create enviando toda la informacion del formulario
