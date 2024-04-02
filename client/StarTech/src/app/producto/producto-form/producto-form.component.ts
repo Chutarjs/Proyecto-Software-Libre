@@ -65,7 +65,10 @@ export class ProductoFormComponent implements OnInit {
               estado: this.productoInfo.estado,
               categoria: this.productoInfo.subcategoria.categoria.id,
               subcategoria: this.productoInfo.subcategoria.id,
+              sku: this.generateSKU(this.productoInfo.subcategoria.categoria.nombre, this.productoInfo.subcategoria.nombre, this.productoInfo.id.toString())
+          
             });
+            this.cargarSubcategorias(this.productoInfo.subcategoria.categoria);
           })
           //[{id:5, nombre: valor, ..}]
           //[5,4]
@@ -95,6 +98,9 @@ export class ProductoFormComponent implements OnInit {
       categoria:[null,Validators.required],
       subcategoria: [null,Validators.required]      
     })
+  }
+  generateSKU(categoria: string, subcategoria: string, identificador: string): string {
+    return `${categoria.substring(0, 3).toUpperCase()}_${subcategoria.substring(0, 3).toUpperCase()}_${identificador}`;
   }
     cargarCategorias() {
     this.categorias = null;

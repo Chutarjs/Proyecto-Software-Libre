@@ -92,14 +92,14 @@ export class ProveedorFormComponent implements OnInit {
   }
 
   preconfigurarProvincia(): void {
-    if (this.proveedorInfo.provincia != null) {
+    if (this.proveedorInfo && this.proveedorInfo.provincia != null)  {
       console.log(this.provincias)
       const provinciaEncontrada = this.provincias.find(provincia => provincia.nombre === this.proveedorInfo.provincia);
       console.log(provinciaEncontrada)
       if (provinciaEncontrada) {
         this.proveedorForm.get('provincia').setValue(provinciaEncontrada.id);
         // Ahora puedes cargar los cantones basados en la provincia seleccionada si es necesario
-        // this.cargarCantones(provinciaEncontrada.id);
+        this.cargarCantones(provinciaEncontrada.id);
       } else {
         console.warn('La provincia del proveedor no se encontró en la lista de provincias.');
       }
@@ -119,14 +119,14 @@ export class ProveedorFormComponent implements OnInit {
     );
   }
   preconfigurarCantones(): void {
-    if (this.proveedorInfo.canton != null) {
+    if (this.proveedorInfo && this.proveedorInfo.canton != null){
       console.log(this.cantones)
       const cantonEncontrado = this.cantones.find(canton => canton.nombre === this.proveedorInfo.canton);
       console.log(cantonEncontrado)
       if (cantonEncontrado) {
         this.proveedorForm.get('canton').setValue(cantonEncontrado.id);
         // Ahora puedes cargar los cantones basados en la provincia seleccionada si es necesario
-        // this.cargarCantones(provinciaEncontrada.id);
+        this.cargarDistritos(this.proveedorForm.get('provincia').value, cantonEncontrado.id);
       } else {
         console.warn('El canton del proveedor no se encontró en la lista de provincias.');
       }
@@ -138,6 +138,7 @@ export class ProveedorFormComponent implements OnInit {
       data => {
         this.distritos = Object.keys(data).map(key => ({ id: parseInt(key), nombre: data[key] }));
         console.log('Distritos:', this.distritos); // Verificar datos en la consola
+        this.preconfigurarDistritos()
       },
       error => {
         console.error('Error al cargar distritos:', error);
@@ -145,7 +146,7 @@ export class ProveedorFormComponent implements OnInit {
     );
   }
   preconfigurarDistritos(): void {
-    if (this.proveedorInfo.distrito != null) {
+    if (this.proveedorInfo && this.proveedorInfo.distrito != null) {
       console.log(this.distritos)
       const distritoEncontrado = this.distritos.find(distrito => distrito.nombre === this.proveedorInfo.distrito);
       console.log(distritoEncontrado)

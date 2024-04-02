@@ -11,9 +11,9 @@
             <input matInput formControlName="sku" maxlength="20" placeholder="SKU" >
             <mat-hint align="end"> / 20</mat-hint>
             @if (errorHandling('sku')) {
-              <mat-error>
-                {{errorHandling('sku')}}
-              </mat-error>
+            <mat-error>
+              {{errorHandling('sku')}}
+            </mat-error>
             }
           </mat-form-field>
         </div>
@@ -88,7 +88,7 @@
         </div>
       </div>
 
- <!-- Dropdown de Categorias -->
+ <!-- Categorias -->
  <div class="row">
   <div class="col">
     <mat-form-field class="full-width">
@@ -101,11 +101,12 @@
   </div>
 </div>
 
-<!-- Dropdown de Subcategorias -->
+<!-- Subcategorias -->
+
 <div class="row">
   <div class="col">
     <mat-form-field class="full-width">
-      <mat-select placeholder="Subcategoria" formControlName="subcategoria">
+      <mat-select placeholder="Subcategoria" formControlName="subcategoria" >
         <mat-option *ngFor="let subcategoria of subcategorias" [value]="subcategoria.id">
           {{ subcategoria.nombre }}
         </mat-option>
@@ -113,6 +114,7 @@
     </mat-form-field>
   </div>
 </div>
+
 
     </mat-card-content>
     <mat-card-actions>
