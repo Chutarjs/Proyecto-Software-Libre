@@ -156,7 +156,7 @@ export class ProductoFormComponent implements OnInit {
   
     if (this.isCreate) {
       //Accion API create enviando toda la informacion del formulario
-       this.gService
+      this.gService
         .create('producto', this.productoForm.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
