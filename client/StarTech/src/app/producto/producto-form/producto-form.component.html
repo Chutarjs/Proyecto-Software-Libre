@@ -8,7 +8,7 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput formControlName="sku" maxlength="20" placeholder="SKU" >
+            <input matInput formControlName="sku" maxlength="20" readonly placeholder="SKU" >
             <mat-hint align="end"> / 20</mat-hint>
             @if (errorHandling('sku')) {
             <mat-error>
@@ -106,7 +106,7 @@
 <div class="row">
   <div class="col">
     <mat-form-field class="full-width">
-      <mat-select placeholder="Subcategoria" formControlName="subcategoria" >
+      <mat-select placeholder="Subcategoria" formControlName="subcategoria" (selectionChange)="onChangeSubcategoria()">
         <mat-option *ngFor="let subcategoria of subcategorias" [value]="subcategoria.id">
           {{ subcategoria.nombre }}
         </mat-option>

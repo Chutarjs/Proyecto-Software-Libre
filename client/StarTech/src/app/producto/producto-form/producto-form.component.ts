@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from '../../share/generic.service';
 import { NotificacionService, TipoMessage } from '../../shared/services/notification.service';
 import { FormErrorMessage } from '../../form-error-message';
+import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-producto-form',
@@ -48,12 +49,12 @@ export class ProductoFormComponent implements OnInit {
       if(this.idProducto != undefined){
         this.isCreate=false
         this.titleForm='Actualizar'
+        this.cargarCategorias();
         //Obtener videojuego a actualizar del API
         this.gService
           .get('producto', this.idProducto)
           .pipe(takeUntil(this.destroy$))
           .subscribe((data)=>{
-            console.log(data)
             this.productoInfo=data
             //Establecer valores a precargar en el formulario
             this.productoForm.patchValue({
@@ -64,11 +65,12 @@ export class ProductoFormComponent implements OnInit {
               mesesGarantia: this.productoInfo.mesesGarantia,
               estado: this.productoInfo.estado,
               categoria: this.productoInfo.subcategoria.categoria.id,
-              subcategoria: this.productoInfo.subcategoria.id,
-              sku: this.generateSKU(this.productoInfo.subcategoria.categoria.nombre, this.productoInfo.subcategoria.nombre, this.productoInfo.id.toString())
-          
+              subcategoria: this.productoInfo.subcategoriaId,
+              sku: this.productoInfo.sku
             });
+            this.onChangeSubcategoria();
             this.cargarSubcategorias(this.productoInfo.subcategoria.categoria);
+            console.log(this.productoInfo)
           })
           //[{id:5, nombre: valor, ..}]
           //[5,4]
@@ -80,6 +82,7 @@ export class ProductoFormComponent implements OnInit {
   formularioReactive() {
     //[null, Validators.required]
     this.productoForm=this.fb.group({
+      id:[null, null],
       sku:[null, Validators.compose([
         Validators.required
       ])],
@@ -99,9 +102,7 @@ export class ProductoFormComponent implements OnInit {
       subcategoria: [null,Validators.required]      
     })
   }
-  generateSKU(categoria: string, subcategoria: string, identificador: string): string {
-    return `${categoria.substring(0, 3).toUpperCase()}_${subcategoria.substring(0, 3).toUpperCase()}_${identificador}`;
-  }
+
     cargarCategorias() {
     this.categorias = null;
      this.gService
@@ -113,13 +114,24 @@ export class ProductoFormComponent implements OnInit {
       }); 
   }  
   cargarSubcategorias(categoriaSeleccionada: any) {
-    console.log(categoriaSeleccionada)
+    console.log("Categoria seleccionada: " + categoriaSeleccionada.subcategoria)
     this.subcategorias = categoriaSeleccionada.subcategorias; 
   }
   onChangeCategoria(): void {
     const categoriaSeleccionada = this.categorias.find(p => p.id === this.productoForm.get('categoria').value);
     this.cargarSubcategorias(categoriaSeleccionada);
   }
+  onChangeSubcategoria(): void {
+    const categoriaSeleccionada = this.categorias.find(p => p.id === this.productoForm.get('categoria').value).nombre;
+    const subcategoriaSeleccionada = this.subcategorias.find(p => p.id === this.productoForm.get('subcategoria').value).nombre;
+    if(this.idProducto == undefined){
+      this.productoForm.get('sku').setValue(categoriaSeleccionada.slice(0, 3).toUpperCase() + "-" + subcategoriaSeleccionada.slice(0, 3).toUpperCase());
+    }
+    else{
+      this.productoForm.get('sku').setValue(categoriaSeleccionada.slice(0, 3).toUpperCase() + "-" + subcategoriaSeleccionada.slice(0, 3).toUpperCase() + "-" + this.idProducto);
+    }
+  }
+  
   public errorHandling = (controlName: string) => {
     let messageError=''
     const control = this.productoForm.get(controlName);

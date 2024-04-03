@@ -1,19 +1,29 @@
 @if(datos){
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>{{ datos.nombre }} </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p class="price">{{ datos.costoUnitario | currency : "USD" }}</p>
-        <p>{{ datos.descripcion }}</p>
-        <p>Categoria: {{ datos.subcategoria.categoria.nombre }} </p>
-        <p>Subcategoria: {{ datos.subcategoria.nombre }} </p> 
-        <p>Meses de garantia: {{ datos.mesesGarantia }} </p> 
-        <p>Estado: {{ datos.estado }} </p> 
-        <p>Cantidad en stock: {{ datos.cantidadStock }} </p> 
-        <p>Cantidad minima: {{ datos.cantidadMinima }} </p> 
-        <p>Cantidad maxima: {{ datos.cantidadMaxima }} </p> 
-      </mat-card-content>
-    </mat-card>
-    }
-    
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ datos.nombre }} </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="price">{{ datos.costoUnitario | currency : "USD" }}</p>
+      <p>{{ datos.descripcion }}</p>
+      <p>Categoria: {{ datos.subcategoria.categoria.nombre }} </p>
+      <p>Subcategoria: {{ datos.subcategoria.nombre }} </p> 
+      <p>Meses de garantia: {{ datos.mesesGarantia }} </p> 
+      <p>Estado: {{ datos.estado }} </p>
+      <p>
+        <p>Inventario:
+          @if(datos.Inventario.length > 0){
+            @for(item of datos.Inventario; track item.idBodega) {  
+              <p>Bodega: {{ item.bodega.nombre }} </p> 
+              <p>Cantidad en stock: {{ item.cantidadStock }} </p> 
+              <p>Cantidad minima: {{ item.cantidadMinima }} </p> 
+              <p>Cantidad maxima: {{ item.cantidadMaxima }} </p>
+            }
+          }@else{
+            <p>Cantidad en stock: 0</p>
+            <p>No hay existencias del producto registradas en el inventario</p>  
+          }
+        </p> 
+    </mat-card-content>
+  </mat-card>
+}

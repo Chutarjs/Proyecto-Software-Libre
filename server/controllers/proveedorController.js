@@ -50,25 +50,18 @@ module.exports.update = async (request, response, next) => {
     let proveedor = request.body;
     let idProveedor = parseInt(request.params.id);
     //Obtener producto viejo
-    const proveedorViejo = await prisma.proveedor.findUnique({
-      where: { id: idProveedor },
-      include: {
-        ordenesCompra:true
-      }
-    });
-  
     const newProveedor = await prisma.proveedor.update({
       where: {
         id: idProveedor,
       },
       data:{
-        nombre: body.nombre,
-        direccion: body.direccion,
-        provincia: body.provincia,
-        canton: body.canton,
-        distrito: body.distrito,
-        correoElectronico: body.correoElectronico,
-        numeroTelefono: body.numeroTelefono
+        nombre: proveedor.nombre,
+        direccion: proveedor.direccion,
+        provincia: proveedor.provincia,
+        canton: proveedor.canton,
+        distrito: proveedor.distrito,
+        correoElectronico: proveedor.correoElectronico,
+        numeroTelefono: proveedor.numeroTelefono
     }
     });
     response.json(newProveedor);

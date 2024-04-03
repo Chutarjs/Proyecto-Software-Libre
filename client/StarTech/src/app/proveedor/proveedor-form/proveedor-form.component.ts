@@ -201,6 +201,7 @@ export class ProveedorFormComponent implements OnInit {
     }
   
     const proveedorData = {
+      id: this.proveedorForm.value.id,
       nombre: this.proveedorForm.value.nombre,
       direccion: this.proveedorForm.value.direccion,
       provincia: this.provincias.find(p => p.id === this.proveedorForm.get('provincia').value).nombre,

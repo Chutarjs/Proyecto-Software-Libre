@@ -50,10 +50,15 @@ module.exports.getById = async (request, response, next) => {
                     categoria:true
                 }
             },
+            Inventario:{
+                include:{
+                    bodega:true
+                }
+            }
         }
     })
     response.json(producto)
-
+ 
 }
 
 //Crear un producto
@@ -77,32 +82,21 @@ module.exports.create = async (request, response, next) => {
 //Actualizar un producto
 module.exports.update = async (request, response, next) => {
     let producto = request.body;
-    let idProducto = parseInt(request.params.id);
+    let idProducto = parseInt(request.params.id); 
     //Obtener producto viejo
-    const productoViejo = await prisma.producto.findUnique({
-      where: { id: idProducto },
-      include: {
-        subcategoria: {
-          select:{
-            id:true
-          }
-        }
-      }
-    });
-  
     const newProducto = await prisma.producto.update({
       where: {
         id: idProducto,
       },
       data:{
-        sku: body.sku,  
-        nombre: body.nombre,
-        descripcion: body.descripcion,
-        costoUnitario: body.costoUnitario,
-        mesesGarantia: body.mesesGarantia,
-        estado: body.estado,
+        sku: producto.sku,
+        nombre: producto.nombre,
+        descripcion: producto.descripcion,
+        costoUnitario: producto.costoUnitario,
+        mesesGarantia: producto.mesesGarantia,
+        estado: producto.estado,
         subcategoria:{
-         connect: body.subcategoria
+            connect: {id: producto.subcategoria}
         }
      }
     });
