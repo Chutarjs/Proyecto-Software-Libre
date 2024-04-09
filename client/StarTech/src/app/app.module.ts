@@ -13,10 +13,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { InventarioModule } from './inventario/inventario.module';
 import { OrdenModule } from './orden/orden.module';
 import { ProveedorModule } from './proveedor/proveedor.module';
+import { CargaDatosModule } from './carga-datos/carga-datos.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -30,15 +32,20 @@ import { ProveedorModule } from './proveedor/proveedor.module';
     InventarioModule,
     OrdenModule,
     ProveedorModule,
+    CargaDatosModule,
     ToastrModule.forRoot({
       positionClass :'toast-bottom-right'
     }),
     // al final el gestor de las rutas principal
     AppRoutingModule,
+
   ],
   providers: [
     provideAnimationsAsync()
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+
+  ]
 })
 export class AppModule { }

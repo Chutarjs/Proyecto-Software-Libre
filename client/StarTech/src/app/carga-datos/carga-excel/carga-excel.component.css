@@ -1,0 +1,35 @@
+/* carga-excel.component.css */
+.container {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    color: #666;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  input[type="file"] {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  input[type="file"]:hover {
+    border-color: #aaa;
+  }
+  
+  input[type="file"]:focus {
+    border-color: #666;
+  }
+  
