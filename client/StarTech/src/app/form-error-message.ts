@@ -36,4 +36,8 @@ export const FormErrorMessage = [
   new ErrorMessage('estado', 'required', 'El estado es requerido'),
   new ErrorMessage('distrito', 'required', 'El distrito es requerido'),
 
+  new ErrorMessage('fechaCreacion', 'required', 'La fecha de creacion es requerida'),
+  new ErrorMessage('bodega', 'required', 'La bodega es requerida'),
+  new ErrorMessage('proveedor', 'required', 'El proveedor es requerido'),
+  new ErrorMessage('usuario', 'required', 'El usuario es requerido'),
 ];

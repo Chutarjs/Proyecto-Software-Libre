@@ -17,13 +17,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { OrdenRoutingModule } from './orden-routing.module';
 import { OrdenIndexComponent } from './orden-index/orden-index.component';
 import { OrdenDetailComponent } from './orden-detail/orden-detail.component';
-
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { OrdenFormComponent } from './orden-form/orden-form.component';
 
 
 @NgModule({
   declarations: [
     OrdenIndexComponent,
-    OrdenDetailComponent
+    OrdenDetailComponent,
+    OrdenFormComponent
   ],
   imports: [
     CommonModule,
@@ -39,9 +41,10 @@ import { OrdenDetailComponent } from './orden-detail/orden-detail.component';
     MatDividerModule,
     MatDialogModule,
     MatInputModule,
-    MatSelectModule,
+    MatSelectModule, 
     MatRadioModule,
-    MatChipsModule
+    MatChipsModule,
+    ReactiveFormsModule
   ]
 })
 export class OrdenModule { }

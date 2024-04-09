@@ -1,6 +1,18 @@
 <div class="grid-container">
   <mat-card>
-    <mat-card-header><h1 class="mat-h1">Ordenes de Compra</h1></mat-card-header>
+    <mat-card-header>
+      <h1 class="mat-h1">Ordenes de Compra</h1>
+      <button 
+      mat-fab
+      color="accent"
+      matTooltip="Crear Orden"
+      aria-label="Crear Orden"
+      color="primary"
+      (click)="crearOrden()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card-header>
     <mat-card-content>
       <mat-form-field class="full-width">
         <mat-label>Id de la orden</mat-label>
@@ -9,7 +21,7 @@
           <mat-icon>search</mat-icon>
         </button>
       </mat-form-field> 
-    </mat-card-content>
+    </mat-card-content> 
   </mat-card>
   <mat-grid-list [cols]="3" rowHeight="15em" gutterSize="10px">
     @for(item of datos; track item.id){
@@ -35,6 +47,18 @@
             >
               <mat-icon class="mat-18">info</mat-icon>
             </button>
+            @if(item.fechaRecibida == null){
+            <button 
+            mat-mini-fab
+            color="accent"
+            matTooltip="Recibir Orden"
+            aria-label="Recibir Orden"
+            color="primary"
+            (click)="recibirOrden(item.id)"
+            >
+            <mat-icon class="mat-18">check</mat-icon>
+            </button>
+            }
           </mat-card-actions>
         </mat-card>
       </mat-grid-tile>

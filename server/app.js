@@ -17,6 +17,7 @@ const subcategoriaRoutes = require("./routes/subcategoriaRoutes");
 const provinciaRoutes = require("./routes/provinciaRoutes");
 const cantonRoutes = require("./routes/cantonRoutes");
 const distritoRoutes = require("./routes/distritoRoutes");
+const usuarioRoutes = require("./routes/usuarioRoutes");
 
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
@@ -34,6 +35,7 @@ extended: true,
 })
 );
 //---- Definir rutas ----
+app.use("/usuario/", usuarioRoutes);
 app.use("/producto/", productoRouter);
 app.use("/bodega/", bodegaRouter);
 app.use("/inventario/", inventarioRouter);

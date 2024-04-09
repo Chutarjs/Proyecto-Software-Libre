@@ -51,6 +51,14 @@ calcularTotal(productos: any[]): number {
     this.router.navigate(['/orden',id])
   }
 
+  recibirOrden(id:number){
+    this.router.navigate(['/orden',id])
+  }
+
+  crearOrden(){
+    this.router.navigate(['/orden/create'])
+  }
+  
   ngOnDestroy(){
     this.destroy$.next(true)
     this.destroy$.unsubscribe()

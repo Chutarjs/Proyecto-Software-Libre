@@ -37,7 +37,50 @@ module.exports.getById = async (request, response, next) => {
     })
     response.json(orden)
 }
-//Crear
+//Crear una orden
 module.exports.create = async (request, response, next) => {
-
-}
+    let body=request.body;
+    const nuevoProducto= await prisma.ordenCompra.create({
+        data:{
+           fechaGeneracion: body.fechaGeneracion,  
+           proveedorId:{
+            connect:{ id: body.proveedor}
+           },
+           bodegaId:{
+            connect:{
+                id: body.bodega
+            }
+           },
+           productos: { // Array de productos a conectar
+            connect: body.productos.map(producto => ({ id: producto }))
+           },
+        }
+    })
+    response.json(nuevaOrden)
+};
+//Actualizar un producto
+module.exports.update = async (request, response, next) => {
+    let orden = request.body;
+    let idOrden = parseInt(request.params.id); 
+    //Obtener producto viejo
+    const newOrden = await prisma.ordenCompra.update({
+      where: {
+        id: idOrden,
+      },
+      data:{
+        fechaGeneracion: orden.fechaGeneracion,  
+        proveedorId:{
+         connect:{ id: orden.proveedor}
+        },
+        bodegaId:{
+         connect:{
+             id: orden.bodega
+         }
+        },
+        productos: { // Array de productos a conectar
+         connect: orden.productos.map(producto => ({ id: producto }))
+        },
+     }
+    });
+    response.json(newOrden);
+};
