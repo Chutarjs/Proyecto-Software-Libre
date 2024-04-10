@@ -6,7 +6,7 @@ module.exports.get = async (request, response, next) => {
         orderBy:{
             fechaGeneracion: 'asc'
         },
-        include:{
+        include:{ 
             bodega:true,
             proveedor: true,
             productos: {
@@ -14,7 +14,7 @@ module.exports.get = async (request, response, next) => {
                     producto:true,
                     cantidad:true,
                 }                
-            }
+            } 
         }
     })
     response.json(ordenes)
@@ -40,24 +40,28 @@ module.exports.getById = async (request, response, next) => {
 //Crear una orden
 module.exports.create = async (request, response, next) => {
     let body=request.body;
-    const nuevoProducto= await prisma.ordenCompra.create({
+
+    const nuevaOrden= await prisma.ordenCompra.create({
         data:{
-           fechaGeneracion: body.fechaGeneracion,  
-           proveedorId:{
+           fechaGeneracion: body.fechaCreacion,  
+           proveedor:{
             connect:{ id: body.proveedor}
            },
-           bodegaId:{
+           bodega:{
             connect:{
                 id: body.bodega
             }
-           },
+           }, 
            productos: { // Array de productos a conectar
-            connect: body.productos.map(producto => ({ id: producto }))
-           },
+            create: body.productos.map(producto => ({
+                producto: { connect: { id: producto.id } },
+                cantidad: producto.cantidad
+            }))
+            },
         }
     })
     response.json(nuevaOrden)
-};
+}; 
 //Actualizar un producto
 module.exports.update = async (request, response, next) => {
     let orden = request.body;

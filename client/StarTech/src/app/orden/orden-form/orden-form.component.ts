@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from '../../share/generic.service';
 import { NotificacionService, TipoMessage } from '../../shared/services/notification.service';
 import { FormErrorMessage } from '../../form-error-message';
 import { tick } from '@angular/core/testing';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+
 
 @Component({
   selector: 'app-orden-form',
@@ -16,13 +18,20 @@ export class OrdenFormComponent implements OnInit {
   destroy$: Subject<boolean> = new Subject<boolean>();
   //Titulo
   titleForm: string = 'Crear';
+  //fecha
+  today = new Date();
+  fechaCreacion = new FormControl({value: this.today, disabled: true});
   //Lista de proveedores
   proveedores: any;
   //Lista de bodegas
   bodegas: any;
   //Lista de usuarios
   usuarios: any;
-  //Orden a actualizar
+  //todos los productos
+  todosProductos: any;
+  //productos seleccionados
+  listaProductos: any;
+  //Orden a actualizar 
   ordenInfo: any;
   //Respuesta del API crear/modificar
   respOrden: any;
@@ -54,6 +63,7 @@ export class OrdenFormComponent implements OnInit {
         this.cargarProveedores();
         this.cargarBodegas();
         this.cargarUsuarios();
+        this.cargarProductos();
         //Obtener videojuego a actualizar del API
         this.gService
           .get('orden', this.idOrden)
@@ -75,7 +85,12 @@ export class OrdenFormComponent implements OnInit {
             console.log(this.ordenInfo)
           })
       }
+      else
+      {
+        this.fechaCreacion.setValue(this.today);
+      }
     })
+    this.cargarProductos();
     this.cargarProveedores();
     this.cargarBodegas();
     this.cargarUsuarios();
@@ -88,10 +103,53 @@ export class OrdenFormComponent implements OnInit {
       proveedor:[null,Validators.required],
       bodega: [null,Validators.required],
       usuario: [null,Validators.required],
-            
+      productos: [null, Validators.required]
     })
   }
-
+  agregarProducto() {
+    // Assuming you want to add the first product from todosProductos to listaProductos
+    if (this.todosProductos && this.todosProductos.length > 0) {
+      const productoToAdd = this.todosProductos[0]; // Getting the first product from todosProductos
+    if (!this.listaProductos) {
+      this.listaProductos = []; // Initialize listaProductos if it's null
+    }
+    productoToAdd.cantidad = 1; // Inicializar la cantidad
+    const cantidadControl = new FormControl(productoToAdd.cantidad);
+    this.ordenForm.addControl('cantidad_' + this.listaProductos.length, cantidadControl);
+      this.listaProductos.push(productoToAdd); // Adding the product to listaProductos
+    } else {
+      console.log('No hay productos disponibles para agregar.');
+    }
+  }
+  eliminarProducto() {
+    if (this.listaProductos && this.listaProductos.length > 0) {
+      this.listaProductos.pop(); // Remove the last product from the array
+      console.log('Último producto eliminado.');
+    } else {
+      console.log('No hay productos en la lista para eliminar.');
+    }
+  }
+  cambiarCantidad(i, producto, cantidad) {
+    console.log("i:" + i)
+    console.log("producto:" + producto)
+    console.log("cantidad:" + cantidad)
+  }
+  cambiarProductoSeleccionado(i, prod){
+        if (!this.listaProductos) {
+          this.listaProductos = []; // Initialize listaProductos if it's null
+        }
+          this.listaProductos[i] = prod; // Adding the product to listaProductos
+  }
+  cargarProductos() {
+    this.todosProductos = null;
+     this.gService
+      .list('producto')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        console.log(data);
+        this.todosProductos = data;
+      }); 
+    }
     cargarProveedores() {
     this.proveedores = null;
      this.gService
@@ -142,9 +200,18 @@ export class OrdenFormComponent implements OnInit {
   
   submitOrden(): void {
     //Establecer submit verdadero
+    this.ordenForm.get('fechaCreacion').setValue(this.today)
+    for (let i = 0; i < this.listaProductos.length; i++) {
+      this.listaProductos[i].cantidad = this.ordenForm.get('cantidad_'+i.toString()).value
+  }
+  
+    let productosForm=this.listaProductos
+
+    this.ordenForm.patchValue({productos:productosForm})
     this.submitted = true;
     //Verificar validación
     if (this.ordenForm.invalid) {
+      console.log(this.ordenForm)
       return;
     }
 
@@ -152,18 +219,14 @@ export class OrdenFormComponent implements OnInit {
     let proveedorForm=this.ordenForm.get('proveedor').value
     let bodegaForm=this.ordenForm.get('bodega').value
     let usuarioForm=this.ordenForm.get('usuario').value
-                    
     //Asignar valor al formulario
     //setValue
     this.ordenForm.patchValue({proveedores:proveedorForm})
     this.ordenForm.patchValue({bodegas:bodegaForm})
     this.ordenForm.patchValue({usuarios:usuarioForm})
+    this.ordenForm.patchValue({productos:productosForm})
     
     console.log(this.ordenForm.value);
-
-    // this.productoForm.get('costoUnitario').setValue(parseFloat(this.productoForm.get('costoUnitario').value))
-    // this.productoForm.get('mesesGarantia').setValue(parseInt(this.productoForm.get('mesesGarantia').value))
-  
     if (this.isCreate) {
       //Accion API create enviando toda la informacion del formulario
       this.gService
@@ -176,7 +239,7 @@ export class OrdenFormComponent implements OnInit {
           `Orden creado: ${data.nombre}`,
           TipoMessage.success,
           'orden-table')
-           this.router.navigate(['/orden-table']); 
+           this.router.navigate(['/orden']); 
         }); 
     } else {
       //Accion API actualizar enviando toda la informacion del formulario
@@ -191,7 +254,7 @@ export class OrdenFormComponent implements OnInit {
           `Orden actualizado: ${data.nombre}`,
           TipoMessage.success,
           'orden-table')
-           this.router.navigate(['/orden-table']); 
+           this.router.navigate(['/orden']); 
         }); 
     }
   }

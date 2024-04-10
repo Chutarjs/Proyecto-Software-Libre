@@ -19,6 +19,8 @@ import { OrdenIndexComponent } from './orden-index/orden-index.component';
 import { OrdenDetailComponent } from './orden-detail/orden-detail.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { OrdenFormComponent } from './orden-form/orden-form.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -44,6 +46,8 @@ import { OrdenFormComponent } from './orden-form/orden-form.component';
     MatSelectModule, 
     MatRadioModule,
     MatChipsModule,
+    MatDatepickerModule, 
+    MatNativeDateModule,
     ReactiveFormsModule
   ]
 })

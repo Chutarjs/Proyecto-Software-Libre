@@ -10,18 +10,15 @@
             <p> Encabezado Orden: </p>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col">
-            <input matInput formControlName="fechaCreacion" type="Date" readonly placeholder="Fecha de Creacion" >
-            @if (errorHandling('fechaCreacion')) {
-            <mat-error>
-                {{errorHandling('fechaCreacion')}}
-            </mat-error>
-            }
-        </div>
-    </div>
-    
+      
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Fecha</mat-label>
+          <input matInput [matDatepicker]="picker" [formControl]="fechaCreacion">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
  <!-- Proveedor -->
  <div class="row">
   <div class="col">
@@ -59,6 +56,50 @@
     </mat-form-field>
   </div>
 </div>
+<div class="row">
+  <div class="col">
+      <p> Detalle Orden: </p>
+  </div>
+</div>
+
+      <button mat-raised-button (click)="agregarProducto()" color="primary">Agregar Producto</button>
+      <button mat-raised-button (click)="eliminarProducto()" color="warn">Eliminar Producto</button>
+      <!-- Agregar productos -->
+      <div>
+        <div *ngFor="let producto of listaProductos; let i = index">
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-select placeholder="Producto" formControlName="todosProductos">
+                  <mat-option *ngFor="let prod of todosProductos" [value]="prod.id" (click)="cambiarProductoSeleccionado(i, prod)">
+                    {{ prod.nombre }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div>
+                <mat-form-field appearance="fill">
+                  <mat-label>Cantidad</mat-label>
+                  <input matInput type="number" [formControlName]="'cantidad_' + i">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Costo Unitario</mat-label>
+                  <input matInput type="number" readonly value="{{ producto.costoUnitario }}">
+                </mat-form-field>
+                <!-- <mat-form-field appearance="fill">
+                  <mat-label>Subtotal</mat-label>
+                  <input matInput type="number" readonly value="{{ producto.costoUnitario * this.cantidad}}">
+                </mat-form-field> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+            <p> Subtotal: </p>
+        </div>
+      </div>
 
     </mat-card-content>
     <mat-card-actions>
