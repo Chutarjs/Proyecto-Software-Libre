@@ -18,7 +18,7 @@ module.exports.get = async (request, response, next) => {
         }
     })
     response.json(ordenes)
-}
+} 
 //Obtener por Id
 module.exports.getById = async (request, response, next) => {
     let idOrden=parseInt(request.params.id)
@@ -48,7 +48,7 @@ module.exports.create = async (request, response, next) => {
             connect:{ id: body.proveedor}
            },
            bodega:{
-            connect:{
+            connect:{ 
                 id: body.bodega
             }
            }, 
@@ -62,29 +62,20 @@ module.exports.create = async (request, response, next) => {
     })
     response.json(nuevaOrden)
 }; 
-//Actualizar un producto
+//Actualizar una orden
 module.exports.update = async (request, response, next) => {
-    let orden = request.body;
-    let idOrden = parseInt(request.params.id); 
+    console.log("Orden: " + request);
+    // Obtener la fecha actual
+    const fechaActual = new Date();
     //Obtener producto viejo
     const newOrden = await prisma.ordenCompra.update({
       where: {
-        id: idOrden,
+        id: parseInt(request.params.id),
       },
       data:{
-        fechaGeneracion: orden.fechaGeneracion,  
-        proveedorId:{
-         connect:{ id: orden.proveedor}
-        },
-        bodegaId:{
-         connect:{
-             id: orden.bodega
-         }
-        },
-        productos: { // Array de productos a conectar
-         connect: orden.productos.map(producto => ({ id: producto }))
-        },
+        fechaRecibida: fechaActual,
      }
     });
-    response.json(newOrden);
+
+    response.json(newOrden)
 };

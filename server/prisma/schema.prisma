@@ -153,7 +153,7 @@ model OrdenCompra {
 
 // Relación muchos a muchos entre OrdenCompra y Producto
 model ProductoOrdenCompra {
-  ordenCompraId    Int
+  ordenCompraId    Int 
   ordenCompra      OrdenCompra @relation(fields: [ordenCompraId], references: [id])
   productoId       Int
   producto         Producto    @relation(fields: [productoId], references: [id])

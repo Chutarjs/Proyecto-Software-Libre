@@ -1,4 +1,4 @@
-<form [formGroup]="ordenForm" (ngSubmit)="submitOrden()"  novalidate >
+<form [formGroup]="ordenForm" novalidate >
   <input type="hidden" formControlName="id" />
   <mat-card class="shipping-card"> 
     <mat-card-header>
@@ -50,7 +50,7 @@
     <mat-form-field class="full-width">
       <mat-select placeholder="Usuario" formControlName="usuario">
         <mat-option *ngFor="let usuario of usuarios" [value]="usuario.id">
-          {{ usuario.nombre }}
+          {{ usuario.id + " - " + usuario.nombre }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -106,7 +106,7 @@
       <div class="example-button-row">
       <button mat-raised-button color="warn" (click)="onReset()">Reset</button>
       <button mat-raised-button color="primary" (click)="onBack()">Regresar</button>
-      <button mat-raised-button color="accent" type="submit">Guardar</button>
+      <button mat-raised-button color="accent" (click)="submitOrden()">Guardar</button>
       </div>
     </mat-card-actions>
   </mat-card>

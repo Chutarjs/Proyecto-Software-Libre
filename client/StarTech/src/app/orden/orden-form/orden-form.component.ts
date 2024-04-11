@@ -226,7 +226,6 @@ export class OrdenFormComponent implements OnInit {
     this.ordenForm.patchValue({usuarios:usuarioForm})
     this.ordenForm.patchValue({productos:productosForm})
     
-    console.log(this.ordenForm.value);
     if (this.isCreate) {
       //Accion API create enviando toda la informacion del formulario
       this.gService
@@ -236,24 +235,9 @@ export class OrdenFormComponent implements OnInit {
           //Obtener respuesta
           this.respOrden = data;
           this.noti.mensajeRedirect('Crear Orden', 
-          `Orden creado: ${data.nombre}`,
+          `Orden creado: ${data.id}`,
           TipoMessage.success,
-          'orden-table')
-           this.router.navigate(['/orden']); 
-        }); 
-    } else {
-      //Accion API actualizar enviando toda la informacion del formulario
-       this.gService
-        .update('orden', this.ordenForm.value)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((data: any) => {
-          //Obtener respuesta
-          this.respOrden = data;
-          
-          this.noti.mensajeRedirect('Actualizar Orden', 
-          `Orden actualizado: ${data.nombre}`,
-          TipoMessage.success,
-          'orden-table')
+          'orden')
            this.router.navigate(['/orden']); 
         }); 
     }
@@ -264,7 +248,7 @@ export class OrdenFormComponent implements OnInit {
     this.ordenForm.reset();
   }
   onBack() {
-    this.router.navigate(['/orden-table']); 
+    this.router.navigate(['/orden']); 
   }
   ngOnDestroy() {
     this.destroy$.next(true);

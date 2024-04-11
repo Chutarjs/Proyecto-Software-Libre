@@ -10,4 +10,4 @@ router.post('/',ordenCompraController.create)
 router.get('/:id',ordenCompraController.getById) 
 router.put('/:id',ordenCompraController.update)
 
-module.exports=router
+module.exports=router 

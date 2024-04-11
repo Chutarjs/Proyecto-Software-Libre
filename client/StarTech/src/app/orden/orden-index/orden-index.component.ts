@@ -3,6 +3,7 @@ import {MatTableModule} from '@angular/material/table';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from '../../share/generic.service';
 import { Router } from '@angular/router';
+import { NotificacionService, TipoMessage } from '../../shared/services/notification.service';
 
 @Component({
   selector: 'app-orden-index',
@@ -19,7 +20,7 @@ export class OrdenIndexComponent  {
   constructor(
     private gService: GenericService,
     private router: Router,
-
+    private noti:NotificacionService
     )
     {
       
@@ -31,7 +32,6 @@ export class OrdenIndexComponent  {
     this.gService.list('orden/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data)=>{
-        console.log(data)
         this.datos=data
       })
   }
@@ -41,7 +41,6 @@ calcularTotal(productos: any[]): number {
   let total = 0;
   for (let producto of productos) {
     total += producto.cantidad * producto.producto.costoUnitario;
-    console.log(total);
   }
   return total;
 }
@@ -51,9 +50,29 @@ calcularTotal(productos: any[]): number {
     this.router.navigate(['/orden',id])
   }
 
-  recibirOrden(id:number){
-    this.router.navigate(['/orden',id])
+  recibirOrden(id: number) {
+    const request = { id: id }; // Create an object with the order ID
+    this.gService
+      .update('orden', request) // Pass the request object
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data: any) => {
+          //Obtener respuesta
+          this.noti.mensajeRedirect(
+            'Crear Orden', 
+            `Orden recibida: ${data.id}`,
+            TipoMessage.success,
+            'orden'
+          );
+          this.router.navigate(['/orden', id]); 
+        },
+        (error) => {
+          // Handle error if needed
+          console.error("Error receiving order:", error);
+        }
+      ); 
   }
+  
 
   crearOrden(){
     this.router.navigate(['/orden/create'])
