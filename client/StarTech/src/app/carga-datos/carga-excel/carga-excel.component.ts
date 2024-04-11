@@ -1,5 +1,7 @@
+//Este componente contendrá la lógica para manejar la carga de archivos Excel desde la interfaz de usuario
+
 import { Component } from '@angular/core';
-import { ExcelService } from '../../excel.service';
+import { CargaExcelService } from '../../excel.service';
 
 @Component({
   selector: 'app-carga-excel',
@@ -7,11 +9,18 @@ import { ExcelService } from '../../excel.service';
   styleUrls: ['./carga-excel.component.css']
 })
 export class CargaExcelComponent {
+  constructor(private cargaExcelService: CargaExcelService) {}
 
-  constructor(private excelService: ExcelService) { }
-
-  onArchivoSeleccionado(event: any): void {
-    const archivo: File = event.target.files[0];
-    this.excelService.cargarDatosDesdeExcel(archivo);
+  onFileSelected(event: any) {
+      const archivoExcel = event.target.files[0];
+      this.cargaExcelService.cargarDatosDesdeExcel(archivoExcel)
+          .subscribe(
+              response => {
+                  console.log('Datos del inventario cargados con éxito:', response);
+              },
+              error => {
+                  console.error('Error al cargar datos desde Excel:', error);
+              }
+          );
   }
 }

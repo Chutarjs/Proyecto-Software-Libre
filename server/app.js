@@ -18,6 +18,7 @@ const provinciaRoutes = require("./routes/provinciaRoutes");
 const cantonRoutes = require("./routes/cantonRoutes");
 const distritoRoutes = require("./routes/distritoRoutes");
 const usuarioRoutes = require("./routes/usuarioRoutes");
+const excelRoutes = require('./routes/excelRoutes');
 
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
@@ -47,7 +48,14 @@ app.use("/subcategoria/", subcategoriaRoutes);
 app.use("/provincia/", provinciaRoutes);
 app.use("/canton/", cantonRoutes);
 app.use("/distrito/", distritoRoutes);
+app.use('/excel', excelRoutes);
 
+app.post('/api/excel/cargar-excel', (req, res) => {
+    // Lógica para manejar la carga de archivos Excel
+  });
+  app.get('/', (req, res) => {
+    res.send('¡Hola desde el servidor!');
+  }); 
 
 // Servidor
 app.listen(port, () => { 

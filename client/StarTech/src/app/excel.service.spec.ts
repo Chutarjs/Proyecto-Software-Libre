@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ExcelService } from './excel.service';
+import { CargaExcelService } from './excel.service';
 
 @Component({
   selector: 'app-carga-datos',
@@ -8,7 +8,7 @@ import { ExcelService } from './excel.service';
 })
 export class CargaDatosComponent {
 
-  constructor(private excelService: ExcelService) { }
+  constructor(private excelService: CargaExcelService) { }
 
   onArchivoSeleccionado(event: any): void {
     const archivo: File = event.target.files[0];
