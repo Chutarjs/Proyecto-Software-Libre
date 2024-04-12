@@ -50,8 +50,9 @@ calcularTotal(productos: any[]): number {
     this.router.navigate(['/orden',id])
   }
 
-  recibirOrden(id: number) {
-    const request = { id: id }; // Create an object with the order ID
+  recibirOrden(param:any) {
+    console.log(param);
+    const request = param; // Create an object with the order ID
     this.gService
       .update('orden', request) // Pass the request object
       .pipe(takeUntil(this.destroy$))
@@ -64,7 +65,7 @@ calcularTotal(productos: any[]): number {
             TipoMessage.success,
             'orden'
           );
-          this.router.navigate(['/orden', id]); 
+          this.router.navigate(['/orden', data.id]); 
         },
         (error) => {
           // Handle error if needed

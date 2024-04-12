@@ -14,6 +14,7 @@ import { InventarioModule } from './inventario/inventario.module';
 import { OrdenModule } from './orden/orden.module';
 import { ProveedorModule } from './proveedor/proveedor.module';
 import { CargaDatosModule } from './carga-datos/carga-datos.module';
+import { AjusteInventarioModule } from './ajuste-inventario/ajuste-inventario.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { CargaDatosModule } from './carga-datos/carga-datos.module';
     }),
     // al final el gestor de las rutas principal
     AppRoutingModule,
+    AjusteInventarioModule,
 
   ],
   providers: [

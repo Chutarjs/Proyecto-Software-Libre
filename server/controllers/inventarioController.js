@@ -49,13 +49,13 @@ module.exports.getById = async (request, response, next) => {
                             }
                         }
                     }
-                }
+                } 
             },
-            bodega:{
+            bodega:{ 
                 select:{
                     ubicacion:true,
                     capacidad:true,
-                    encargados:true,
+                    encargados:true, 
                     nombre:true,
                     ajusteInventario:{
                         select:{

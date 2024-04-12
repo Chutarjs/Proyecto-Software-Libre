@@ -19,7 +19,7 @@ const routes: Routes = [
     component: InventarioFormComponent
   },
   {
-    path:'inventario/:id',component: InventarioDetailComponent
+    path:'inventario/:idBodega/:idProducto',component: InventarioDetailComponent
   },
   {
     path: 'inventario/update/:idBodega/:idProducto',

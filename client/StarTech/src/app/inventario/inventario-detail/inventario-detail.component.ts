@@ -14,9 +14,11 @@ export class InventarioDetailComponent {
 
   constructor(private route: ActivatedRoute, private gService: GenericService) {
     //Obtener párametro de la URL
-    let id = this.route.snapshot.paramMap.get('id');
-    if(!isNaN(Number(id))){
-      this.obtenerBodega(Number(id))
+    let idBodega = this.route.snapshot.paramMap.get('idBodega');
+    let idProducto = this.route.snapshot.paramMap.get('idProducto');
+
+    if(!isNaN(Number(idProducto))){
+      this.obtenerBodega(Number(idProducto))
     }
   }
   obtenerBodega(id: any) {

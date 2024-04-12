@@ -21,7 +21,7 @@
         @for(item of datos; track item.bodegaId){
             <mat-grid-tile>
                 <mat-card class="dashboard-card">
-                  <mat-card-header class="dashboard-card-header">
+                  <mat-card-header class="dashboard-card-header"> 
                     <mat-card-title>{{item.bodega.nombre}} </mat-card-title>
                   </mat-card-header>
                   <mat-card-content class="dashboard-card-content">
@@ -37,7 +37,7 @@
                       matTooltip="Detalle Bodega"
                       aria-label="Detalle Bodega"
                       color="primary"
-                      (click)="detalleInventario(item.bodegaId)"
+                      (click)="detalleInventario(item.bodegaId, item.productoId)"
                     >
                       <mat-icon class="mat-18">info</mat-icon>
                     </button>

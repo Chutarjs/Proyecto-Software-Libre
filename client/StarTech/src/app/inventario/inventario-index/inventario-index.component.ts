@@ -37,8 +37,8 @@ export class InventarioIndexComponent {
       });
   }
 
-  detalleInventario(id: number) {
-    this.router.navigate(['/inventario', id]);
+  detalleInventario(idBodega: number, idProducto:number) {
+    this.router.navigate(['/inventario', idProducto, idBodega]);
   }
 
   ngOnDestroy() {

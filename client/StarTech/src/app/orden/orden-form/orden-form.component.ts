@@ -31,6 +31,8 @@ export class OrdenFormComponent implements OnInit {
   todosProductos: any;
   //productos seleccionados
   listaProductos: any;
+  //total
+  total: any;
   //Orden a actualizar 
   ordenInfo: any;
   //Respuesta del API crear/modificar
@@ -57,38 +59,7 @@ export class OrdenFormComponent implements OnInit {
     //Verificar si se envio un id por parametro para crear formulario para actualizar
     this.activeRouter.params.subscribe((params:Params)=>{
       this.idOrden=params['id']
-      if(this.idOrden != undefined){
-        this.isCreate=false
-        this.titleForm='Actualizar'
-        this.cargarProveedores();
-        this.cargarBodegas();
-        this.cargarUsuarios();
-        this.cargarProductos();
-        //Obtener videojuego a actualizar del API
-        this.gService
-          .get('orden', this.idOrden)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((data)=>{
-            this.ordenInfo=data
-            //Establecer valores a precargar en el formulario
-            this.ordenForm.patchValue({
-              id: this.ordenInfo.id,
-              nombre: this.ordenInfo.nombre,
-              descripcion: this.ordenInfo.descripcion,
-              costoUnitario: this.ordenInfo.costoUnitario,
-              mesesGarantia: this.ordenInfo.mesesGarantia,
-              estado: this.ordenInfo.estado,
-              categoria: this.ordenInfo.subcategoria.categoria.id,
-              subcategoria: this.ordenInfo.subcategoriaId,
-              sku: this.ordenInfo.sku
-            });
-            console.log(this.ordenInfo)
-          })
-      }
-      else
-      {
         this.fechaCreacion.setValue(this.today);
-      }
     })
     this.cargarProductos();
     this.cargarProveedores();
@@ -103,7 +74,8 @@ export class OrdenFormComponent implements OnInit {
       proveedor:[null,Validators.required],
       bodega: [null,Validators.required],
       usuario: [null,Validators.required],
-      productos: [null, Validators.required]
+      productos: [null, Validators.required],
+      total: [null, null]
     })
   }
   agregarProducto() {
@@ -113,9 +85,13 @@ export class OrdenFormComponent implements OnInit {
     if (!this.listaProductos) {
       this.listaProductos = []; // Initialize listaProductos if it's null
     }
-    productoToAdd.cantidad = 1; // Inicializar la cantidad
-    const cantidadControl = new FormControl(productoToAdd.cantidad);
-    this.ordenForm.addControl('cantidad_' + this.listaProductos.length, cantidadControl);
+      productoToAdd.cantidad = 1; // Inicializar la cantidad
+      productoToAdd.subtotal = productoToAdd.cantidad * productoToAdd.costoUnitario;
+      const cantidadControl = new FormControl(productoToAdd.cantidad);
+      const subtotal = new FormControl((productoToAdd.cantidad*productoToAdd.costoUnitario));
+
+      this.ordenForm.addControl('cantidad_' + this.listaProductos.length, cantidadControl);
+      this.ordenForm.addControl('subtotal_' + this.listaProductos.length, subtotal);
       this.listaProductos.push(productoToAdd); // Adding the product to listaProductos
     } else {
       console.log('No hay productos disponibles para agregar.');
@@ -129,16 +105,35 @@ export class OrdenFormComponent implements OnInit {
       console.log('No hay productos en la lista para eliminar.');
     }
   }
-  cambiarCantidad(i, producto, cantidad) {
+  cambiarCantidad(i) {
     console.log("i:" + i)
-    console.log("producto:" + producto)
-    console.log("cantidad:" + cantidad)
+    const cantidad = this.ordenForm.get('cantidad_'+i).value; 
+    this.ordenForm.get('subtotal_'+i).setValue(cantidad*this.listaProductos[i].costoUnitario);
+    this.cambiarTotal();
+  }
+  cambiarTotal() {
+    var total = 0;
+    for(let product in this.listaProductos)
+    {
+      console.log(product);
+      console.log(this.ordenForm);
+      total += this.ordenForm.get('subtotal_'+product).value;
+    }
+    console.log(this.ordenForm.get('total'));
+    this.ordenForm.get('total').setValue(total);
   }
   cambiarProductoSeleccionado(i, prod){
-        if (!this.listaProductos) {
-          this.listaProductos = []; // Initialize listaProductos if it's null
-        }
-          this.listaProductos[i] = prod; // Adding the product to listaProductos
+    for(var productoKey in this.listaProductos){
+      var producto = this.listaProductos[productoKey];
+      if(producto.nombre == prod.nombre){
+        this.noti.mensajeRedirect('Añadir producto', 
+        `Ese producto ya fue añadido`, 
+        TipoMessage.warning,
+        'orden/create')
+      }
+    }
+    this.listaProductos[i] = prod; // Adding the product to listaProductos
+    this.cambiarCantidad(i);
   }
   cargarProductos() {
     this.todosProductos = null;
