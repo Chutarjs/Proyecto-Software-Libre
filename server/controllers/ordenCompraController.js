@@ -62,12 +62,12 @@ module.exports.create = async (request, response, next) => {
     })
     response.json(nuevaOrden)
 }; 
+
 //Actualizar una orden
 module.exports.update = async (request, response, next) => {
-    console.log("Orden: " + request);
-    // Obtener la fecha actual
+    // Obtener la fecha actual que es la fecha de recepcion
     const fechaActual = new Date();
-    //Obtener producto viejo
+    //Añade la fecha de recepcion
     const newOrden = await prisma.ordenCompra.update({
       where: { 
         id: parseInt(request.params.id),
@@ -76,24 +76,23 @@ module.exports.update = async (request, response, next) => {
         fechaRecibida: fechaActual,
      }
     }); 
-    response.json(newOrden)
- 
-    let inventario = request.body;
-    console.log("inventario: " + parseInt(request.body.bodegaId)); 
+
+    //se añaden los productos al inventario
+    let inventario = request.body; 
     let idBodega = parseInt(request.body.bodegaId);
+
     for(var product in inventario.productos){
         let idProducto = parseInt(request.body.productos[product].producto.id);
-        console.log("Producto: "+ idProducto);
-        //Obtener inventario viejo 
-        const inventarioViejo = await prisma.inventario.findFirst({ 
-        where: { bodegaId: idBodega, productoId: idProducto} 
+        //Obtener inventario si existe
+        let inventarioViejo = await prisma.inventario.findFirst({ 
+            where: { bodegaId: idBodega, productoId: idProducto} 
         }); 
         if(inventarioViejo == null){
-            const nuevoInventario= await prisma.inventario.createMany({
+            const nuevoInventario= await prisma.inventario.create({
                 data:{ 
-                   cantidadStock: parseInt(request.body.productos[product].cantidad),
-                   cantidadMaxima: 10000,
-                   cantidadMinima: 0,
+                    cantidadStock: parseInt(request.body.productos[product].cantidad),
+                    cantidadMaxima: 10000,
+                    cantidadMinima: 0,
                     bodegaId: idBodega,
                     productoId: idProducto
                 }
@@ -102,11 +101,11 @@ module.exports.update = async (request, response, next) => {
         }
         else    
         { 
-            const newInventario = await prisma.inventario.updateMany({
+            const newInventario = await prisma.inventario.update({
             where: {
             productoId: idProducto,
             bodegaId: idBodega
-            },
+            }, 
             data:{
             cantidadStock: product.cantidad + inventarioViejo? inventarioViejo.cantidadStock: 0,
             }
