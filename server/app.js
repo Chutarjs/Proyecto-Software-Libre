@@ -18,6 +18,7 @@ const provinciaRoutes = require("./routes/provinciaRoutes");
 const cantonRoutes = require("./routes/cantonRoutes");
 const distritoRoutes = require("./routes/distritoRoutes");
 const usuarioRoutes = require("./routes/usuarioRoutes");
+const ajusteRoutes = require("./routes/ajusteRoutes");
 // const excelRoutes = require('./routes/excelRoutes');
 
 // Acceder a la configuracion del archivo .env
@@ -37,6 +38,7 @@ extended: true,
 );
 //---- Definir rutas ----
 app.use("/usuario/", usuarioRoutes);
+app.use("/ajuste/", ajusteRoutes)
 app.use("/producto/", productoRouter);
 app.use("/bodega/", bodegaRouter);
 app.use("/inventario/", inventarioRouter);

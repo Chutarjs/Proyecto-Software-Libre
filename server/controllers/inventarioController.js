@@ -81,15 +81,15 @@ module.exports.create = async (request, response, next) => {
     console.log(body);
     const nuevoInventario= await prisma.inventario.create({
         data:{
-           cantidadStock: body.cantidadStock,
-           cantidadMaxima: body.cantidadMaxima,
-           cantidadMinima: body.cantidadMinima,
-           bodega: {
-            connect: { id: body.bodegas } // Assuming you have a unique identifier for bodega, replace `body.bodegaId` with the actual unique identifier
-        },
-        producto: {
-            connect: { id: body.productos } // Assuming you have a unique identifier for producto, replace `body.productoId` with the actual unique identifier
-        }
+            cantidadStock: body.cantidadStock,
+            cantidadMaxima: body.cantidadMaxima,
+            cantidadMinima: body.cantidadMinima,
+            bodega: {
+             connect: { id: body.bodegas } // Assuming you have a unique identifier for bodega, replace `body.bodegaId` with the actual unique identifier
+            },
+            producto: {
+              connect: { id: body.productos } // Assuming you have a unique identifier for producto, replace `body.productoId` with the actual unique identifier
+            }
         }
     })
     response.json(nuevoInventario)
