@@ -19,7 +19,7 @@
     </mat-card>
     <mat-grid-list [cols]="4" rowHeight="15em" gutterSize="10px">
         @for(item of datos; track item.bodegaId){
-            <mat-grid-tile>
+            <mat-grid-tile> 
                 <mat-card class="dashboard-card">
                   <mat-card-header class="dashboard-card-header"> 
                     <mat-card-title>{{item.bodega.nombre}} </mat-card-title>

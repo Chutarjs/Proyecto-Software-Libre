@@ -17,13 +17,13 @@ export class InventarioDetailComponent {
     let idBodega = this.route.snapshot.paramMap.get('idBodega');
     let idProducto = this.route.snapshot.paramMap.get('idProducto');
 
-    if(!isNaN(Number(idProducto))){
-      this.obtenerBodega(Number(idProducto))
+    if(!isNaN(Number(idProducto)) && !isNaN(Number(idBodega))){
+      this.obtenerBodega(Number(idBodega), Number(idProducto))
     }
   }
-  obtenerBodega(id: any) {
+  obtenerBodega(idBodega: any, idProducto: any) {
     this.gService
-      .get('bodega',id)
+      .get('inventario',idBodega + "/" + idProducto)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         console.log(data);

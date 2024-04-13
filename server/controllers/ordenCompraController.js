@@ -69,7 +69,7 @@ module.exports.update = async (request, response, next) => {
     const fechaActual = new Date();
     //Obtener producto viejo
     const newOrden = await prisma.ordenCompra.update({
-      where: {
+      where: { 
         id: parseInt(request.params.id),
       },
       data:{
@@ -113,5 +113,5 @@ module.exports.update = async (request, response, next) => {
             });
             response.json(newInventario);
         } 
-    }
-};
+    } 
+}; 
