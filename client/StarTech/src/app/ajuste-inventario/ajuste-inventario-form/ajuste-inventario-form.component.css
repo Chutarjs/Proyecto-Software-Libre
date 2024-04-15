@@ -1,31 +1,42 @@
-.full-width {
-  width: 100%;
-}
-
 .shipping-card {
-  min-width: 120px;
-  margin: 20px auto;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.mat-radio-button {
-  display: block;
-  margin: 5px 0;
+.mat-card-header {
+  background-color: #2196F3;
+  color: white;
+}
+
+.mat-card-content {
+  padding: 20px 0;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .row {
+  margin-bottom: 20px;
   display: flex;
-  flex-direction: row;
 }
 
 .col {
   flex: 1;
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
-.col:last-child {
-  margin-right: 0;
+textarea {
+  resize: vertical;
 }
-.example-button-row {
-  display: table-cell;
-  max-width: 600px;
+
+button {
+  margin-left: 10px;
+}
+
+.mat-hint {
+  font-size: 12px;
+  color: #888;
 }

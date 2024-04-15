@@ -1,127 +1,104 @@
-<form [formGroup]="productoForm" (ngSubmit)="submitProducto()"  novalidate >
+<form [formGroup]="ordenForm" novalidate >
   <input type="hidden" formControlName="id" />
   <mat-card class="shipping-card"> 
     <mat-card-header>
-      <mat-card-title>{{titleForm}} Producto</mat-card-title>
+      <mat-card-title>{{titleForm}} Ajuste de Inventario</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
         <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput formControlName="sku" maxlength="20" readonly placeholder="SKU" >
-            <mat-hint align="end"> / 20</mat-hint>
-            @if (errorHandling('sku')) {
-            <mat-error>
-              {{errorHandling('sku')}}
-            </mat-error>
-            }
-          </mat-form-field>
+            <p> Encabezado Ajuste de Inventario: </p>
         </div>
       </div>
       
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput formControlName="nombre" placeholder="Nombre" >
-            @if (errorHandling('nombre')) {
-              <mat-error>
-                {{errorHandling('nombre')}}
-              </mat-error>
-            }
-            
-          </mat-form-field>
-        </div>
-      </div>
-      
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput formControlName="descripcion" placeholder="Descripcion" >
-            @if (errorHandling('descripcion')) {
-              <mat-error>
-                {{errorHandling('descripcion')}}
-              </mat-error>
-            }
-            
-          </mat-form-field>
-        </div>
-      </div>
-      
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput formControlName="costoUnitario" placeholder="Costo Unitario" >
-            @if (errorHandling('costoUnitario')) {
-              <mat-error>
-                {{errorHandling('costoUnitario')}}
-              </mat-error>
-            }
-            
-          </mat-form-field>
-        </div>
-      </div>
-      
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput formControlName="mesesGarantia" placeholder="Meses de Garantía" >
-            @if (errorHandling('mesesGarantia')) {
-              <mat-error>
-                {{errorHandling('mesesGarantia')}}
-              </mat-error>
-            }
-            
-          </mat-form-field>
-        </div>
-      </div>
-      
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput formControlName="estado" placeholder="Estado" >
-            @if (errorHandling('estado')) {
-              <mat-error>
-                {{errorHandling('estado')}}
-              </mat-error>
-            }
-          </mat-form-field>
-        </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Fecha</mat-label>
+          <input matInput [matDatepicker]="picker" [formControl]="fechaCreacion">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
       </div>
 
- <!-- Categorias -->
+ <!-- Bodega -->
  <div class="row">
   <div class="col">
     <mat-form-field class="full-width">
-      <mat-select placeholder="Categoria" formControlName="categoria" (selectionChange)="onChangeCategoria()">
-        <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
-          {{ categoria.nombre }}
+      <mat-select placeholder="Bodega" formControlName="bodega">
+        <mat-option *ngFor="let bodega of bodegas" [value]="bodega.id">
+          {{ bodega.nombre }}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 </div>
 
-<!-- Subcategorias -->
-
-<div class="row">
+ <!-- Usuarios -->
+ <div class="row">
   <div class="col">
     <mat-form-field class="full-width">
-      <mat-select placeholder="Subcategoria" formControlName="subcategoria" (selectionChange)="onChangeSubcategoria()">
-        <mat-option *ngFor="let subcategoria of subcategorias" [value]="subcategoria.id">
-          {{ subcategoria.nombre }}
+      <mat-select placeholder="Usuario" formControlName="usuario">
+        <mat-option *ngFor="let usuario of usuarios" [value]="usuario.id">
+          {{ usuario.id + " - " + usuario.nombre }}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 </div>
+<div class="row">
+  <div class="col">
+      <p> Detalle Ajuste de Inventario: </p>
+  </div>
+</div>
 
+      <button mat-raised-button (click)="agregarProducto()" color="primary">Agregar Producto</button>
+      <button mat-raised-button (click)="eliminarProducto()" color="warn">Eliminar Producto</button>
+      <!-- Agregar productos -->
+      <div>
+        <div *ngFor="let producto of listaProductos; let i = index">
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-select placeholder="Producto" formControlName="productos">
+                  <mat-option *ngFor="let prod of todosProductos" [value]="prod.id" (click)="cambiarProductoSeleccionado(i, prod)">
+                    {{ prod.nombre }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div>
+                <mat-form-field appearance="fill">
+                  <mat-label>Cantidad</mat-label>
+                  <input matInput type="number" [formControlName]="'cantidad_' + i" (click)="cambiarCantidad(i)">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Costo Unitario</mat-label>
+                  <input matInput type="number" readonly value="{{ producto.costoUnitario }}">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Subtotal</mat-label>
+                  <input matInput type="number" [formControlName]="'subtotal_' + i">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="fill">
+            <mat-label>Total</mat-label>
+            <input matInput type="number" formControlName="total" readonly>
+          </mat-form-field>
+        </div>
+      </div>
 
     </mat-card-content>
     <mat-card-actions>
       <div class="example-button-row">
       <button mat-raised-button color="warn" (click)="onReset()">Reset</button>
       <button mat-raised-button color="primary" (click)="onBack()">Regresar</button>
-      <button mat-raised-button color="accent" type="submit">Guardar</button>
+      <button mat-raised-button color="accent" (click)="submitOrden()">Guardar</button>
       </div>
     </mat-card-actions>
   </mat-card>

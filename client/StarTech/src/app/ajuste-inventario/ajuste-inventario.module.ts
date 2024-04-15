@@ -17,14 +17,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon'; 
 import { MatButtonModule } from '@angular/material/button';
 import { AjusteInventarioDetailComponent } from './ajuste-inventario-detail/ajuste-inventario-detail.component';
-import { AjusteInventarioAllComponent } from './ajuste-inventario-all/ajuste-inventario-all.component';
+import { AjusteInventarioIndexComponent } from './ajuste-inventario-index/ajuste-inventario-index.component';
 import { AjusteInventarioFormComponent } from './ajuste-inventario-form/ajuste-inventario-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AjusteInventarioDetailComponent,
-    AjusteInventarioAllComponent,
+    AjusteInventarioIndexComponent,
     AjusteInventarioFormComponent
   ],
   imports: [

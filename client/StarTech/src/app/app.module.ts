@@ -34,12 +34,13 @@ import { AjusteInventarioModule } from './ajuste-inventario/ajuste-inventario.mo
     OrdenModule,
     ProveedorModule,
     CargaDatosModule,
+    AjusteInventarioModule,
     ToastrModule.forRoot({
       positionClass :'toast-bottom-right'
     }),
     // al final el gestor de las rutas principal
     AppRoutingModule,
-    AjusteInventarioModule,
+    
 
   ],
   providers: [
