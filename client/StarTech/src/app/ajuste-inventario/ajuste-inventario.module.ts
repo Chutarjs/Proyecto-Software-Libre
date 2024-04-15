@@ -20,6 +20,8 @@ import { AjusteInventarioDetailComponent } from './ajuste-inventario-detail/ajus
 import { AjusteInventarioIndexComponent } from './ajuste-inventario-index/ajuste-inventario-index.component';
 import { AjusteInventarioFormComponent } from './ajuste-inventario-form/ajuste-inventario-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
     MatRadioModule,
     MatChipsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     ReactiveFormsModule, //Gestionar Formularios
   ]
 })
