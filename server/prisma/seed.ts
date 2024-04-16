@@ -149,9 +149,9 @@ const main = async () => {
       data: productoAjusteInventario,
     });
     //inventario
-    await prisma.inventario.createMany({
-      data: inventario,
-    });
+    // await prisma.inventario.createMany({
+    //   data: inventario,
+    // });
 
   } catch (error) {
     throw error;

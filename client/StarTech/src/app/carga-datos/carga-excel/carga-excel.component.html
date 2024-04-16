@@ -1,8 +1,36 @@
 <div class="container">
-    <h2>Carga de Datos desde Excel</h2>
-    <p>Seleccione un archivo Excel con los datos a cargar y haga clic en el botón para iniciar la carga:</p>
-    <div>
-      <input type="file" (change)="onFileSelected($event)" accept=".xlsx, .xls">
-    </div>    
+  <h2>Carga de Datos desde Excel</h2>
+  <p>Seleccione un archivo Excel con los datos a cargar y haga clic en el botón para iniciar la carga:</p>
+  <div>
+    <input type="file" (change)="onFileSelected($event)" accept=".xlsx, .xls">
   </div>
-  
+
+  <!-- Mostrar los datos del inventario -->
+  <div *ngIf="datosInventario.length > 0">
+    <h3>Datos del Inventario Cargados:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Bodega ID</th>
+          <th>Producto ID</th>
+          <th>Cantidad en Stock</th>
+          <th>Cantidad Mínima</th>
+          <th>Cantidad Máxima</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dato of datosInventario">
+          <td>{{ dato[0] }}</td>
+          <td>{{ dato[1] }}</td>
+          <td>{{ dato[2] }}</td>
+          <td>{{ dato[3] }}</td>
+          <td>{{ dato[4] }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button (click)="insertInventario()">
+      Insertar Inventario
+    </button>
+  </div>
+</div>

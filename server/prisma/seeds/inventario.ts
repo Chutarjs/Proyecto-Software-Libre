@@ -7,7 +7,7 @@ export const inventario = [
       cantidadMaxima: 150,
       cantidadStock: 35
     },
-    //Inventario 1 
+    //Inventario 2
     {
         bodegaId: 1,
         productoId: 3,
@@ -15,7 +15,7 @@ export const inventario = [
         cantidadMaxima: 250,
         cantidadStock: 33
     },
-    //Inventario 1 
+    //Inventario 3 
     {
         bodegaId: 1,
         productoId: 2,
@@ -23,7 +23,7 @@ export const inventario = [
         cantidadMaxima: 50,
         cantidadStock: 8
     },
-        //Inventario 1 
+        //Inventario 4 
         {
             bodegaId: 2,
             productoId: 3,
@@ -31,7 +31,7 @@ export const inventario = [
             cantidadMaxima: 250,
             cantidadStock: 170
         },
-        //Inventario 1 
+        //Inventario 5 
         {
             bodegaId: 2,
             productoId: 4,
@@ -39,7 +39,7 @@ export const inventario = [
             cantidadMaxima: 50,
             cantidadStock: 8
         },
-            //Inventario 1 
+            //Inventario 6 
     {
         bodegaId: 2,
         productoId: 5,
@@ -47,7 +47,7 @@ export const inventario = [
         cantidadMaxima: 250,
         cantidadStock: 33
     },
-    //Inventario 1 
+    //Inventario 7
     {
         bodegaId: 3,
         productoId: 2,
@@ -55,7 +55,7 @@ export const inventario = [
         cantidadMaxima: 50,
         cantidadStock: 8
     },
-        //Inventario 1 
+        //Inventario 8 
         {
             bodegaId: 3,
             productoId: 3,
@@ -63,7 +63,7 @@ export const inventario = [
             cantidadMaxima: 200,
             cantidadStock: 3
         },
-        //Inventario 1 
+        //Inventario 9 
         {
             bodegaId: 3,
             productoId: 6,
