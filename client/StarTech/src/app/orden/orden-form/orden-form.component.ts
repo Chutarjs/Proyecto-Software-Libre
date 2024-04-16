@@ -223,6 +223,7 @@ export class OrdenFormComponent implements OnInit {
     
     if (this.isCreate) {
       //Accion API create enviando toda la informacion del formulario
+      console.log(this.ordenForm)
       this.gService
         .create('orden', this.ordenForm.value)
         .pipe(takeUntil(this.destroy$))

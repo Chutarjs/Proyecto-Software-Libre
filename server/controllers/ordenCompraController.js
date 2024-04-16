@@ -77,10 +77,11 @@ module.exports.update = async (request, response, next) => {
      }
     }); 
 
+    response.json(newOrden);
+
     //se añaden los productos al inventario
     let inventario = request.body; 
     let idBodega = parseInt(request.body.bodegaId);
-
     for(var product in inventario.productos){
         let idProducto = parseInt(request.body.productos[product].producto.id);
         //Obtener inventario si existe
@@ -97,20 +98,22 @@ module.exports.update = async (request, response, next) => {
                     productoId: idProducto
                 }
             })
-            response.json(nuevoInventario)
+            // response.json(nuevoInventario)
         }
         else    
         { 
-            const newInventario = await prisma.inventario.update({
+            const newInventario = await prisma.inventario.updateMany({
             where: {
-            productoId: idProducto,
-            bodegaId: idBodega
+                bodegaId: idBodega, 
+                productoId: idProducto
             }, 
             data:{
-            cantidadStock: product.cantidad + inventarioViejo? inventarioViejo.cantidadStock: 0,
+                cantidadStock: parseInt(request.body.productos[product].cantidad) + parseInt(inventarioViejo.cantidadStock),
             }
             });
-            response.json(newInventario);
-        } 
-    } 
-}; 
+            // response.json(newInventario);
+        }
+        
+        //ajustes
+    }   
+};  
