@@ -4,9 +4,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from '../../share/generic.service';
 import { NotificacionService, TipoMessage } from '../../shared/services/notification.service';
-import { FormErrorMessage } from '../../form-error-message';
-import { tick } from '@angular/core/testing';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-ajuste-inventario-form',
@@ -25,6 +22,7 @@ export class AjusteInventarioFormComponent implements OnInit {
   ordenForm: FormGroup;
   idOrden: number = 0;
   isCreate: boolean = true;
+  tipoMovimientos: string[] = ['Entrada', 'Salida', 'Transferencia'];
 
   constructor(
     private fb: FormBuilder,
@@ -33,7 +31,7 @@ export class AjusteInventarioFormComponent implements OnInit {
     private gService: GenericService,
     private noti: NotificacionService
   ) {
-    this.formularioReactive()
+    this.formularioReactive();
   }
 
   ngOnInit(): void {
@@ -50,8 +48,10 @@ export class AjusteInventarioFormComponent implements OnInit {
       fechaCreacion: [null, Validators.required],
       bodega: [null, Validators.required],
       usuario: [null, Validators.required],
+      tipoMovimiento: [null, Validators.required],
       justificacion: [null, Validators.required],
       productos: [null, Validators.required],
+      total: [null]
     });
   }
 
@@ -77,18 +77,18 @@ export class AjusteInventarioFormComponent implements OnInit {
 
   agregarProducto() {
     if (this.todosProductos && this.todosProductos.length > 0) {
-      const productoToAdd = this.todosProductos[0]; // Getting the first product from todosProductos
+      const productoToAdd = this.todosProductos[0];
       if (!this.listaProductos) {
-        this.listaProductos = []; // Initialize listaProductos if it's null
+        this.listaProductos = [];
       }
-      productoToAdd.cantidad = 1; // Inicializar la cantidad
+      productoToAdd.cantidad = 1;
       productoToAdd.subtotal = productoToAdd.cantidad * productoToAdd.costoUnitario;
       const cantidadControl = new FormControl(productoToAdd.cantidad);
-      const subtotal = new FormControl((productoToAdd.cantidad * productoToAdd.costoUnitario));
+      const subtotal = new FormControl(productoToAdd.cantidad * productoToAdd.costoUnitario);
 
       this.ordenForm.addControl('cantidad_' + this.listaProductos.length, cantidadControl);
       this.ordenForm.addControl('subtotal_' + this.listaProductos.length, subtotal);
-      this.listaProductos.push(productoToAdd); // Adding the product to listaProductos
+      this.listaProductos.push(productoToAdd);
     } else {
       console.log('No hay productos disponibles para agregar.');
     }
@@ -96,7 +96,7 @@ export class AjusteInventarioFormComponent implements OnInit {
 
   eliminarProducto() {
     if (this.listaProductos && this.listaProductos.length > 0) {
-      this.listaProductos.pop(); // Remove the last product from the array
+      this.listaProductos.pop();
       console.log('Último producto eliminado.');
     } else {
       console.log('No hay productos en la lista para eliminar.');
@@ -104,37 +104,35 @@ export class AjusteInventarioFormComponent implements OnInit {
   }
 
   cambiarCantidad(i) {
-    console.log("i:" + i)
-    const cantidad = this.ordenForm.get('cantidad_'+i).value; 
-    this.ordenForm.get('subtotal_'+i).setValue(cantidad * this.listaProductos[i].costoUnitario);
+    const cantidad = this.ordenForm.get('cantidad_' + i).value; 
+    this.ordenForm.get('subtotal_' + i).setValue(cantidad * this.listaProductos[i].costoUnitario);
     this.cambiarTotal();
   }
+
   cambiarProductoSeleccionado(i, prod){
-    for(var productoKey in this.listaProductos){
-      var producto = this.listaProductos[productoKey];
+    for(let productoKey in this.listaProductos){
+      let producto = this.listaProductos[productoKey];
       if(producto.nombre == prod.nombre){
         this.noti.mensajeRedirect('Añadir producto', 
-        `Ese producto ya fue añadido`, 
-        TipoMessage.warning,
-        'orden/create')
+          `Ese producto ya fue añadido`, 
+          TipoMessage.warning,
+          'orden/create');
       }
     }
   }
+
   cambiarTotal() {
-    var total = 0;
+    let total = 0;
     for (let product in this.listaProductos) {
-      console.log(product);
-      console.log(this.ordenForm);
-      total += this.ordenForm.get('subtotal_'+product).value;
+      total += this.ordenForm.get('subtotal_' + product).value;
     }
-    console.log(this.ordenForm.get('total'));
     this.ordenForm.get('total').setValue(total);
   }
 
   submitOrden(): void {
     this.ordenForm.get('fechaCreacion').setValue(this.today);
     for (let i = 0; i < this.listaProductos.length; i++) {
-      this.listaProductos[i].cantidad = this.ordenForm.get('cantidad_'+i.toString()).value;
+      this.listaProductos[i].cantidad = this.ordenForm.get('cantidad_' + i.toString()).value;
     }
     let productosForm = this.listaProductos;
     this.ordenForm.patchValue({ productos: productosForm });

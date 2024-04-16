@@ -19,6 +19,7 @@ const cantonRoutes = require("./routes/cantonRoutes");
 const distritoRoutes = require("./routes/distritoRoutes");
 const usuarioRoutes = require("./routes/usuarioRoutes");
 const ajusteRoutes = require("./routes/ajusteRoutes");
+const tipoMovimientoRoutes = require('./tipoMovimientoRoutes');
 // const excelRoutes = require('./routes/excelRoutes');
 
 // Acceder a la configuracion del archivo .env
@@ -50,6 +51,7 @@ app.use("/subcategoria/", subcategoriaRoutes);
 app.use("/provincia/", provinciaRoutes);
 app.use("/canton/", cantonRoutes);
 app.use("/distrito/", distritoRoutes);
+app.use('/tipoMovimiento', tipoMovimientoRoutes);
 // app.use('/excel', excelRoutes);
 
 // app.post('/api/excel/cargar-excel', (req, res) => {
