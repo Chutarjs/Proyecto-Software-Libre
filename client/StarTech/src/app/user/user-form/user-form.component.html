@@ -1,0 +1,101 @@
+<form [formGroup]="proveedorForm" (ngSubmit)="submitProveedor()" novalidate>
+  <input type="hidden" formControlName="id" />
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>{{titleForm}} Proveedor</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="nombre" placeholder="Nombre">
+            <mat-error *ngIf="errorHandling('nombre')">
+              {{errorHandling('nombre')}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="direccion" placeholder="Direccion">
+            <mat-error *ngIf="errorHandling('direccion')">
+              {{errorHandling('direccion')}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+ <!-- Dropdown de Provincias -->
+<div class="row">
+  <div class="col">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Provincia" formControlName="provincia" (selectionChange)="onChangeProvincia()">
+        <mat-option *ngFor="let provincia of provincias" [value]="provincia.id">
+          {{ provincia.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+<!-- Dropdown de Cantones -->
+<div class="row">
+  <div class="col">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Canton" formControlName="canton" (selectionChange)="onChangeCanton()">
+        <mat-option *ngFor="let canton of cantones" [value]="canton.id">
+          {{ canton.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+<!-- Dropdown de Distritos -->
+<div class="row">
+  <div class="col">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Distrito" formControlName="distrito">
+        <mat-option *ngFor="let distrito of distritos" [value]="distrito.id">
+          {{ distrito.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="correoElectronico" placeholder="Correo Electrónico">
+            <mat-error *ngIf="errorHandling('correoElectronico')">
+              {{errorHandling('correoElectronico')}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="numeroTelefono" placeholder="Número de Teléfono">
+            <mat-error *ngIf="errorHandling('numeroTelefono')">
+              {{errorHandling('numeroTelefono')}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="example-button-row">
+        <button mat-raised-button color="warn" (click)="onReset()">Reset</button>
+        <button mat-raised-button color="primary" (click)="onBack()">Regresar</button>
+        <button mat-raised-button color="accent" type="submit">Guardar</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>
