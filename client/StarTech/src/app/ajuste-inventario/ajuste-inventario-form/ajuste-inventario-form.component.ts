@@ -52,7 +52,6 @@ export class AjusteInventarioFormComponent implements OnInit {
       tipoMovimiento: [null, Validators.required],
       justificacion: [null, Validators.required],
       productos: [null, Validators.required],
-      tipoMovimiento: [null, Validators.required]
     });
   }
 
