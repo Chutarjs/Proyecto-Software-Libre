@@ -24,15 +24,16 @@ export class AjusteInventarioIndexComponent {
   }
 
   listaAjustes() {
-    this.gService.list('ajuste-inventario/')
+    this.gService.list('ajuste/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.datos = data;
+        console.log(this.datos);
       });
   }
 
   detalleAjuste(id: number) {
-    this.router.navigate(['/ajuste-inventario', id]);
+    this.router.navigate(['/ajuste', id]);
   }
 
   crearAjuste() {

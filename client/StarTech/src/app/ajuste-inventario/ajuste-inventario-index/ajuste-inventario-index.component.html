@@ -23,7 +23,7 @@
       </mat-form-field> 
     </mat-card-content> 
   </mat-card>
-  <mat-grid-list [cols]="3" rowHeight="15em" gutterSize="10px">
+  <mat-grid-list [cols]="4" rowHeight="20em" gutterSize="10px">
     <ng-container *ngFor="let item of datos">
       <mat-grid-tile>
         <mat-card class="dashboard-card">
@@ -36,7 +36,7 @@
             <div class="emitida">Usuario: {{ item.usuario.nombre }}</div>
             <div class="emitida">Tipo de Movimiento: {{ item.tipoMovimiento }}</div>
             <div class="emitida">Justificación: {{ item.justificacion }}</div>
-            <div class="emitida">Total Productos: {{ item.productos.length }}</div>
+            <div class="emitida">Total productos: {{ item.productos.length }}</div>
           </mat-card-content>
           <mat-divider inset></mat-divider>
           <mat-card-actions>

@@ -11,4 +11,4 @@ router.post('/',ajusteController.create)
 
 router.get('/:id',ajusteController.getById) 
 
-module.exports=router 
+module.exports=router    

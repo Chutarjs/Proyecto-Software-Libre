@@ -68,7 +68,7 @@ module.exports.getById = async (request, response, next) => {
                             }
                         }
                     }
-                }
+                } 
             }
         }
     })
@@ -85,10 +85,10 @@ module.exports.create = async (request, response, next) => {
             cantidadMaxima: body.cantidadMaxima,
             cantidadMinima: body.cantidadMinima,
             bodega: {
-             connect: { id: body.bodegas } // Assuming you have a unique identifier for bodega, replace `body.bodegaId` with the actual unique identifier
+             connect: { id: body.bodegas } 
             },
             producto: {
-              connect: { id: body.productos } // Assuming you have a unique identifier for producto, replace `body.productoId` with the actual unique identifier
+              connect: { id: body.productos }
             }
         }
     })

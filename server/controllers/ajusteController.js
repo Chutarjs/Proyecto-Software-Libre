@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient, TipoMovimiento } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 //Listar todos los ajustes
@@ -25,7 +25,11 @@ module.exports.getById = async (request, response, next) => {
         include:{
             bodega:true,
             usuario:true,
-            productos:true,
+            productos:{
+                include:{
+                    producto:true
+                }
+            },
         }
     })
     response.json(ajuste)
@@ -35,16 +39,29 @@ module.exports.getById = async (request, response, next) => {
 module.exports.create = async (request, response, next) => {
     let body=request.body;
     const nuevoAjuste = await prisma.ajusteInventario.create({
-        data:{
-           fecha: body.fecha,  
-           bodegaId: body.bodegaId,
-           usuarioId: body.usuarioId,
-           tipoMovimiento: body.tipoMovimiento,
-           justificacion: body.justificacion,
-           productos:{
-            connect: { id: body.productos }
-           }
+        data:{  
+            bodegaId: body.bodega, 
+            usuarioId: body.usuario,
+            fecha: body.fechaCreacion,
+            tipoMovimiento: body.tipoMovimiento == "Entrada"? TipoMovimiento.ENTRADA: TipoMovimiento.SALIDA,
+            justificacion: body.justificacion,
+            // productos: {
+            //     connect: body.productos.map(producto => ({ id: producto.id }))        
+            // }
         }
     })
-    response.json(nuevoAjuste)
-};
+    for(var producto in body.productos){
+        var cantidad = body.productos[producto].cantidad
+        const nuevoProductoAjuste = await prisma.productoAjusteInventario.create({
+            data:{
+                ajusteInventarioId: nuevoAjuste.id,
+                productoId: body.productos[producto].id,
+                cantidad: cantidad
+            }
+        })
+        console.log(nuevoProductoAjuste)
+    }
+    response.json(nuevoAjuste) 
+
+
+};  

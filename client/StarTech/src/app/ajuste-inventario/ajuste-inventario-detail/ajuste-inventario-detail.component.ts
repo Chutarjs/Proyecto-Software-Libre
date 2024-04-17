@@ -16,12 +16,12 @@ export class AjusteInventarioDetailComponent {
     //Obtener párametro de la URL
     let id = this.route.snapshot.paramMap.get('id');
     if(!isNaN(Number(id))){
-      this.obtenerProducto(Number(id))
+      this.obtenerAjuste(Number(id))
     }
   }
-  obtenerProducto(id: any) {
+  obtenerAjuste(id: any) {
     this.gService
-      .get('producto',id)
+      .get('ajuste',id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         console.log(data);

@@ -41,6 +41,7 @@ export class AjusteInventarioFormComponent implements OnInit {
       this.idOrden = params['id'];
       this.fechaCreacion.setValue(this.today);
     });
+    this.cargarProductos();
     this.cargarBodegas();
     this.cargarUsuarios();
   }
@@ -52,6 +53,7 @@ export class AjusteInventarioFormComponent implements OnInit {
       usuario: [null, Validators.required],
       justificacion: [null, Validators.required],
       productos: [null, Validators.required],
+      tipoMovimiento: [null, Validators.required]
     });
   }
 
@@ -74,7 +76,16 @@ export class AjusteInventarioFormComponent implements OnInit {
         this.usuarios = data;
       }); 
   }
-
+  cargarProductos() {
+    this.todosProductos = null;
+     this.gService
+      .list('producto')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        console.log(data);
+        this.todosProductos = data;
+      }); 
+  }
   agregarProducto() {
     if (this.todosProductos && this.todosProductos.length > 0) {
       const productoToAdd = this.todosProductos[0]; // Getting the first product from todosProductos
@@ -82,12 +93,9 @@ export class AjusteInventarioFormComponent implements OnInit {
         this.listaProductos = []; // Initialize listaProductos if it's null
       }
       productoToAdd.cantidad = 1; // Inicializar la cantidad
-      productoToAdd.subtotal = productoToAdd.cantidad * productoToAdd.costoUnitario;
       const cantidadControl = new FormControl(productoToAdd.cantidad);
-      const subtotal = new FormControl((productoToAdd.cantidad * productoToAdd.costoUnitario));
 
       this.ordenForm.addControl('cantidad_' + this.listaProductos.length, cantidadControl);
-      this.ordenForm.addControl('subtotal_' + this.listaProductos.length, subtotal);
       this.listaProductos.push(productoToAdd); // Adding the product to listaProductos
     } else {
       console.log('No hay productos disponibles para agregar.');
@@ -103,12 +111,6 @@ export class AjusteInventarioFormComponent implements OnInit {
     }
   }
 
-  cambiarCantidad(i) {
-    console.log("i:" + i)
-    const cantidad = this.ordenForm.get('cantidad_'+i).value; 
-    this.ordenForm.get('subtotal_'+i).setValue(cantidad * this.listaProductos[i].costoUnitario);
-    this.cambiarTotal();
-  }
   cambiarProductoSeleccionado(i, prod){
     for(var productoKey in this.listaProductos){
       var producto = this.listaProductos[productoKey];
@@ -118,17 +120,8 @@ export class AjusteInventarioFormComponent implements OnInit {
         TipoMessage.warning,
         'orden/create')
       }
+      this.listaProductos[i] = prod;
     }
-  }
-  cambiarTotal() {
-    var total = 0;
-    for (let product in this.listaProductos) {
-      console.log(product);
-      console.log(this.ordenForm);
-      total += this.ordenForm.get('subtotal_'+product).value;
-    }
-    console.log(this.ordenForm.get('total'));
-    this.ordenForm.get('total').setValue(total);
   }
 
   submitOrden(): void {
@@ -139,17 +132,19 @@ export class AjusteInventarioFormComponent implements OnInit {
     let productosForm = this.listaProductos;
     this.ordenForm.patchValue({ productos: productosForm });
 
+    console.log(this.ordenForm);
+
     if (this.isCreate) {
       this.gService
-        .create('ajuste-inventario', this.ordenForm.value)
+        .create('ajuste', this.ordenForm.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
           this.noti.mensajeRedirect('Crear Ajuste de Inventario', 
             `Ajuste de Inventario creado: ${data.id}`,
             TipoMessage.success,
-            'ajuste-inventario'
+            'ajuste'
           );
-          this.router.navigate(['/ajuste-inventario']); 
+          this.router.navigate(['/ajuste']); 
         }); 
     }
   }

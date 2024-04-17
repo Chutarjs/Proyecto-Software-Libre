@@ -32,6 +32,25 @@
     </mat-form-field>
   </div>
 </div>
+ <!-- Movimientos -->
+ <div class="row">
+  <div class="col">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Tipo de Movimiento" formControlName="tipoMovimiento">
+        <mat-option value="Entrada">Entrada</mat-option>
+        <mat-option value="Salida">Salida</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<!-- Justificacion -->
+<div class="row">
+  <div class="col">
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Justificación" formControlName="justificacion">
+    </mat-form-field>
+  </div>
+</div>
 
  <!-- Usuarios -->
  <div class="row">
@@ -68,28 +87,11 @@
               <div>
                 <mat-form-field appearance="fill">
                   <mat-label>Cantidad</mat-label>
-                  <input matInput type="number" [formControlName]="'cantidad_' + i" (click)="cambiarCantidad(i)">
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                  <mat-label>Costo Unitario</mat-label>
-                  <input matInput type="number" readonly value="{{ producto.costoUnitario }}">
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                  <mat-label>Subtotal</mat-label>
-                  <input matInput type="number" [formControlName]="'subtotal_' + i">
+                  <input matInput type="number" [formControlName]="'cantidad_' + i">
                 </mat-form-field>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <mat-form-field appearance="fill">
-            <mat-label>Total</mat-label>
-            <input matInput type="number" formControlName="total" readonly>
-          </mat-form-field>
         </div>
       </div>
 
