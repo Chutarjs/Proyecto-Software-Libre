@@ -8,4 +8,4 @@ const bodegaController=require('../controllers/bodegaController')
 router.get('/',bodegaController.get)
 router.get('/:id',bodegaController.getById)
  
-module.exports=router 
+module.exports=router   

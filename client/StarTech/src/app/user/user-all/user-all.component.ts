@@ -22,7 +22,7 @@ export class UserAllComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['nombre', 'direccion', 'contacto','acciones'];
+  displayedColumns = ['nombre', 'id', 'rol','acciones'];
 
   constructor(private router:Router,
     private route:ActivatedRoute,
@@ -31,12 +31,12 @@ export class UserAllComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.listaProveedores()
+    this.listaUsuarios()
   }
   //Listar todos los videojuegos llamando al API
-  listaProveedores(){
+  listaUsuarios(){
     //localhost:3000/videojuego
-    this.gService.list('proveedor/')
+    this.gService.list('usuario/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data)=>{
         console.log(data)
@@ -44,18 +44,17 @@ export class UserAllComponent implements AfterViewInit {
         this.dataSource = new MatTableDataSource(this.datos)
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        
       })
   }
 
-  actualizarProveedor(id: number) {
-    this.router.navigate(['/proveedor/update', id], {
+  actualizarUsuario(id: number) {
+    this.router.navigate(['/user/update', id], {
       relativeTo: this.route,
     });
   }
 
-  crearProveedor() {
-    this.router.navigate(['/proveedor/create'], {
+  crearUsuario() {
+    this.router.navigate(['/user/create'], {
       relativeTo: this.route,
     });
   }

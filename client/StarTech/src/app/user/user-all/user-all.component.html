@@ -1,14 +1,14 @@
 <mat-card class="full-width">
   <!-- Titulo del Card -->
   <mat-card-header>
-    <mat-card-title>Proveedores</mat-card-title>
+    <mat-card-title>Usuarios</mat-card-title>
     <mat-card-subtitle>  
     <a
     mat-mini-fab
-    matTooltip="Crear Proveedores"
-    aria-label="Crear Proveedores"
+    matTooltip="Crear Usuarios"
+    aria-label="Crear Usuarios"
       color="primary"
-      (click)="crearProveedor()"
+      (click)="crearUsuario()"
     >
       <mat-icon>add</mat-icon>
     </a>
@@ -27,15 +27,15 @@
     </ng-container>  
   
     <!-- Direccion Column -->
-    <ng-container matColumnDef="direccion">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Direccion</th>
-      <td mat-cell *matCellDef="let row">{{row.provincia}}, {{row.canton}}, {{row.distrito}}, {{ row.direccion }}</td>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
     </ng-container>
 
     <!-- Telefono Column -->
-    <ng-container matColumnDef="contacto">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Contacto</th>
-      <td mat-cell *matCellDef="let row">{{ row.numeroTelefono }}</td>
+    <ng-container matColumnDef="rol">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Rol</th>
+      <td mat-cell *matCellDef="let row">{{ row.rol }}</td>
     </ng-container>
 
      <!-- Acciones Column -->
@@ -45,10 +45,10 @@
         <button
         mat-mini-fab
         color="accent"
-        matTooltip="Actualizar Proveedor"
-        aria-label="Actualizar Proveedor"
+        matTooltip="Actualizar Usuario"
+        aria-label="Actualizar Usuario"
         color="primary"
-        (click)="actualizarProveedor(row.id)"
+        (click)="actualizarUsuario(row.id)"
         >
           <mat-icon class="mat-18">edit</mat-icon>
         </button>
