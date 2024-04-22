@@ -15,6 +15,8 @@ import { OrdenModule } from './orden/orden.module';
 import { ProveedorModule } from './proveedor/proveedor.module';
 import { CargaDatosModule } from './carga-datos/carga-datos.module';
 import { AjusteInventarioModule } from './ajuste-inventario/ajuste-inventario.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpErrorInterceptorService } from './share/http-error-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,10 @@ import { AjusteInventarioModule } from './ajuste-inventario/ajuste-inventario.mo
 
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    {
+      provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptorService, multi: true
+      }
   ],
   bootstrap: [AppComponent],
   exports: [

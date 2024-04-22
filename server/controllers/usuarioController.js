@@ -31,7 +31,7 @@ module.exports.register = async (request, response, next) => {
   module.exports.login = async (request, response, next) => {
     let userReq = request.body;
     //Buscar el usuario según el email dado
-    const user = await prisma.Usuario.findUnique({
+    const user = await prisma.usuario.findFirst({
       where: {
         correoElectronico: userReq.correoElectronico,
       },
@@ -44,7 +44,7 @@ module.exports.register = async (request, response, next) => {
       });
     }
     //Verifica la contraseña
-    const checkPassword=await bcrypt.compare(userReq.password, user.password);
+    const checkPassword=await bcrypt.compare(userReq.contrasena, user.contrasena);
     if(checkPassword === false){
       response.status(401).send({
         success:false,

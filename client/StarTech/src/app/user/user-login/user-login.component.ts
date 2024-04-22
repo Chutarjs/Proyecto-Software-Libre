@@ -27,8 +27,8 @@ export class UserLoginComponent implements OnInit {
   // Definir el formulario con su reglas de validación
   reactiveForm() {
     this.formulario = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      correoElectronico: ['', [Validators.required, Validators.email]],
+      contrasena: ['', Validators.required],
     });
   }
   ngOnInit(): void {

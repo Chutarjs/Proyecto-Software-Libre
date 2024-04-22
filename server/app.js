@@ -39,7 +39,7 @@ extended: true,
 })
 );
 //---- Definir rutas ----
-app.use("/usuario/", usuarioRoutes);
+app.use("/user/", usuarioRoutes);
 app.use("/ajuste/", ajusteRoutes)
 app.use("/producto/", productoRouter);
 app.use("/bodega/", bodegaRouter);

@@ -8,10 +8,10 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Email</mat-label>
-            <input matInput type="text" placeholder="Email usuario" formControlName="email" />
-            @if (errorHandling('email')) {
+            <input matInput type="text" placeholder="Email usuario" formControlName="correoElectronico" />
+            @if (errorHandling('correoElectronico')) {
               <mat-error>
-                {{errorHandling('email')}}
+                {{errorHandling('correoElectronico')}}
               </mat-error>
             }
           </mat-form-field>
@@ -21,13 +21,13 @@
         <div class="col">
           <mat-form-field class="full-width">
           <mat-label>Password</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password usuario" formControlName="password" />
+          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password usuario" formControlName="contrasena" />
           <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
-          @if (errorHandling('password')) {
+          @if (errorHandling('contrasena')) {
             <mat-error>
-              {{errorHandling('password')}}
+              {{errorHandling('contrasena')}}
             </mat-error>
           }
         </mat-form-field>
