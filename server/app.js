@@ -19,6 +19,7 @@ const cantonRoutes = require("./routes/cantonRoutes");
 const distritoRoutes = require("./routes/distritoRoutes");
 const usuarioRoutes = require("./routes/usuarioRoutes");
 const ajusteRoutes = require("./routes/ajusteRoutes");
+const rolRouter = require("./routes/rolRoutes");
 
 // const excelRoutes = require('./routes/excelRoutes');
 
@@ -51,6 +52,7 @@ app.use("/subcategoria/", subcategoriaRoutes);
 app.use("/provincia/", provinciaRoutes);
 app.use("/canton/", cantonRoutes);
 app.use("/distrito/", distritoRoutes);
+app.use("/rol/", rolRouter);
 // app.use('/excel', excelRoutes);
 
 // app.post('/api/excel/cargar-excel', (req, res) => {

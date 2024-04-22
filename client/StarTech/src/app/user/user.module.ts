@@ -1,49 +1,37 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import {MatDividerModule} from '@angular/material/divider';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';  
-import { MatMenuModule } from '@angular/material/menu';
-import {MatDialogModule} from "@angular/material/dialog";
+import { UserRoutingModule } from './user-routing.module';
+import { UserCreateComponent } from './user-create/user-create.component';
+import { UserLoginComponent } from './user-login/user-login.component';
+import { UserIndexComponent } from './user-index/user-index.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatButtonModule} from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
-import {MatChipsModule} from '@angular/material/chips';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatCardModule } from '@angular/material/card'; 
-import { MatIconModule } from '@angular/material/icon'; 
-import { MatButtonModule } from '@angular/material/button';
-import { UserAllComponent } from './user-all/user-all.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { UserRoutingModule } from './user-routing.module';
-import { UserFormComponent } from './user-form/user-form.component';
-
+import {MatDividerModule} from '@angular/material/divider'; 
+import {MatDialogModule} from "@angular/material/dialog";
+import { MatIconModule } from '@angular/material/icon';
+import { LayoutModule } from '@angular/cdk/layout';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
-  declarations: [
-    UserAllComponent,
-    UserFormComponent
-  ],
+  declarations: [UserCreateComponent, UserLoginComponent, UserIndexComponent],
   imports: [
     CommonModule,
-    UserRoutingModule,
-    MatGridListModule,
     MatCardModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
+    MatTabsModule,
+    MatButtonModule,MatIconModule,
+    LayoutModule,
     MatDividerModule,
     MatDialogModule,
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
-    MatChipsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    UserRoutingModule
   ]
 })
 export class UserModule { }

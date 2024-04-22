@@ -4,12 +4,8 @@ const router= express.Router();
 //Controlador
 const usuarioController=require('../controllers/usuarioController')
 //Rutas
-//localhost:3000/videojuego/grafico
-router.get('/',usuarioController.get)
+router.post("/login", usuarioController.login);
 
-router.post('/',usuarioController.create)
+router.post("/registrar", usuarioController.register);
 
-router.get('/:id',usuarioController.getById) 
-
-router.put('/:id',usuarioController.update)
-module.exports=router 
+module.exports = router;

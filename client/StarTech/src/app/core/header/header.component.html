@@ -46,7 +46,7 @@
             <span>Login</span>
           </button> 
         }@else{
-          <button mat-menu-item>
+          <button mat-menu-item (click)="logout()">
             <mat-icon>person_remove</mat-icon>
             <span>Logout</span>
           </button>
