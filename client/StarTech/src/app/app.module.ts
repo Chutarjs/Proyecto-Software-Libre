@@ -7,6 +7,7 @@ import { ShareModule } from './share/share.module';
 import { ToastrModule } from 'ngx-toastr';
 import { HomeModule } from './home/home.module';
 import { UserModule } from './user/user.module';
+import { BodegaModule } from './bodega/bodega.module';
 import { ProductoModule } from './producto/producto.module';
 import { HttpClientModule } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -32,6 +33,7 @@ import { HttpErrorInterceptorService } from './share/http-error-interceptor.serv
     HomeModule,
     UserModule,
     ProductoModule,
+    BodegaModule,
     InventarioModule,
     OrdenModule,
     ProveedorModule,
@@ -42,8 +44,6 @@ import { HttpErrorInterceptorService } from './share/http-error-interceptor.serv
     }),
     // al final el gestor de las rutas principal
     AppRoutingModule,
-    
-
   ],
   providers: [
     provideAnimationsAsync(),

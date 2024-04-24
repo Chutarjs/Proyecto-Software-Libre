@@ -3,6 +3,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from '../../share/generic.service';
 import { Router } from '@angular/router';
 import { ImpresiónService } from '../../shared/services/impresión.service';
+import { AuthenticationService } from '../../share/authentication.service';
 
 @Component({
   selector: 'app-producto-index',
@@ -11,16 +12,26 @@ import { ImpresiónService } from '../../shared/services/impresión.service';
 })
 export class ProductoIndexComponent {
 
-  //idUsuario=2
+  currentUser:any;
+  isAutenticated:boolean;
   datos: any //Respuesta del API
   destroy$:Subject<boolean>=new Subject<boolean>();
 
   constructor(
     private gService: GenericService,
     private router: Router,
-    private srvReporte: ImpresiónService
-    )
+    private srvReporte: ImpresiónService,
+    private authService: AuthenticationService
+  )
     {
+                //Suscripción al booleano que indica si el usuario esta autenticado
+    this.authService.isAuthenticated.subscribe((valor)=>(
+      this.isAutenticated=valor
+    ))
+    //Suscripción para acceder a la información del usuario actual
+    this.authService.decodeToken.subscribe((user:any)=>(
+      this.currentUser=user
+    ))
     this.listaProductos()
   }
   actualizarProducto(id: number) {

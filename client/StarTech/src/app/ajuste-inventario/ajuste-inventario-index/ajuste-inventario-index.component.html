@@ -2,7 +2,7 @@
   <mat-card>
     <mat-card-header>
       <h1 class="mat-h1">Ajustes de Inventario</h1>
-      <button 
+      <button *ngIf="this.currentUser?.rol==='ADMINISTRADOR' || this.currentUser?.rol==='EMPLEADO'"
         mat-fab
         color="accent"
         matTooltip="Crear Ajuste"
@@ -40,7 +40,7 @@
           </mat-card-content>
           <mat-divider inset></mat-divider>
           <mat-card-actions>
-            <button 
+            <button *ngIf="this.currentUser?.rol==='ADMINISTRADOR' || this.currentUser?.rol==='EMPLEADO'"
               mat-mini-fab
               color="accent"
               matTooltip="Detalle Ajuste"

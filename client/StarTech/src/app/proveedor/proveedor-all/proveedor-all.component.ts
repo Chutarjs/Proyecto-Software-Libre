@@ -7,6 +7,7 @@ import { GenericService } from '../../share/generic.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ProveedorDiagComponent } from '../proveedor-diag/proveedor-diag.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from '../../share/authentication.service';
 
 @Component({
   selector: 'app-proveedor-all',
@@ -14,7 +15,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './proveedor-all.component.css'
 })
 export class ProveedorAllComponent implements AfterViewInit {
-  datos: any
+  datos: any;
+  currentUser:any;
+  isAutenticated:boolean;
   destroy$: Subject<boolean>=new Subject<boolean>()
   
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -28,11 +31,20 @@ export class ProveedorAllComponent implements AfterViewInit {
   constructor(private router:Router,
     private route:ActivatedRoute,
     private gService:GenericService,
-    private dialog:MatDialog){
+    private dialog:MatDialog,
+    private authService: AuthenticationService){
   }
 
   ngAfterViewInit(): void {
     this.listaProveedores()
+        //Suscripción al booleano que indica si el usuario esta autenticado
+        this.authService.isAuthenticated.subscribe((valor)=>(
+          this.isAutenticated=valor
+        ))
+        //Suscripción para acceder a la información del usuario actual
+        this.authService.decodeToken.subscribe((user:any)=>(
+          this.currentUser=user
+        ))
   }
   //Listar todos los videojuegos llamando al API
   listaProveedores(){

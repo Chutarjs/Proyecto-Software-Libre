@@ -73,6 +73,7 @@ export class UserCreateComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.roles = data;
+        this.roles.pop();
         console.log(this.roles);
       });
   }

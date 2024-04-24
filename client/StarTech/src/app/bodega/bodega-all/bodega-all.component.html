@@ -1,14 +1,14 @@
 <mat-card class="full-width">
   <!-- Titulo del Card -->
   <mat-card-header>
-    <mat-card-title>Producto</mat-card-title>
+    <mat-card-title>Bodegas</mat-card-title>
     <mat-card-subtitle>  
     <a *ngIf="this.currentUser?.rol==='ADMINISTRADOR'"
     mat-mini-fab
-    matTooltip="Crear producto"
-    aria-label="Crear producto"
+    matTooltip="Crear Bodegas"
+    aria-label="Crear Bodegas"
       color="primary"
-      (click)="crearProducto()"
+      (click)="crearBodega()"
     >
       <mat-icon>add</mat-icon>
     </a>
@@ -20,35 +20,35 @@
   <table mat-table class="full-width-table" 
   [dataSource]="dataSource"
   matSort aria-label="Elements">
-    <!-- Codigo Column -->
-    <ng-container matColumnDef="sku">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>SKU</th>
-      <td mat-cell *matCellDef="let row">{{ row.sku }}</td>
-    </ng-container>  
-  
     <!-- Nombre Column -->
     <ng-container matColumnDef="nombre">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
       <td mat-cell *matCellDef="let row">{{ row.nombre }}</td>
+    </ng-container>  
+  
+    <!-- Direccion Column -->
+    <ng-container matColumnDef="direccion">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Direccion</th>
+      <td mat-cell *matCellDef="let row">{{row.ubicacion.provincia}}, {{row.ubicacion.canton}}, {{row.ubicacion.distrito}}</td>
     </ng-container>
 
-    <!-- Precio Column -->
-    <ng-container matColumnDef="costoUnitario">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
-      <td mat-cell *matCellDef="let row">{{ row.costoUnitario }}</td>
+    <!-- Telefono Column -->
+    <ng-container matColumnDef="contacto">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Direccion Exacta</th>
+      <td mat-cell *matCellDef="let row">{{ row.ubicacion.direccionExacta }}</td>
     </ng-container>
 
      <!-- Acciones Column -->
-     <ng-container matColumnDef="acciones" >
+     <ng-container matColumnDef="acciones">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</th>
       <td mat-cell *matCellDef="let row">
         <button *ngIf="this.currentUser?.rol==='ADMINISTRADOR'"
         mat-mini-fab
         color="accent"
-        matTooltip="Actualizar Producto"
-        aria-label="Actualizar Producto"
+        matTooltip="Actualizar Bodega"
+        aria-label="Actualizar Bodega"
         color="primary"
-        (click) = actualizarProducto(row.id)
+        (click)="actualizarBodega(row.id)"
         >
           <mat-icon class="mat-18">edit</mat-icon>
         </button>

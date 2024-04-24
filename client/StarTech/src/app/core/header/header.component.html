@@ -19,21 +19,19 @@
       routerLinkActive="link-active">
       Mantenimientos
     </button>
-    <mat-menu #menu2="matMenu">
-      <button mat-menu-item  [routerLink]="'/producto-table'" [routerLinkActive]="'link-active'">Productos</button>
-      <button mat-menu-item [routerLink]="'/proveedor-table'" [routerLinkActive]="'link-active'">Proveedores</button>
-      <button mat-menu-item [routerLink]="'/inventario-table'" [routerLinkActive]="'link-active'">Inventarios</button>
-      <button mat-menu-item [routerLink]="'/user-table'" [routerLinkActive]="'link-active'">Usuarios</button>
-    </mat-menu>
+      <mat-menu #menu2="matMenu">
+        <button mat-menu-item *ngIf="this.currentUser?.rol==='ADMINISTRADOR' || this.currentUser?.rol==='EMPLEADO'" [routerLink]="'/producto-table'" [routerLinkActive]="'link-active'">Productos</button>
+        <button mat-menu-item *ngIf="this.currentUser?.rol==='ADMINISTRADOR' || this.currentUser?.rol==='EMPLEADO'" [routerLink]="'/proveedor-table'" [routerLinkActive]="'link-active'">Proveedores</button>
+        <button mat-menu-item *ngIf="this.currentUser?.rol==='ADMINISTRADOR' || this.currentUser?.rol==='EMPLEADO'" [routerLink]="'/inventario-table'" [routerLinkActive]="'link-active'">Inventarios</button>
+        <button mat-menu-item *ngIf="this.currentUser?.rol==='ADMINISTRADOR' || this.currentUser?.rol==='EMPLEADO'" [routerLink]="'/bodega-table'" [routerLinkActive]="'link-active'">Bodegas</button>
+        <button mat-menu-item *ngIf="this.currentUser?.rol==='ADMINISTRADOR'" [routerLink]="'/user-table'" [routerLinkActive]="'link-active'">Usuarios</button>
+      </mat-menu>
     </mat-menu>
     <!--enlaces de la app-->
     <!-- https://fonts.google.com/icons -->
     <!--https://material.angular.io/guide/typography-->
     <div class="example-spacer"></div>
     <div class="example-spacer">
-      <button mat-icon-button matBadgeColor="accent" [matBadge]="0">
-        <mat-icon>shopping_cart</mat-icon>
-      </button>
       <!-- Menu de Usuario-->
       <span class="mat-caption" *ngIf="isAutenticated">{{currentUser.email}}</span>
       <button mat-icon-button [matMenuTriggerFor]="menu3">

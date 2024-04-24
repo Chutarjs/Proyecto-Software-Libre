@@ -4,7 +4,7 @@
       <h1 class="mat-h1">Productos</h1>
     </mat-card-header>
     
-    <div class="report-buttons">
+    <div class="report-buttons" *ngIf="this.currentUser?.rol==='ADMINISTRADOR' || this.currentUser?.rol==='EMPLEADO'">
       
       <button mat-button color="primary" (click)="reporteProductos()">
         <mat-icon>description</mat-icon>
@@ -22,17 +22,6 @@
         <mat-icon>description</mat-icon>
         <span>Correctos</span>
       </button>
-      <mat-card-subtitle>  
-        <a
-        mat-mini-fab
-          matTooltip="Crear Producto"
-          aria-label="Crear Producto"
-          color="primary"
-          (click)="crearProducto()"
-        >
-          <mat-icon>add</mat-icon>
-        </a>
-      </mat-card-subtitle>
     </div>
     <mat-card-content>
     <mat-form-field class="full-width">

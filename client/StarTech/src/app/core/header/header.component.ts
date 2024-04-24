@@ -26,12 +26,6 @@ export class HeaderComponent {
     this.cartService.countItems.subscribe((valor)=>{
       this.qtyItems=valor
     })
-    //Usuario
-    /*  this.isAutenticated=false
-    this.currentUser={
-      name: "Gabriel García",
-      email: "ggarcia@prueba.com"
-    }  */
     //Suscripción al booleano que indica si el usuario esta autenticado
     this.authService.isAuthenticated.subscribe((valor)=>(
       this.isAutenticated=valor
@@ -40,7 +34,7 @@ export class HeaderComponent {
     this.authService.decodeToken.subscribe((user:any)=>(
       this.currentUser=user
     ))
-
+    console.log(this.currentUser);
   }
 
   login(){

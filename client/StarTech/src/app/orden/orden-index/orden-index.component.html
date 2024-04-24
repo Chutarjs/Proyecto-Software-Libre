@@ -2,7 +2,7 @@
   <mat-card>
     <mat-card-header>
       <h1 class="mat-h1">Ordenes de Compra</h1>
-      <button 
+      <button *ngIf="this.currentUser?.rol==='ADMINISTRADOR' || this.currentUser?.rol==='EMPLEADO'"
       mat-fab
       color="accent"
       matTooltip="Crear Orden"
@@ -48,7 +48,7 @@
               <mat-icon class="mat-18">info</mat-icon>
             </button>
             @if(item.fechaRecibida == null){
-            <button 
+            <button *ngIf="this.currentUser?.rol==='ADMINISTRADOR' || this.currentUser?.rol==='EMPLEADO'"
             mat-mini-fab
             color="accent"
             matTooltip="Recibir Orden"
